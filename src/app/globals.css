@@ -1,226 +1,293 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  /* ESQUEMA CLEAN - FUNDO BRANCO PRINCIPAL */
-  --primary: #1e3a8a;        /* Azul Suíço Profundo - apenas header/navegação */
-  --background: #ffffff;     /* Branco Alpino - fundo principal (70%) */
-  --background-alt: #f9fafb; /* Bege Suave - seções alternadas (20%) */
-  --background-section: #f3f4f6; /* Cinza Claro - seções alternadas */
+  /* ESQUEMA INSTITUCIONAL SUÍÇO - admin.ch */
+  --swiss-red: #DC0018;      /* Vermelho Suíço Principal */
+  --swiss-red-dark: #B3001A; /* Vermelho Suíço Escuro */
+  --swiss-red-light: #FFE8EB; /* Vermelho Suíço Ultra Claro */
   
-  /* TEXTOS CLEAN */
-  --foreground: #374151;     /* Cinza Grafite - textos principais */
-  --foreground-light: #6b7280; /* Cinza Médio - textos secundários */
+  /* FUNDO PRINCIPAL */
+  --background: #ffffff;     /* Branco puro - fundo principal */
+  --background-alt: #fafafa; /* Cinza ultra claro */
+  --background-section: #f8f9fa; /* Cinza seções */
   
-  /* CORES DE AÇÃO CLEAN */
-  --accent: #059669;         /* Verde Confiança - botão principal */
-  --accent-dark: #047857;    /* Verde escuro - hover principal */
-  --secondary: #3b82f6;      /* Azul Claro - botões secundários, links */
-  --accent-orange: #ea580c;  /* Laranja Energia - urgência */
+  /* TEXTOS INSTITUCIONAIS */
+  --foreground: #1a1a1a;     /* Preto suave - títulos */
+  --foreground-medium: #333333; /* Cinza escuro - textos principais */
+  --foreground-light: #666666; /* Cinza médio - textos secundários */
+  --foreground-lighter: #999999; /* Cinza claro - labels */
   
-  /* TONS NEUTROS CLEAN */
-  --border-color: #f3f4f6;   /* Bordas minimalistas */
-  --shadow-light: rgba(0, 0, 0, 0.05); /* Sombras sutis */
-  --shadow-medium: rgba(0, 0, 0, 0.1);  /* Sombras botões */
+  /* CORES DE AÇÃO MINIMALISTAS */
+  --accent: var(--swiss-red);     /* Vermelho suíço - ações principais */
+  --accent-hover: var(--swiss-red-dark); /* Hover vermelho */
+  --link-color: #0066CC;      /* Azul institucional - links */
+  --link-hover: #004499;      /* Azul hover */
+  
+  /* TONS NEUTROS INSTITUCIONAIS */
+  --border-color: #e5e5e5;   /* Bordas neutras */
+  --border-light: #f0f0f0;   /* Bordas ultra leves */
+  --shadow: rgba(0, 0, 0, 0.08); /* Sombras sutis */
+  --shadow-light: rgba(0, 0, 0, 0.04);
+  
+  /* SUCCESS/ERROR STATES */
+  --success: #28a745;
+  --warning: #ffc107;
+  --error: #dc3545;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;        
-    --background-alt: #f9fafb;    
-    --background-section: #f3f4f6; 
-    --foreground: #374151;        
-    --foreground-light: #6b7280;  
+@layer base {
+  body {
+    color: var(--foreground-medium);
+    background: var(--background);
+    font-family: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* TIPOGRAFIA INSTITUCIONAL SUÍÇA */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--foreground);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  h1 { font-size: clamp(2rem, 4vw, 3.5rem); }
+  h2 { font-size: clamp(1.5rem, 3vw, 2.5rem); }
+  h3 { font-size: clamp(1.25rem, 2.5vw, 1.875rem); }
+
+  p {
+    color: var(--foreground-medium);
+    line-height: 1.7;
+    font-size: 1.125rem;
+  }
+
+  /* LINKS INSTITUCIONAIS */
+  a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+  }
+  
+  /* SCROLL SUAVE PARA NAVEGAÇÃO */
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-inter), sans-serif;
-  line-height: 1.6;
-  font-weight: 400;
-}
+@layer components {
+  /* BACKGROUNDS INSTITUCIONAIS */
+  .bg-main { 
+    @apply bg-white;
+  }
+  .bg-alt { 
+    @apply bg-gray-50;
+  }
+  .bg-section { 
+    @apply bg-gray-50;
+  }
+  
+  /* CARDS MINIMALISTAS */
+  .card-swiss { 
+    @apply bg-white border border-gray-200 rounded transition-shadow duration-200;
+  }
+  
+  .card-swiss:hover {
+    @apply shadow-md;
+  }
+  
+  /* TEXT COLORS INSTITUCIONAIS */
+  .text-primary { 
+    @apply text-gray-900 font-semibold;
+  }
+  .text-main { 
+    @apply text-gray-800;
+  }
+  .text-secondary { 
+    @apply text-gray-600;
+  }
+  .text-light { 
+    @apply text-gray-400;
+  }
+  .text-accent { 
+    color: var(--swiss-red);
+    @apply font-semibold;
+  }
+  .text-link { 
+    color: var(--link-color);
+  }
+  
+  /* BOTÕES ESTILO ADMIN.CH */
+  .btn-swiss {
+    background-color: var(--swiss-red);
+    @apply text-white px-6 py-3 rounded font-medium transition-colors duration-200 inline-flex items-center no-underline;
+  }
+  
+  .btn-swiss:hover {
+    background-color: var(--swiss-red-dark);
+    @apply text-white no-underline;
+  }
+  
+  .btn-swiss-outline {
+    @apply bg-transparent text-swiss-red px-6 py-3 border border-swiss-red rounded font-medium transition-all duration-200 inline-flex items-center no-underline;
+  }
+  
+  .btn-swiss-outline:hover {
+    background-color: var(--swiss-red);
+    @apply text-white no-underline;
+  }
+  
+  .btn-secondary-swiss {
+    @apply bg-gray-50 text-gray-700 px-6 py-3 border border-gray-300 rounded font-medium transition-all duration-200 no-underline;
+  }
+  
+  .btn-secondary-swiss:hover {
+    @apply bg-gray-100 border-gray-300 text-gray-700 no-underline;
+  }
+  
+  /* FORMULÁRIOS ESTILO ADMIN.CH */
+  .form-swiss {
+    @apply flex flex-col gap-6;
+  }
+  
+  .form-swiss label {
+    @apply font-medium text-gray-900 mb-2 block;
+  }
+  
+  .form-swiss input,
+  .form-swiss textarea,
+  .form-swiss select {
+    @apply w-full px-4 py-3 border border-gray-300 rounded bg-white text-gray-700 transition-colors duration-200;
+  }
+  
+  .form-swiss input:focus,
+  .form-swiss textarea:focus,
+  .form-swiss select:focus {
+    @apply outline-none;
+    border-color: var(--swiss-red);
+  }
+  
+  /* GRIDS INSTITUCIONAIS */
+  .grid-swiss-2 {
+    @apply grid gap-8;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  
+  .grid-swiss-3 {
+    @apply grid gap-6;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  /* SEÇÕES COM ESPAÇAMENTO GENEROSO E DEMARCAÇÃO */
+  .section-swiss {
+    @apply py-20 relative;
+    min-height: fit-content;
+  }
+  
+  .section-swiss-large {
+    @apply py-32 relative;
+    min-height: 80vh;
+  }
+  
+  /* CONTAINER RESPONSIVO */
+  .container-swiss {
+    @apply max-w-6xl mx-auto px-6;
+  }
+  
+  @screen md {
+    .container-swiss {
+      @apply px-8;
+    }
+  }
+  
+  /* NAVEGAÇÃO ESTILO ADMIN.CH */
+  .nav-swiss {
+    @apply bg-white border-b border-gray-200 py-4 shadow-sm relative z-50;
+  }
+  
+  .nav-swiss a {
+    @apply text-gray-700 font-medium px-4 py-2 no-underline transition-colors duration-200;
+  }
+  
+  .nav-swiss a:hover,
+  .nav-swiss a.active {
+    color: var(--swiss-red);
+  }
 
-/* Hierarquia clean - títulos em cinza grafite */
-h1, h2, h3, h4, h5, h6 {
-  color: var(--foreground);
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-p {
-  color: var(--foreground-light);
-  line-height: 1.7;
+  /* Remove sublinhados de todos os links da header */
+  header a,
+  header a:hover,
+  header a:focus,
+  header a:active,
+  .no-underline {
+    text-decoration: none !important;
+  }
+  
+  /* SEPARADORES DE SEÇÃO */
+  .section-divider {
+    @apply py-8 border-t border-gray-100;
+  }
+  
+  .section-divider-accent {
+    @apply py-12 bg-gradient-to-r from-transparent via-gray-100 to-transparent;
+  }
+  
+  /* ALERTS STYLE ADMIN.CH */
+  .alert-swiss {
+    @apply px-6 py-4 rounded border-l-4 my-4;
+  }
+  
+  .alert-success {
+    @apply bg-gray-50;
+    border-color: var(--success);
+    color: var(--success);
+  }
+  
+  .alert-warning {
+    @apply bg-yellow-50;
+    border-color: var(--warning);
+    color: #8b6914;
+  }
+  
+  .alert-error {
+    @apply bg-red-50;
+    border-color: var(--error);
+    color: var(--error);
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-}
+  
+  /* UTILITÁRIOS PARA DEMARCAÇÃO DE SEÇÕES */
+  .section-border-top {
+    @apply border-t-4 border-gray-100;
+  }
+  
+  .section-border-accent {
+    @apply border-t-4;
+    border-color: var(--swiss-red);
+  }
+  
+  .bg-pattern-dots {
+    background-image: radial-gradient(circle, #e5e5e5 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
 
-@layer components {
-  /* Backgrounds clean com espaçamento generoso */
-  .bg-main { background-color: var(--background); }
-  .bg-alt { background-color: var(--background-alt); }
-  .bg-section { background-color: var(--background-section); }
-  .bg-card { 
-    background-color: var(--background); 
-    box-shadow: 0 2px 10px var(--shadow-light);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-  }
-  
-  /* Header específico - azul profundo apenas na barra */
-  .header-bg { background-color: var(--primary); }
-  
-  /* Text Colors clean */
-  .text-primary { color: var(--primary); font-weight: 600; }
-  .text-main { color: var(--foreground); font-weight: 500; }
-  .text-secondary { color: var(--foreground-light); font-weight: 500; }
-  .text-accent { color: var(--accent); font-weight: 600; }
-  .text-accent-orange { color: var(--accent-orange); }
-  .text-link { color: var(--secondary); }
-  
-  /* BOTÕES CLEAN - NOVOS DESIGNS */
-  .btn-primary {
-    background-color: var(--accent);
-    color: white;
-    padding: 16px 32px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 15px var(--shadow-medium);
-  }
-  .btn-primary:hover {
-    background-color: var(--accent-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.3);
-  }
-  
-  .btn-secondary {
-    background-color: transparent;
-    color: var(--secondary);
-    padding: 14px 30px;
-    border: 2px solid var(--secondary);
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-  .btn-secondary:hover {
-    background-color: var(--secondary);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-  }
-  
-  .btn-accent-orange {
-    background-color: var(--accent-orange);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 15px var(--shadow-medium);
-  }
-  .btn-accent-orange:hover {
-    background-color: #f97316;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(234, 88, 12, 0.3);
-  }
-  
-  .btn-outline-white {
-    border: 2px solid white;
-    color: white;
-    background-color: transparent;
-    padding: 14px 30px;
-    border-radius: 12px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-  .btn-outline-white:hover {
-    background-color: white;
-    color: var(--foreground);
-    transform: translateY(-2px);
-  }
-  
-  /* Icon containers clean */
-  .icon-primary { 
-    background-color: rgba(30, 58, 138, 0.08); 
-    border: 1px solid rgba(30, 58, 138, 0.1); 
-  }
-  .icon-secondary { 
-    background-color: rgba(59, 130, 246, 0.08); 
-    border: 1px solid rgba(59, 130, 246, 0.1); 
-  }
-  .icon-accent { 
-    background-color: rgba(5, 150, 105, 0.08); 
-    border: 1px solid rgba(5, 150, 105, 0.1); 
-  }
-  .icon-orange { 
-    background-color: rgba(234, 88, 12, 0.08); 
-    border: 1px solid rgba(234, 88, 12, 0.1); 
-  }
-  
-  /* Hover effects clean */
-  .hover-text-accent:hover { color: var(--accent); }
-  .hover-shadow:hover { 
-    box-shadow: 0 8px 25px var(--shadow-light); 
-    transform: translateY(-2px);
-    transition: all 0.3s ease;
-  }
-  
-  /* Cards com espaçamento generoso */
-  .card-clean {
-    background-color: var(--background);
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 2px 10px var(--shadow-light);
-    border: 1px solid var(--border-color);
-  }
-  
-  /* Seções com espaçamento abundante */
-  .section-spacing {
-    padding: 80px 0;
-  }
-  
-  .section-spacing-large {
-    padding: 120px 0;
-  }
-  
-  /* Formulário clean */
-  .form-card {
-    background-color: var(--background) !important;
-    color: var(--foreground) !important;
-    padding: 40px !important;
-    border-radius: 16px !important;
-    box-shadow: 0 2px 10px var(--shadow-light) !important;
-  }
-  
-  .form-card input, 
-  .form-card select, 
-  .form-card textarea {
-    background-color: var(--background) !important;
-    color: var(--foreground) !important;
-    border: 1px solid var(--border-color) !important;
-    border-radius: 8px !important;
-    padding: 12px 16px !important;
-  }
-  
-  .form-card input:focus, 
-  .form-card select:focus, 
-  .form-card textarea:focus {
-    border-color: var(--secondary) !important;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
-    outline: none !important;
+  /* Sombras intensas para hero */
+  .shadow-3xl {
+    box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
   }
 }
 

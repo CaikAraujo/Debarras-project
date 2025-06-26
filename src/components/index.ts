@@ -1,10 +1,13 @@
-export { default as Header } from './Header';
-export { default as Hero } from './Hero';
-export { default as NewHero } from './NewHero';
-export { default as Services } from './Services';
-export { default as Specialties } from './Specialties';
-export { default as About } from './About';
-export { default as AboutCompany } from './AboutCompany';
-export { default as FAQ } from './FAQ';
-export { default as Contact } from './Contact';
-export { default as Footer } from './Footer'; 
+// UI Components
+export { default as Button } from './ui/Button'
+export { default as Card } from './ui/Card'
+export { default as Form } from './ui/Form'
+export { default as SectionDivider } from './ui/SectionDivider'
+
+// Swiss Sections
+export { default as NavSwiss } from './sections/NavSwiss'
+export { default as HeroSwiss } from './sections/HeroSwiss'
+export { default as AboutSwiss } from './sections/AboutSwiss'
+export { default as ServicesSwiss } from './sections/ServicesSwiss'
+export { default as FeedbackSwiss } from './sections/FeedbackSwiss'
+export { default as ContactSwiss } from './sections/ContactSwiss' 
