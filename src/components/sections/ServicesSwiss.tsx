@@ -1,77 +1,108 @@
-import Card from '../ui/Card'
-
-const services = [
-  {
-    title: 'Débarras Résidentiel',
-    description: 'Vide-greniers, caves, appartements et maisons avec tri sélectif et évacuation responsable.',
-    icon: '🏠'
-  },
-  {
-    title: 'Débarras Commercial', 
-    description: 'Bureaux, entrepôts, magasins et locaux professionnels. Service adapté aux entreprises.',
-    icon: '🏢'
-  },
-  {
-    title: 'Nettoyage Professionnel',
-    description: 'Nettoyage approfondi après débarras, remise en état complète des locaux.',
-    icon: '✨'
-  },
-  {
-    title: 'Élimination de Gravats',
-    description: 'Évacuation de matériaux de construction, déchets de rénovation selon normes suisses.',
-    icon: '🚛'
-  },
-  {
-    title: 'Organisation d\'Espaces',
-    description: 'Conseil en organisation et aménagement d\'espaces pour optimiser votre environnement.',
-    icon: '📦'
-  },
-  {
-    title: 'Service d\'Urgence',
-    description: 'Intervention rapide 24h/7j pour situations urgentes et sinistres.',
-    icon: '⚡'
-  }
-]
+'use client'
 
 const ServicesSwiss = () => {
   return (
-    <section className="section-swiss bg-main border-b border-gray-200" id="services">
-      <div className="container-swiss">
-        <div className="text-center mb-12">
-          <h2 className="text-primary mb-6">Nos Services</h2>
-          <p className="text-lg text-secondary max-w-3xl mx-auto">
-            Une gamme complète de services professionnels adaptés 
-            aux besoins résidentiels et commerciaux en Suisse.
-          </p>
-        </div>
-        
-        <div className="grid-swiss-3">
-          {services.map((service, index) => (
-            <Card key={index} hover className="text-center h-full">
-              <Card.Content>
-                <div className="text-4xl mb-4">{service.icon}</div>
-                <Card.Title>{service.title}</Card.Title>
-                <p className="text-secondary leading-relaxed">
-                  {service.description}
+    <div className="admin-container">
+      <div className="admin-main-layout">
+        <div className="admin-content">
+          
+          <div className="admin-section">
+            <h2>Nos Services</h2>
+            <p style={{ marginBottom: '30px' }}>
+              Débarras Pro offre une gamme complète de services professionnels 
+              conformes aux normes suisses.
+            </p>
+            
+            <div className="admin-service-grid">
+              <div className="admin-card">
+                <h3>Débarras Résidentiel</h3>
+                <p>
+                  Évacuation complète de logements, appartements et maisons. 
+                  Service professionnel avec tri sélectif selon les normes suisses.
                 </p>
-              </Card.Content>
-            </Card>
-          ))}
+                <ul style={{ fontSize: '13px', marginTop: '10px' }}>
+                  <li>• Appartements et maisons</li>
+                  <li>• Caves et greniers</li>
+                  <li>• Succession et héritage</li>
+                </ul>
+              </div>
+              
+              <div className="admin-card">
+                <h3>Débarras Commercial</h3>
+                <p>
+                  Débarras de bureaux, locaux commerciaux et espaces professionnels. 
+                  Solutions adaptées aux entreprises.
+                </p>
+                <ul style={{ fontSize: '13px', marginTop: '10px' }}>
+                  <li>• Bureaux et open-space</li>
+                  <li>• Entrepôts et stockage</li>
+                  <li>• Locaux commerciaux</li>
+                </ul>
+              </div>
+              
+              <div className="admin-card">
+                <h3>Nettoyage Professionnel</h3>
+                <p>
+                  Nettoyage approfondi après débarras. Remise en état complète 
+                  des locaux.
+                </p>
+                <ul style={{ fontSize: '13px', marginTop: '10px' }}>
+                  <li>• Nettoyage post-débarras</li>
+                  <li>• Remise en état</li>
+                  <li>• Préparation location</li>
+                </ul>
+              </div>
+              
+              <div className="admin-card">
+                <h3>Tri et Recyclage</h3>
+                <p>
+                  Tri sélectif et recyclage conformes aux réglementations 
+                  environnementales suisses.
+                </p>
+                <ul style={{ fontSize: '13px', marginTop: '10px' }}>
+                  <li>• Tri sélectif certifié</li>
+                  <li>• Recyclage écologique</li>
+                  <li>• Élimination conforme</li>
+                </ul>
+              </div>
+            </div>
+            
+            {/* Statistiques comme admin.ch */}
+            <div className="admin-stats">
+              <div className="admin-stat">
+                <span className="admin-stat-number">2500+</span>
+                <div className="admin-stat-label">Débarras réalisés</div>
+              </div>
+              <div className="admin-stat">
+                <span className="admin-stat-number">95%</span>
+                <div className="admin-stat-label">Matériaux recyclés</div>
+              </div>
+              <div className="admin-stat">
+                <span className="admin-stat-number">48h</span>
+                <div className="admin-stat-label">Délai moyen</div>
+              </div>
+              <div className="admin-stat">
+                <span className="admin-stat-number">100%</span>
+                <div className="admin-stat-label">Clients satisfaits</div>
+              </div>
+            </div>
+            
+          </div>
         </div>
         
-        <div className="text-center mt-12">
-          <p className="text-secondary mb-6">
-            Tous nos services sont certifiés et conformes aux normes environnementales suisses.
-          </p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-light">
-            <span>✓ Assurance professionnelle</span>
-            <span>✓ Tri sélectif écologique</span>
-            <span>✓ Devis gratuit sous 24h</span>
-            <span>✓ Équipe certifiée</span>
+        <div className="admin-sidebar">
+          <div className="admin-sidebar-item">
+            <h4>Zones d'intervention</h4>
+            <p>Service dans toute la Suisse romande: Genève, Vaud, Valais, Neuchâtel, Jura, Fribourg.</p>
+          </div>
+          
+          <div className="admin-sidebar-item">
+            <h4>Certifications</h4>
+            <p>ISO 14001 certifié. Membre USIC. Assurance RC 2M CHF.</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 

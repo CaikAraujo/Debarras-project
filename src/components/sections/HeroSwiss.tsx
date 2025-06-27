@@ -1,112 +1,217 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import Button from '../ui/Button'
-
 const HeroSwiss = () => {
-  const [scrollY, setScrollY] = useState(0)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    // Animação de entrada
-    const timer = setTimeout(() => {
-      setIsVisible(true)
-    }, 300)
-
-    // Efeito parallax no scroll
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    
-    return () => {
-      clearTimeout(timer)
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
-
-  // Cálculos para efeitos parallax
-  const opacity = Math.max(0, 1 - scrollY / 400)
-  const translateY = scrollY * 0.5
-  const scale = Math.max(0.8, 1 - scrollY / 2000)
-
   return (
-    <section 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100 px-4 sm:px-6"
-      style={{
-        transform: `translateY(${translateY}px) scale(${scale})`,
-        opacity: opacity,
-      }}
-    >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-20 sm:opacity-30">
-        <div className="absolute inset-0 bg-pattern-dots"></div>
-      </div>
-
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/10 to-white/30"></div>
-
-      <div className="container-swiss relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+    <div className="admin-container">
+      <div className="admin-main-layout">
+        
+        {/* Conteúdo principal */}
+        <div className="admin-content">
           
-          {/* Título com animação - Simplificado */}
-          <div className={`transition-all duration-1000 ease-out ${
-            isVisible 
-              ? 'translate-y-0 opacity-100' 
-              : 'translate-y-8 sm:translate-y-12 opacity-0'
-          }`}>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
-              <span className="block">Débarras Professionnel</span>
-              <span className="block text-swiss-red">en Suisse</span>
-            </h1>
-          </div>
-          
-          {/* Subtitle com delay - Mais conciso */}
-          <div className={`transition-all duration-1000 ease-out delay-300 ${
-            isVisible 
-              ? 'translate-y-0 opacity-100' 
-              : 'translate-y-8 sm:translate-y-12 opacity-0'
-          }`}>
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-700 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed font-light">
-              Libérez votre espace. Nous gérons le débarras et le nettoyage avec une efficacité suisse.
+          {/* Equipe de direção - inspirado nos membros do conselho federal */}
+          <div className="admin-section">
+            <h1>Équipe de Direction</h1>
+            <p style={{ marginBottom: '30px' }}>
+              Notre équipe expérimentée assure un service professionnel de débarras 
+              conforme aux normes suisses les plus strictes.
             </p>
-          </div>
-          
-          {/* Button com delay maior - Foco no CTA principal */}
-          <div className={`transition-all duration-1000 ease-out delay-500 ${
-            isVisible 
-              ? 'translate-y-0 opacity-100' 
-              : 'translate-y-8 sm:translate-y-12 opacity-0'
-          }`}>
-            <div className="flex justify-center items-center">
-              <Button 
-                variant="primary" 
-                className="w-full sm:w-auto px-8 sm:px-12 py-4 sm:py-5 text-base sm:text-lg font-semibold rounded-xl sm:rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300"
-              >
-                Demander un Devis Gratuit
-              </Button>
+            
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', 
+              gap: '20px',
+              marginBottom: '30px'
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ 
+                  width: '140px', 
+                  height: '180px', 
+                  background: '#f0f0f0', 
+                  marginBottom: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#999',
+                  fontSize: '12px'
+                }}>
+                  Photo<br/>Directeur
+                </div>
+                <div style={{ fontSize: '14px', fontWeight: 'bold' }}>Marc Dubois</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-medium)' }}>Directeur Général</div>
+              </div>
+              
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ 
+                  width: '140px', 
+                  height: '180px', 
+                  background: '#f0f0f0', 
+                  marginBottom: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#999',
+                  fontSize: '12px'
+                }}>
+                  Photo<br/>Responsable
+                </div>
+                <div style={{ fontSize: '14px', fontWeight: 'bold' }}>Anne Mueller</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-medium)' }}>Responsable Opérations</div>
+              </div>
+              
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ 
+                  width: '140px', 
+                  height: '180px', 
+                  background: '#f0f0f0', 
+                  marginBottom: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#999',
+                  fontSize: '12px'
+                }}>
+                  Photo<br/>Chef Équipe
+                </div>
+                <div style={{ fontSize: '14px', fontWeight: 'bold' }}>Pierre Martinet</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-medium)' }}>Chef d'Équipe Valais</div>
+              </div>
+              
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ 
+                  width: '140px', 
+                  height: '180px', 
+                  background: '#f0f0f0', 
+                  marginBottom: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#999',
+                  fontSize: '12px'
+                }}>
+                  Photo<br/>Spécialiste
+                </div>
+                <div style={{ fontSize: '14px', fontWeight: 'bold' }}>Sofia Bernasconi</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-medium)' }}>Spécialiste Recyclage</div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator - Apenas visual */}
-      <div className={`absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-1000 ${
-        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-      } hidden sm:flex`}>
-        <div className="flex flex-col items-center space-y-2 text-gray-400">
-          <div className="w-6 h-10 border-2 border-gray-300 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-gray-300 rounded-full mt-2 animate-bounce"></div>
+          
+          {/* Article principal avec image */}
+          <div className="admin-section" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '20px' }}>
+            <div style={{ 
+              background: '#f0f0f0', 
+              height: '200px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#999',
+              fontSize: '14px'
+            }}>
+              Image débarras<br/>professionnel
+            </div>
+            <div>
+              <h2 style={{ color: 'var(--link-blue)' }}>
+                Service de débarras conforme aux normes suisses
+              </h2>
+              <p>
+                Débarras Pro investit dans des solutions durables pour le traitement 
+                des déchets en Suisse. Notre équipe certifiée garantit un service 
+                professionnel respectueux de l'environnement.
+              </p>
+              <p>
+                Nos méthodes de tri sélectif et de recyclage dépassent les exigences 
+                légales suisses, offrant une solution complète pour le débarras 
+                de logements et locaux commerciaux.
+              </p>
+              <ul style={{ fontSize: '14px', marginTop: '15px' }}>
+                <li style={{ marginBottom: '5px' }}>
+                  <a href="#" style={{ color: 'var(--link-blue)' }}>
+                    Communiqué: Nouvelle certification ISO 14001 🔗
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
+          
+          {/* Section réseaux sociaux */}
+          <div className="admin-section">
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: '200px 1fr', 
+              gap: '20px',
+              padding: '20px',
+              background: 'var(--background-gray)',
+              border: '1px solid var(--border-light)'
+            }}>
+              <div style={{ 
+                background: '#f0f0f0', 
+                height: '120px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#999',
+                fontSize: '12px'
+              }}>
+                Image<br/>équipe travail
+              </div>
+              <div>
+                <h3 style={{ marginBottom: '15px' }}>Réseaux sociaux</h3>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                  <span style={{ fontSize: '13px' }}>📄 tout</span>
+                  <div style={{ display: 'flex', gap: '15px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ 
+                        background: 'var(--swiss-red)', 
+                        color: 'white', 
+                        padding: '4px 8px',
+                        fontSize: '12px'
+                      }}>f</span>
+                      <span style={{ fontSize: '13px' }}>Débarras Pro Suisse</span>
+                    </div>
+                    <span style={{ fontSize: '20px' }}>✕</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
         </div>
+        
+        {/* Sidebar comme admin.ch */}
+        <div className="admin-sidebar">
+          
+          <div className="admin-sidebar-item">
+            <h4>Ukraine</h4>
+            <p>Soutien aux réfugiés ukrainiens avec services de débarras gratuits.</p>
+          </div>
+          
+          <div className="admin-sidebar-item">
+            <h4>Genève internationale</h4>
+            <p>Services spécialisés pour les organisations internationales.</p>
+          </div>
+          
+          <div className="admin-sidebar-item">
+            <h4>Suisse-UE</h4>
+            <p>Collaboration transfrontalière pour les déménagements.</p>
+          </div>
+          
+          <div className="admin-sidebar-item">
+            <h4>Too big to fail</h4>
+            <p>Solutions pour les grandes entreprises et institutions.</p>
+          </div>
+          
+          <div className="admin-sidebar-item" style={{ background: 'white', padding: '20px' }}>
+            <h4 style={{ color: 'var(--text-dark)', marginBottom: '15px' }}>Engagement approfondi</h4>
+            <h4 style={{ color: 'var(--text-dark)', fontSize: '16px', marginBottom: '10px' }}>
+              Engagement international
+            </h4>
+            <p>Notre expertise s'étend au-delà des frontières suisses.</p>
+          </div>
+          
+        </div>
+        
       </div>
-
-      {/* Floating Elements - Responsive */}
-      <div className="absolute top-16 sm:top-20 left-4 sm:left-10 w-12 sm:w-20 h-12 sm:h-20 bg-swiss-red/10 rounded-full animate-pulse"></div>
-      <div className="absolute top-32 sm:top-40 right-6 sm:right-20 w-10 sm:w-16 h-10 sm:h-16 bg-blue-500/10 rounded-full animate-pulse delay-1000"></div>
-      <div className="absolute bottom-24 sm:bottom-32 left-6 sm:left-20 w-8 sm:w-12 h-8 sm:h-12 bg-green-500/10 rounded-full animate-pulse delay-500"></div>
-    </section>
+    </div>
   )
 }
 
