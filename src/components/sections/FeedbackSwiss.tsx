@@ -7,7 +7,7 @@ const testimonials = [
     location: 'Genève',
     service: 'Débarras résidentiel',
     rating: 5,
-    comment: 'Service impeccable et très professionnel. L\'équipe est arrivée à l\'heure et a fait un travail remarquable.',
+    comment: 'Service impeccable et très professionnel. L&apos;équipe est arrivée à l&apos;heure et a fait un travail remarquable.',
     date: 'Mars 2024'
   },
   {
@@ -15,7 +15,7 @@ const testimonials = [
     location: 'Lausanne', 
     service: 'Débarras commercial',
     rating: 5,
-    comment: 'Excellent service pour le débarras de nos bureaux. Rapide, efficace et respectueux de l\'environnement.',
+    comment: 'Excellent service pour le débarras de nos bureaux. Rapide, efficace et respectueux de l&apos;environnement.',
     date: 'Février 2024'
   },
   {
@@ -39,7 +39,7 @@ const testimonials = [
     location: 'Neuchâtel',
     service: 'Déchets spéciaux',
     rating: 5,
-    comment: 'Très compétents pour l\'évacuation de nos produits chimiques. Respect total des normes de sécurité.',
+    comment: 'Très compétents pour l&apos;évacuation de nos produits chimiques. Respect total des normes de sécurité.',
     date: 'Novembre 2023'
   },
   {
@@ -114,7 +114,7 @@ const FeedbackSwiss = () => {
                     </div>
                   </div>
                   <p className="text-secondary leading-relaxed text-sm">
-                    "{testimonial.comment}"
+                    {testimonial.comment}
                   </p>
                 </Card.Content>
               </Card>
@@ -132,7 +132,7 @@ const FeedbackSwiss = () => {
                 Partagez votre Expérience
               </h3>
               <p className="text-lg text-secondary max-w-3xl mx-auto leading-relaxed">
-                Votre avis nous aide à améliorer nos services et guide d'autres clients 
+                Votre avis nous aide à améliorer nos services et guide d&apos;autres clients 
                 dans le choix de leurs prestations de débarras.
               </p>
             </div>
@@ -253,29 +253,45 @@ const FeedbackSwiss = () => {
                         className="min-h-[140px] focus:ring-2 focus:ring-red-100"
                         required
                       />
-                      <p className="text-sm text-gray-500 mt-2">
-                        Minimum 50 caractères pour un témoignage de qualité
-                      </p>
+                       <p className="text-sm text-gray-500 mt-2">
+                         Minimum 50 caractères pour un témoignage de qualité
+                       </p>
                     </Form.Field>
                   </div>
-                  
-                  {/* Bouton de soumission */}
-                  <div className="text-center pt-6 border-t border-gray-200">
-                    <button type="submit" className="admin-btn">
-                      Publier mon Avis
-                    </button>
-                    <p className="text-sm text-gray-500 mt-4 max-w-lg mx-auto">
-                      En publiant cet avis, vous acceptez nos conditions d'utilisation 
-                      et confirmez l'authenticité de votre témoignage.
-                    </p>
-                  </div>
                 </div>
+
+                {/* Consentement */}
+                <div className="pt-8 mt-8 border-t border-gray-200">
+                  <Form.Field>
+                    <div className="flex items-center">
+                      <input 
+                        type="checkbox"
+                        id="feedback-consent"
+                        name="consent"
+                        className="h-5 w-5 text-swiss-red rounded border-gray-300 focus:ring-red-500"
+                        required
+                      />
+                      <Form.Label htmlFor="feedback-consent" className="ml-3 text-sm mb-0">
+                        J&apos;accepte que mon témoignage soit utilisé à des fins marketing 
+                        et publié sur le site de Suisse Débarras.
+                      </Form.Label>
+                    </div>
+                  </Form.Field>
+                </div>
+                
+                <div className="text-center pt-6 border-t border-gray-200 mt-8">
+                   <button type="submit" className="admin-btn">
+                     Publier mon Avis
+                   </button>
+                   <p className="text-sm text-gray-500 mt-4 max-w-lg mx-auto">
+                     En publiant cet avis, vous acceptez nos conditions d&apos;utilisation 
+                     et confirmez l&apos;authenticité de votre témoignage.
+                   </p>
+                 </div>
               </Form>
             </div>
           </div>
         </div>
-
-
       </div>
     </section>
   )

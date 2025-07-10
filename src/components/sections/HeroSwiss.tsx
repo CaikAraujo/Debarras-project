@@ -73,7 +73,7 @@ const HeroSwiss = () => {
                   Photo<br/>Chef Équipe
                 </div>
                 <div style={{ fontSize: '14px', fontWeight: 'bold' }}>Pierre Martinet</div>
-                <div style={{ fontSize: '12px', color: 'var(--text-medium)' }}>Chef d'Équipe Valais</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-medium)' }}>Chef d&apos;Équipe Valais</div>
               </div>
               
               <div style={{ textAlign: 'center' }}>
