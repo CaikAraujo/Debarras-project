@@ -1,27 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { sendEmail } from '@/app/_actions/sendEmail'
 
 const ContactSwiss = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  })
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Form data:', formData)
-  }
-
   return (
     <div className="admin-container" id="contact">
       <div className="admin-main-layout">
@@ -39,15 +20,15 @@ const ContactSwiss = () => {
               {/* Formulaire */}
               <div>
                 <h3 style={{ marginBottom: '20px' }}>Demande de devis</h3>
-                <form onSubmit={handleSubmit}>
+                <form action={async (formData) => {
+                  await sendEmail(formData)
+                }}>
                   <div className="admin-form-group">
                     <label className="admin-form-label">Nom *</label>
                     <input 
                       type="text"
                       name="name"
                       className="admin-form-input"
-                      value={formData.name}
-                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -56,10 +37,8 @@ const ContactSwiss = () => {
                     <label className="admin-form-label">Email *</label>
                     <input 
                       type="email"
-                      name="email"
+                      name="senderEmail"
                       className="admin-form-input"
-                      value={formData.email}
-                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -70,19 +49,25 @@ const ContactSwiss = () => {
                       type="tel"
                       name="phone"
                       className="admin-form-input"
-                      value={formData.phone}
-                      onChange={handleChange}
                     />
                   </div>
                   
+                  <div className="admin-form-group">
+                    <label className="admin-form-label">Service souhaité</label>
+                    <input 
+                      type="text"
+                      name="service"
+                      className="admin-form-input"
+                      placeholder="Ex: Débarras de maison, nettoyage..."
+                    />
+                  </div>
+
                   <div className="admin-form-group">
                     <label className="admin-form-label">Description du projet *</label>
                     <textarea 
                       name="message"
                       className="admin-form-input"
                       rows={5}
-                      value={formData.message}
-                      onChange={handleChange}
                       placeholder="Décrivez votre projet de débarras..."
                       required
                     />
