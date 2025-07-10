@@ -1,5 +1,4 @@
 import Card from '../ui/Card'
-import Button from '../ui/Button'
 import Form from '../ui/Form'
 
 const testimonials = [
@@ -34,6 +33,22 @@ const testimonials = [
     rating: 5,
     comment: 'Intervention rapide pour éliminer les gravats de notre rénovation. Tout fait dans les règles.',
     date: 'Décembre 2023'
+  },
+  {
+    name: 'Isabelle Perrin',
+    location: 'Neuchâtel',
+    service: 'Déchets spéciaux',
+    rating: 5,
+    comment: 'Très compétents pour l\'évacuation de nos produits chimiques. Respect total des normes de sécurité.',
+    date: 'Novembre 2023'
+  },
+  {
+    name: 'Marc Rosset',
+    location: 'Yverdon',
+    service: 'Destruction de matériel',
+    rating: 5,
+    comment: 'Destruction sécurisée de nos documents confidentiels avec certificat. Service discret et professionnel.',
+    date: 'Octobre 2023'
   }
 ]
 
@@ -59,30 +74,24 @@ const FeedbackSwiss = () => {
         </div>
 
         {/* Statistiques */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mb-16">
-          <Card>
-            <Card.Content className="text-center">
-              <div className="text-4xl font-bold text-accent mb-2">4.9/5</div>
-              <div className="text-secondary">Note moyenne</div>
-              <div className="flex justify-center mt-2">
-                {renderStars(5)}
-              </div>
-            </Card.Content>
-          </Card>
-          <Card>
-            <Card.Content className="text-center">
-              <div className="text-4xl font-bold text-accent mb-2">98%</div>
-              <div className="text-secondary">Clients satisfaits</div>
-              <div className="text-sm text-light mt-2">Sur 500+ projets</div>
-            </Card.Content>
-          </Card>
-          <Card>
-            <Card.Content className="text-center">
-              <div className="text-4xl font-bold text-accent mb-2">24h</div>
-              <div className="text-secondary">Réponse garantie</div>
-              <div className="text-sm text-light mt-2">Devis sous 24h</div>
-            </Card.Content>
-          </Card>
+        <div className="grid-swiss-3 mb-16">
+          <div className="metric-card">
+            <div className="metric-number">4.9/5</div>
+            <div className="metric-label">Note moyenne</div>
+            <div className="flex justify-center mt-2">
+              {renderStars(5)}
+            </div>
+          </div>
+          <div className="metric-card">
+            <div className="metric-number">98%</div>
+            <div className="metric-label">Clients satisfaits</div>
+            <div className="text-sm text-light mt-2">Sur 500+ projets</div>
+          </div>
+          <div className="metric-card">
+            <div className="metric-number">48h</div>
+            <div className="metric-label">Délai maximum</div>
+            <div className="text-sm text-light mt-2">Intervention garantie</div>
+          </div>
         </div>
 
         {/* Témoignages récents */}
@@ -113,115 +122,160 @@ const FeedbackSwiss = () => {
           </div>
         </div>
 
-        {/* Formulaire de témoignage */}
-        <div className="grid-swiss-2">
-          <div>
-            <h3 className="text-xl font-semibold text-primary mb-6">
-              Partagez votre Expérience
-            </h3>
-            <p className="text-secondary mb-8">
-              Votre avis nous aide à améliorer nos services et aide d'autres clients 
-              à faire leur choix. Merci de prendre quelques minutes pour nous évaluer.
-            </p>
+        {/* Section d'évaluation */}
+        <div className="mb-16">
+          <div className="max-w-5xl mx-auto">
             
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <span className="w-2 h-2 bg-swiss-red rounded-full"></span>
-                <span className="text-secondary text-sm">Processus simple et rapide</span>
+            {/* En-tête élégant */}
+            <div className="text-center mb-16">
+              <h3 className="text-3xl font-bold text-primary mb-6">
+                Partagez votre Expérience
+              </h3>
+              <p className="text-lg text-secondary max-w-3xl mx-auto leading-relaxed">
+                Votre avis nous aide à améliorer nos services et guide d'autres clients 
+                dans le choix de leurs prestations de débarras.
+              </p>
+            </div>
+
+                         {/* Cards d'avantages */}
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+               <div className="card-swiss card-swiss-hover text-center">
+                 <div className="mb-4 flex justify-center">
+                   <span className="text-swiss-red text-5xl font-bold">+</span>
+                 </div>
+                 <h4 className="text-lg font-semibold text-primary mb-3">Simple et Rapide</h4>
+                 <p className="text-secondary">Formulaire en moins de 3 minutes</p>
+               </div>
+               
+               <div className="card-swiss card-swiss-hover text-center">
+                 <div className="mb-4 flex justify-center">
+                   <span className="text-swiss-red text-5xl font-bold">+</span>
+                 </div>
+                 <h4 className="text-lg font-semibold text-primary mb-3">Vérification Qualité</h4>
+                 <p className="text-secondary">Avis validé avant publication</p>
+               </div>
+               
+               <div className="card-swiss card-swiss-hover text-center">
+                 <div className="mb-4 flex justify-center">
+                   <span className="text-swiss-red text-5xl font-bold">+</span>
+                 </div>
+                 <h4 className="text-lg font-semibold text-primary mb-3">Données Sécurisées</h4>
+                 <p className="text-secondary">Protection selon la LPD suisse</p>
+               </div>
+             </div>
+
+            {/* Formulaire moderne */}
+            <div className="card-swiss">
+              <div className="border-b border-gray-200 pb-6 mb-8">
+                <h4 className="text-2xl font-semibold text-primary text-center">
+                  Évaluer nos Services
+                </h4>
               </div>
-              <div className="flex items-center space-x-3">
-                <span className="w-2 h-2 bg-swiss-red rounded-full"></span>
-                <span className="text-secondary text-sm">Avis publié après vérification</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <span className="w-2 h-2 bg-swiss-red rounded-full"></span>
-                <span className="text-secondary text-sm">Données confidentielles protégées</span>
-              </div>
+              
+              <Form>
+                <div className="space-y-8">
+                  {/* Informations personnelles */}
+                  <div>
+                    <h5 className="text-lg font-medium text-primary mb-6">Vos Informations</h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <Form.Field>
+                        <Form.Label htmlFor="feedback-nom" required>Nom complet</Form.Label>
+                        <Form.Input 
+                          id="feedback-nom"
+                          name="nom"
+                          type="text"
+                          placeholder="Jean Dupont"
+                          required
+                        />
+                      </Form.Field>
+                      
+                      <Form.Field>
+                        <Form.Label htmlFor="feedback-location">Localisation</Form.Label>
+                        <Form.Input 
+                          id="feedback-location"
+                          name="location"
+                          type="text"
+                          placeholder="Genève"
+                        />
+                      </Form.Field>
+                    </div>
+                  </div>
+                  
+                  {/* Service et évaluation */}
+                  <div>
+                    <h5 className="text-lg font-medium text-primary mb-6">Votre Expérience</h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <Form.Field>
+                        <Form.Label htmlFor="feedback-service">Service utilisé</Form.Label>
+                        <select 
+                          id="feedback-service"
+                          name="service"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 transition-all duration-200 focus:outline-none focus:border-swiss-red focus:ring-2 focus:ring-red-100"
+                        >
+                          <option value="">Choisir un service</option>
+                          <option value="debarras-residentiel">Débarras résidentiel</option>
+                          <option value="debarras-commercial">Débarras commercial</option>
+                          <option value="nettoyage-desinfection">Nettoyage et désinfection</option>
+                          <option value="fin-chantier">Nettoyage fin de chantier</option>
+                          <option value="dechets-speciaux">Déchets spéciaux</option>
+                          <option value="destruction-materiel">Destruction de matériel</option>
+                        </select>
+                      </Form.Field>
+                      
+                      <Form.Field>
+                        <Form.Label htmlFor="feedback-rating" required>Note globale</Form.Label>
+                        <select 
+                          id="feedback-rating"
+                          name="rating"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 transition-all duration-200 focus:outline-none focus:border-swiss-red focus:ring-2 focus:ring-red-100"
+                          required
+                        >
+                          <option value="">Choisir une note</option>
+                          <option value="5">★★★★★ Excellent</option>
+                          <option value="4">★★★★☆ Très bien</option>
+                          <option value="3">★★★☆☆ Bien</option>
+                          <option value="2">★★☆☆☆ Moyen</option>
+                          <option value="1">★☆☆☆☆ Insatisfaisant</option>
+                        </select>
+                      </Form.Field>
+                    </div>
+                  </div>
+                  
+                  {/* Témoignage */}
+                  <div>
+                    <h5 className="text-lg font-medium text-primary mb-6">Votre Témoignage</h5>
+                    <Form.Field>
+                      <Form.Label htmlFor="feedback-comment" required>Décrivez votre expérience</Form.Label>
+                      <Form.Textarea 
+                        id="feedback-comment"
+                        name="comment"
+                        placeholder="Partagez votre expérience : qualité du service, ponctualité de l'équipe, satisfaction générale..."
+                        className="min-h-[140px] focus:ring-2 focus:ring-red-100"
+                        required
+                      />
+                      <p className="text-sm text-gray-500 mt-2">
+                        Minimum 50 caractères pour un témoignage de qualité
+                      </p>
+                    </Form.Field>
+                  </div>
+                  
+                  {/* Bouton de soumission */}
+                  <div className="text-center pt-6 border-t border-gray-200">
+                    <button type="submit" className="admin-btn">
+                      Publier mon Avis
+                    </button>
+                    <p className="text-sm text-gray-500 mt-4 max-w-lg mx-auto">
+                      En publiant cet avis, vous acceptez nos conditions d'utilisation 
+                      et confirmez l'authenticité de votre témoignage.
+                    </p>
+                  </div>
+                </div>
+              </Form>
             </div>
           </div>
-
-          <Card>
-            <Card.Header>
-              <Card.Title>Laisser un Avis</Card.Title>
-            </Card.Header>
-            <Card.Content>
-              <Form>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Form.Field>
-                    <Form.Label htmlFor="feedback-nom" required>Nom</Form.Label>
-                    <Form.Input 
-                      id="feedback-nom"
-                      name="nom"
-                      type="text"
-                      placeholder="Votre nom"
-                      required
-                    />
-                  </Form.Field>
-                  
-                  <Form.Field>
-                    <Form.Label htmlFor="feedback-location">Localisation</Form.Label>
-                    <Form.Input 
-                      id="feedback-location"
-                      name="location"
-                      type="text"
-                      placeholder="Ville, Canton"
-                    />
-                  </Form.Field>
-                </div>
-                
-                <Form.Field>
-                  <Form.Label htmlFor="feedback-rating" required>Note</Form.Label>
-                  <select 
-                    id="feedback-rating"
-                    name="rating"
-                    className="w-full px-4 py-3 border border-gray-300 rounded bg-white text-gray-700 transition-colors duration-200 focus:outline-none focus:border-swiss-red"
-                    required
-                  >
-                    <option value="">Choisissez une note</option>
-                    <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
-                    <option value="4">⭐⭐⭐⭐ Très bien</option>
-                    <option value="3">⭐⭐⭐ Bien</option>
-                    <option value="2">⭐⭐ Moyen</option>
-                    <option value="1">⭐ Décevant</option>
-                  </select>
-                </Form.Field>
-                
-                <Form.Field>
-                  <Form.Label htmlFor="feedback-comment" required>Votre avis</Form.Label>
-                  <Form.Textarea 
-                    id="feedback-comment"
-                    name="comment"
-                    placeholder="Partagez votre expérience avec nos services..."
-                    className="min-h-[100px]"
-                    required
-                  />
-                </Form.Field>
-                
-                <Button type="submit" variant="primary" className="w-full">
-                  Publier l'Avis
-                </Button>
-              </Form>
-            </Card.Content>
-          </Card>
         </div>
 
-        {/* Call to action final */}
-        <div className="text-center mt-16 pt-16 border-t border-gray-200">
-          <h3 className="text-xl font-semibold text-primary mb-4">
-            Rejoignez nos Clients Satisfaits
-          </h3>
-          <p className="text-secondary mb-8 max-w-2xl mx-auto">
-            Découvrez pourquoi nous sommes la référence en débarras professionnel en Suisse.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="primary" size="lg">
-              Demander un Devis
-            </Button>
-            <Button variant="outline" size="lg">
-              Appeler Maintenant
-            </Button>
-          </div>
-        </div>
+
       </div>
     </section>
   )

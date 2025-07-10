@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import Link from 'next/link'
 
 const NavSwiss = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   
   return (
     <div className="admin-header">
@@ -34,19 +33,23 @@ const NavSwiss = () => {
         <div className="admin-container">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-              {/* Logo da Suíça */}
+              {/* Logo da Empresa */}
               <div style={{ 
                 width: '60px', 
                 height: '60px', 
-                background: 'var(--swiss-red)', 
                 display: 'flex', 
                 alignItems: 'center', 
-                justifyContent: 'center',
-                color: 'white',
-                fontWeight: 'bold',
-                fontSize: '32px'
+                justifyContent: 'center'
               }}>
-                +
+                <img 
+                  src="/images/logo debarras.png" 
+                  alt="Suisse Débarras Logo" 
+                  style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'contain' 
+                  }}
+                />
               </div>
               
               {/* Textos do header */}
@@ -55,7 +58,7 @@ const NavSwiss = () => {
                   Service Professionnel Suisse
                 </div>
                 <div style={{ fontSize: '18px', fontWeight: 'bold', color: 'var(--text-dark)' }}>
-                  Débarras Pro
+                  Suisse Débarras
                 </div>
                 <div style={{ fontSize: '14px', color: 'var(--text-medium)' }}>
                   Solutions de débarras et nettoyage
@@ -63,7 +66,7 @@ const NavSwiss = () => {
               </div>
             </div>
             
-            {/* Busca e temas */}
+            {/* Busca */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
               <div style={{ position: 'relative' }}>
                 <input 
@@ -83,14 +86,6 @@ const NavSwiss = () => {
                   color: 'var(--text-medium)'
                 }}>🔍</span>
               </div>
-              <select style={{
-                padding: '6px 12px',
-                border: '1px solid var(--border-gray)',
-                fontSize: '13px',
-                background: 'white'
-              }}>
-                <option>Thèmes A-Z</option>
-              </select>
             </div>
           </div>
         </div>
@@ -99,12 +94,10 @@ const NavSwiss = () => {
       {/* Navegação principal */}
       <div className="admin-nav">
         <div className="admin-container">
-          <a href="#" className="admin-nav-item">Services</a>
-          <a href="#about" className="admin-nav-item">À propos</a>
-          <a href="#" className="admin-nav-item">Zones d'intervention</a>
-          <a href="#contact" className="admin-nav-item">Contact</a>
-          <a href="#" className="admin-nav-item">Devis</a>
-          <a href="#" className="admin-nav-item">Documentation</a>
+          <Link href="/" className="admin-nav-item">À propos</Link>
+          <Link href="/services" className="admin-nav-item">Services</Link>
+          <Link href="/contact" className="admin-nav-item">Contact</Link>
+          <Link href="/feedback" className="admin-nav-item">Feedback</Link>
         </div>
       </div>
     </div>

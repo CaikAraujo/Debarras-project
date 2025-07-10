@@ -1,17 +1,15 @@
 'use client'
 
 import NavSwiss from '@/components/sections/NavSwiss'
-import AboutSwiss from '@/components/sections/AboutSwiss'
-import CantonShields from '@/components/sections/CantonShields'
+import ServicesSwiss from '@/components/sections/ServicesSwiss'
 import FooterSwiss from '@/components/sections/FooterSwiss'
 
-export default function Home() {
+export default function ServicesPage() {
   return (
     <div style={{ background: 'var(--background)', minHeight: '100vh' }}>
       <NavSwiss />
-      <AboutSwiss />
-      <CantonShields />
+      <ServicesSwiss />
       <FooterSwiss />
     </div>
   )
-}
+} 

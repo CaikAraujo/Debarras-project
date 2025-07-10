@@ -75,57 +75,62 @@
 }
 
 @layer components {
-  /* HEADER EXATO DO ADMIN.CH */
+  /* HEADER EXATO DO ADMIN.CH COM MELHOR ESPAÇAMENTO */
   .admin-header {
     background: var(--background);
     border-bottom: 1px solid var(--border-gray);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   }
 
   .admin-header-top {
     background: var(--background-gray);
     border-bottom: 1px solid var(--border-light);
-    padding: 8px 0;
+    padding: 10px 0;
     font-size: 12px;
   }
 
   .admin-header-main {
-    padding: 12px 0;
+    padding: 20px 0;
   }
 
   .admin-nav {
     background: var(--background-light-gray);
     border-bottom: 1px solid var(--border-gray);
     padding: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   }
 
   .admin-nav-item {
     display: inline-block;
-    padding: 12px 20px;
+    padding: 16px 24px;
     color: var(--text-dark);
     text-decoration: none;
     font-size: 14px;
+    font-weight: 500;
     border-right: 1px solid var(--border-light);
+    transition: all 0.2s ease;
   }
 
   .admin-nav-item:hover {
     background: var(--background);
     color: var(--swiss-red);
     text-decoration: none;
+    transform: translateY(-1px);
   }
 
-  /* CONTAINER EXATO DO ADMIN.CH */
+  /* CONTAINER EXATO DO ADMIN.CH COM MELHOR PADDING */
   .admin-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 24px;
   }
 
-  /* LAYOUT PRINCIPAL */
+  /* LAYOUT PRINCIPAL COM MAIS RESPIRAÇÃO */
   .admin-main-layout {
     display: grid;
     grid-template-columns: 1fr 300px;
-    gap: 30px;
-    padding: 20px 0;
+    gap: 40px;
+    padding: 32px 0;
   }
 
   .admin-content {
@@ -136,28 +141,39 @@
     background: var(--background);
   }
 
-  /* SEÇÕES */
+  /* SEÇÕES COM MELHOR ESPAÇAMENTO */
   .admin-section {
-    margin-bottom: 30px;
-    padding-bottom: 20px;
+    margin-bottom: 48px;
+    padding-bottom: 32px;
     border-bottom: 1px solid var(--border-light);
   }
 
   .admin-section:last-child {
     border-bottom: none;
+    margin-bottom: 0;
   }
 
-  /* CARDS COMO ADMIN.CH */
+  /* CARDS COMO ADMIN.CH COM MELHOR VISUAL */
   .admin-card {
     background: var(--background);
     border: 1px solid var(--border-light);
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 6px;
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+  }
+
+  .admin-card:hover {
+    border-color: var(--border-gray);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
   }
 
   .admin-card h3 {
     color: var(--swiss-red);
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    font-size: 18px;
   }
 
   /* SIDEBAR ITEMS */
@@ -181,64 +197,121 @@
     margin: 0;
   }
 
-  /* BOTÕES ESTILO ADMIN.CH */
-  .admin-btn {
+  /* BOTÕES ESTILO ADMIN.CH MELHORADOS */
+  .admin-btn,
+  .btn-swiss {
     background: var(--swiss-red);
     color: white;
-    padding: 8px 16px;
+    padding: 12px 24px;
     border: none;
+    border-radius: 4px;
     font-size: 14px;
+    font-weight: 500;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(220, 0, 24, 0.2);
   }
 
-  .admin-btn:hover {
+  .admin-btn:hover,
+  .btn-swiss:hover {
     background: var(--swiss-red-hover);
     color: white;
     text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(220, 0, 24, 0.3);
   }
 
-  .admin-btn-outline {
+  .admin-btn-outline,
+  .btn-swiss-outline {
     background: transparent;
     color: var(--text-dark);
-    border: 1px solid var(--border-gray);
-    padding: 8px 16px;
+    border: 2px solid var(--border-gray);
+    padding: 10px 22px;
+    border-radius: 4px;
     font-size: 14px;
+    font-weight: 500;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
+    transition: all 0.2s ease;
   }
 
-  .admin-btn-outline:hover {
+  .admin-btn-outline:hover,
+  .btn-swiss-outline:hover {
+    background: var(--background-gray);
+    color: var(--swiss-red);
+    border-color: var(--swiss-red);
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary-swiss {
     background: var(--background-gray);
     color: var(--text-dark);
+    border: 1px solid var(--border-light);
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
     text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.2s ease;
   }
 
-  /* FORMULÁRIOS */
+  .btn-secondary-swiss:hover {
+    background: var(--border-light);
+    border-color: var(--border-gray);
+    transform: translateY(-1px);
+  }
+
+  /* FORMULÁRIOS MELHORADOS */
   .admin-form-group {
-    margin-bottom: 15px;
+    margin-bottom: 24px;
   }
 
   .admin-form-label {
     display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
+    font-weight: 600;
+    margin-bottom: 8px;
     font-size: 14px;
+    color: var(--text-dark);
   }
 
   .admin-form-input {
     width: 100%;
-    padding: 8px;
-    border: 1px solid var(--border-gray);
+    padding: 12px 16px;
+    border: 2px solid var(--border-light);
+    border-radius: 6px;
     font-size: 14px;
     background: var(--background);
+    transition: all 0.2s ease;
   }
 
   .admin-form-input:focus {
     outline: none;
     border-color: var(--swiss-red);
+    box-shadow: 0 0 0 3px rgba(220, 0, 24, 0.1);
+  }
+
+  .admin-form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 14px;
+    background: var(--background);
+    transition: all 0.2s ease;
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .admin-form-textarea:focus {
+    outline: none;
+    border-color: var(--swiss-red);
+    box-shadow: 0 0 0 3px rgba(220, 0, 24, 0.1);
   }
 
   /* LISTA DE SERVIÇOS */
@@ -277,24 +350,98 @@
     margin-top: 5px;
   }
 
-  /* FOOTER COMO ADMIN.CH */
+  /* SEÇÕES SWISS COM MELHOR LAYOUT */
+  .section-swiss {
+    padding: 80px 0;
+    position: relative;
+  }
+
+  .container-swiss {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .grid-swiss-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    margin: 32px 0;
+  }
+
+  .grid-swiss-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+    margin: 32px 0;
+  }
+
+  .grid-swiss-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin: 32px 0;
+  }
+
+  .card-swiss {
+    background: var(--background);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 32px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+  }
+
+  .card-swiss-hover:hover {
+    border-color: var(--swiss-red);
+    box-shadow: 0 8px 24px rgba(220, 0, 24, 0.12);
+    transform: translateY(-4px);
+  }
+
+  /* TÍTULOS DAS SEÇÕES */
+  .text-primary {
+    color: var(--text-dark);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+
+  .text-secondary {
+    color: var(--text-medium);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .text-accent {
+    color: var(--swiss-red);
+    font-weight: 600;
+  }
+
+  .text-light {
+    color: var(--text-light);
+    font-size: 14px;
+  }
+
+  /* FOOTER COMO ADMIN.CH COM MELHOR ESPAÇAMENTO */
   .admin-footer {
     background: var(--background-gray);
     border-top: 1px solid var(--border-gray);
-    padding: 30px 0;
-    margin-top: 40px;
+    padding: 48px 0 32px 0;
+    margin-top: 64px;
   }
 
   .admin-footer-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
   }
 
   .admin-footer h4 {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     color: var(--text-dark);
   }
 
@@ -305,13 +452,14 @@
   }
 
   .admin-footer li {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 
   .admin-footer a {
     color: var(--text-medium);
     text-decoration: none;
-    font-size: 13px;
+    font-size: 14px;
+    transition: color 0.2s ease;
   }
 
   .admin-footer a:hover {
@@ -319,20 +467,234 @@
     text-decoration: underline;
   }
 
-  /* RESPONSIVO */
+  /* ESTILOS ESPECÍFICOS PARA COMPONENTES */
+  .bg-main {
+    background: var(--background);
+  }
+
+  .bg-gray-50 {
+    background: var(--background-gray);
+  }
+
+  .border-gray-200 {
+    border-color: var(--border-light);
+  }
+
+  .bg-swiss-red {
+    background: var(--swiss-red);
+  }
+
+  .bg-gray-50 {
+    background: #f9fafb;
+  }
+
+  .border-green-500 {
+    border-color: #10b981;
+  }
+
+  .bg-opacity-20 {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Melhorias para os cards de certificação */
+  .certification-item {
+    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+    border-left: 4px solid #10b981;
+    padding: 24px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .certification-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(16, 185, 129, 0.15);
+  }
+
+  /* Estilo para os cantões */
+  .canton-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .canton-badge:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+
+  /* Ícones grandes para os headers */
+  .section-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.9;
+  }
+
+  /* Melhorias para os serviços em destaque */
+  .service-highlight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    border-radius: 8px;
+    background: rgba(220, 0, 24, 0.05);
+    border: 1px solid rgba(220, 0, 24, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .service-highlight:hover {
+    background: rgba(220, 0, 24, 0.1);
+    border-color: rgba(220, 0, 24, 0.2);
+    transform: translateY(-1px);
+  }
+
+  /* Estilos para escudos dos cantões */
+  .canton-shield-container {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    background: transparent;
+  }
+
+  .canton-shield-container img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  /* MELHORIAS VISUAIS */
+  .shadow-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .shadow-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .rounded {
+    border-radius: 8px;
+  }
+
+  .rounded-lg {
+    border-radius: 12px;
+  }
+
+  /* ESPAÇAMENTOS ESPECÍFICOS */
+  .space-y-3 > * + * {
+    margin-top: 12px;
+  }
+
+  .space-y-4 > * + * {
+    margin-top: 16px;
+  }
+
+  .space-y-6 > * + * {
+    margin-top: 24px;
+  }
+
+  .space-y-8 > * + * {
+    margin-top: 32px;
+  }
+
+  .space-x-3 > * + * {
+    margin-left: 12px;
+  }
+
+  .space-x-4 > * + * {
+    margin-left: 16px;
+  }
+
+  /* RESPONSIVO MELHORADO */
+  @media (max-width: 1024px) {
+    .container-swiss {
+      padding: 0 20px;
+    }
+    
+    .section-swiss {
+      padding: 64px 0;
+    }
+    
+    .text-primary {
+      font-size: 28px;
+    }
+  }
+
   @media (max-width: 768px) {
     .admin-main-layout {
       grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 24px 0;
     }
     
-    .admin-container {
-      padding: 0 15px;
+    .admin-container,
+    .container-swiss {
+      padding: 0 16px;
     }
     
     .admin-nav-item {
       display: block;
       border-right: none;
       border-bottom: 1px solid var(--border-light);
+      padding: 12px 16px;
+    }
+
+    .section-swiss {
+      padding: 48px 0;
+    }
+
+    .grid-swiss-2,
+    .grid-swiss-3,
+    .grid-swiss-4 {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .card-swiss {
+      padding: 24px;
+    }
+
+    .text-primary {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .text-secondary {
+      font-size: 15px;
+    }
+
+    .admin-footer-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .admin-container,
+    .container-swiss {
+      padding: 0 12px;
+    }
+
+    .section-swiss {
+      padding: 32px 0;
+    }
+
+    .card-swiss {
+      padding: 20px;
+    }
+
+    .admin-btn,
+    .admin-btn-outline {
+      padding: 10px 20px;
+      font-size: 13px;
     }
   }
 }
@@ -396,6 +758,146 @@
 
 .btn-outline:hover {
   background-color: rgba(37, 99, 235, 0.1);
+}
+
+/* ESTILOS ESPECÍFICOS PARA PÁGINAS */
+
+/* Hero e banner sections */
+.hero-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 80px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Testimonials e reviews */
+.testimonial-card {
+  background: var(--background);
+  border-left: 4px solid var(--swiss-red);
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.rating-stars {
+  color: #fbbf24;
+  font-size: 16px;
+}
+
+/* Google Maps placeholder */
+.google-maps-placeholder {
+  background: linear-gradient(45deg, #f3f4f6 25%, transparent 25%), 
+              linear-gradient(-45deg, #f3f4f6 25%, transparent 25%), 
+              linear-gradient(45deg, transparent 75%, #f3f4f6 75%), 
+              linear-gradient(-45deg, transparent 75%, #f3f4f6 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  border: 2px dashed var(--border-gray);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  transition: all 0.3s ease;
+}
+
+.google-maps-placeholder:hover {
+  border-color: var(--swiss-red);
+  background-color: rgba(220, 0, 24, 0.02);
+}
+
+/* Badges e labels */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--background-gray);
+  color: var(--text-medium);
+  border: 1px solid var(--border-light);
+}
+
+.badge-success {
+  background: #dcfce7;
+  color: #16a34a;
+  border-color: #bbf7d0;
+}
+
+.badge-warning {
+  background: #fef3c7;
+  color: #d97706;
+  border-color: #fde68a;
+}
+
+.badge-info {
+  background: #dbeafe;
+  color: #2563eb;
+  border-color: #bfdbfe;
+}
+
+/* Stats e métricas */
+.metric-card {
+  text-align: center;
+  padding: 32px 24px;
+  background: var(--background);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  border-color: var(--swiss-red);
+  box-shadow: 0 8px 24px rgba(220, 0, 24, 0.1);
+  transform: translateY(-4px);
+}
+
+.metric-number {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--swiss-red);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.metric-label {
+  font-size: 14px;
+  color: var(--text-medium);
+  font-weight: 500;
+}
+
+/* Call to action sections */
+.cta-section {
+  background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  padding: 48px 32px;
+  text-align: center;
+  margin: 48px 0;
+}
+
+.cta-section h3 {
+  color: var(--swiss-red);
+  margin-bottom: 16px;
+}
+
+/* Links e botões especiais */
+.link-external {
+  color: var(--link-blue);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.link-external:hover {
+  color: var(--link-blue-hover);
+  text-decoration: underline;
 }
 
 /* Ajuste para o texto do hero com mais contraste */
