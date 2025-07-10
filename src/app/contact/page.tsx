@@ -42,6 +42,7 @@ export default function ContactPage() {
               
               <div>
                 <h3 className="text-xl font-semibold text-primary mb-6">Protection des Données</h3>
+                {/* LPD - Loi sur la Protection des Données */}
                 <div className="space-y-4 text-secondary text-sm">
                   <p>
                     Conformément à la Loi fédérale sur la protection des données (LPD), 
@@ -49,7 +50,7 @@ export default function ContactPage() {
                   </p>
                   <div>
                     <strong>Collecte de données :</strong><br />
-                    Uniquement les informations nécessaires à l'exécution de nos services.
+                    Uniquement les informations nécessaires à l&apos;exécution de nos services.
                   </div>
                   <div>
                     <strong>Utilisation :</strong><br />

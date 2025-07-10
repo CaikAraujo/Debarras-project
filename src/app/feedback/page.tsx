@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import NavSwiss from '@/components/sections/NavSwiss'
 import FeedbackSwiss from '@/components/sections/FeedbackSwiss'
 import FooterSwiss from '@/components/sections/FooterSwiss'
@@ -26,7 +27,12 @@ export default function FeedbackPage() {
                     {/* Ícone de Localização */}
                     <div className="flex justify-center mb-4">
                       <div className="w-16 h-16 border-2 border-swiss-red rounded-full flex items-center justify-center bg-white">
-                        <img src="/images/icons/local.png" alt="Localização" className="w-8 h-8" />
+                        <Image 
+                          src="/images/icons/local.png" 
+                          alt="Localização" 
+                          width={32} 
+                          height={32} 
+                        />
                       </div>
                     </div>
                     

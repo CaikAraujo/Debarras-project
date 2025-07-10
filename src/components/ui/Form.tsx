@@ -1,4 +1,4 @@
-import { forwardRef, InputHTMLAttributes, TextareaHTMLAttributes, LabelHTMLAttributes } from 'react'
+import { forwardRef, LabelHTMLAttributes } from 'react'
 
 interface FormProps {
   children: React.ReactNode

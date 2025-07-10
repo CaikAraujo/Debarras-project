@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 
 const NavSwiss = () => {
   
@@ -41,12 +42,12 @@ const NavSwiss = () => {
                 alignItems: 'center', 
                 justifyContent: 'center'
               }}>
-                <img 
+                <Image 
                   src="/images/logo debarras.png" 
                   alt="Suisse Débarras Logo" 
+                  width={60}
+                  height={60}
                   style={{ 
-                    width: '100%', 
-                    height: '100%', 
                     objectFit: 'contain' 
                   }}
                 />
