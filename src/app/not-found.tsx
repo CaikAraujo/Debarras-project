@@ -17,7 +17,7 @@ export default function NotFound() {
                 Page non trouvée
               </h2>
               <p className="text-lg text-gray-600 mb-8">
-                Désolé, la page que vous cherchez n'existe pas ou a été déplacée.
+                Désolé, la page que vous cherchez n&apos;existe pas ou a été déplacée.
               </p>
             </div>
 
@@ -30,7 +30,7 @@ export default function NotFound() {
                 <div className="text-swiss-red text-3xl mb-3">🏠</div>
                 <h3 className="font-semibold text-gray-900 mb-2">Accueil</h3>
                 <p className="text-gray-600 text-sm">
-                  Retourner à la page d'accueil
+                  Retourner à la page d&apos;accueil
                 </p>
               </Link>
 
@@ -71,7 +71,7 @@ export default function NotFound() {
             {/* Contact d'urgence */}
             <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
               <h3 className="font-semibold text-gray-900 mb-3">
-                Besoin d'aide immédiate ?
+                Besoin d&apos;aide immédiate ?
               </h3>
               <p className="text-gray-600 mb-4">
                 Contactez Suisse Débarras directement pour votre projet de débarras

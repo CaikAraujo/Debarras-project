@@ -27,7 +27,7 @@ const Label = ({ children, required = false, className = '', ...props }: LabelPr
   )
 }
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {}
+type InputProps = React.ComponentPropsWithoutRef<'input'>
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className = '', ...props }, ref) => {
@@ -43,7 +43,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
 Input.displayName = 'Input'
 
-interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {}
+type TextareaProps = React.ComponentPropsWithoutRef<'textarea'>
 
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className = '', ...props }, ref) => {

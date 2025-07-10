@@ -116,7 +116,7 @@ const HeroSwiss = () => {
               <p>
                 Débarras Pro investit dans des solutions durables pour le traitement 
                 des déchets en Suisse. Notre équipe certifiée garantit un service 
-                professionnel respectueux de l'environnement.
+                professionnel respectueux de l&apos;environnement.
               </p>
               <p>
                 Nos méthodes de tri sélectif et de recyclage dépassent les exigences 
@@ -205,7 +205,7 @@ const HeroSwiss = () => {
             <h4 style={{ color: 'var(--text-dark)', fontSize: '16px', marginBottom: '10px' }}>
               Engagement international
             </h4>
-            <p>Notre expertise s'étend au-delà des frontières suisses.</p>
+            <p>Notre expertise s&apos;étend au-delà des frontières suisses.</p>
           </div>
           
         </div>
