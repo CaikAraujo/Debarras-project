@@ -102,8 +102,8 @@ const ContactSwiss = () => {
                     
                     <div style={{ marginBottom: '10px' }}>
                       <strong>Email:</strong><br/>
-                      <a href="mailto:info@debarras-pro.ch" style={{ color: 'var(--link-blue)' }}>
-                        info@debarras-pro.ch
+                      <a href="mailto:info@suisse-debarras.ch" style={{ color: 'var(--link-blue)' }}>
+                        info@suisse-debarras.ch
                       </a>
                     </div>
                     
