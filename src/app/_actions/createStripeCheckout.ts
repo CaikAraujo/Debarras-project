@@ -43,7 +43,8 @@ export async function createStripeCheckout(data: CheckoutData) {
     return { success: true, checkoutUrl: session.url, sessionId: session.id }
 
   } catch (error) {
-    return { success: false, error: error instanceof Error ? error.message : 'Erro no checkout' }
+    console.error('Erro ao criar checkout do Stripe:', error)
+    return { success: false, error: 'Não foi possível iniciar o checkout. Tente novamente.' }
   }
 }
 

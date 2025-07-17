@@ -60,9 +60,7 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
     return { success: true, totalPrice: total, breakdown }
 
   } catch (error) {
-    if (error instanceof Error) {
-      return { success: false, error: error.message }
-    }
-    return { success: false, error: 'Erro interno' }
+    console.error('Erro ao calcular o preço:', error) // Log do erro no servidor
+    return { success: false, error: 'Ocorreu um erro ao calcular o preço. Tente novamente.' }
   }
 } 

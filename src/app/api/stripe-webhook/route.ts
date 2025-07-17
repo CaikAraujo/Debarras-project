@@ -20,7 +20,8 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : 'Unknown error'
     console.error(`❌ Erro na verificação do webhook: ${errorMessage}`)
-    return NextResponse.json({ error: errorMessage }, { status: 400 })
+    // Retorna uma resposta genérica para evitar vazar detalhes do erro
+    return NextResponse.json({ error: 'Webhook signature verification failed.' }, { status: 400 })
   }
 
   // Lida com o evento específico
