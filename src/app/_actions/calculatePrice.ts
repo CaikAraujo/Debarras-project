@@ -22,7 +22,8 @@ function checkRateLimit(ip: string = 'localhost'): boolean {
     return true
   }
   
-  if (data.count >= 10) return false
+  // Rate limit generoso para desenvolvimento
+  if (data.count >= 1000) return false
   data.count++
   return true
 }
@@ -35,20 +36,27 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
 
     const validated = PriceCalculationSchema.parse(data)
     const multiplier = PRICING.multipliers[validated.cantonId]
-    const seenRooms = new Set<string>()
+    const seenNonBedroomRooms = new Set<string>()
 
     let total = 0
     const breakdown = []
 
     for (const selection of validated.selections) {
-      if (seenRooms.has(selection.roomId)) {
-        return { success: false, error: `Cômodo duplicado: ${selection.roomId}` }
+      // Para quartos, permitir múltiplas seleções
+      // Para outros cômodos, verificar duplicatas
+      if (selection.roomId !== 'bedroom') {
+        if (seenNonBedroomRooms.has(selection.roomId)) {
+          return { success: false, error: `Cômodo já selecionado: ${selection.roomId}` }
+        }
+        seenNonBedroomRooms.add(selection.roomId)
       }
-      seenRooms.add(selection.roomId)
 
-      const priceConfig = PRICING.base.find(p => p.quantity === selection.quantity)!
+      const priceConfig = PRICING.base.find(p => p.quantity === selection.quantity)
+      if (!priceConfig) {
+        return { success: false, error: `Quantidade inválida: ${selection.quantity}` }
+      }
+
       const finalPrice = Math.round(priceConfig.price * multiplier)
-      
       breakdown.push({ ...selection, basePrice: priceConfig.price, finalPrice })
       total += finalPrice
     }
@@ -60,7 +68,7 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
     return { success: true, totalPrice: total, breakdown }
 
   } catch (error) {
-    console.error('Erro ao calcular o preço:', error) // Log do erro no servidor
+    console.error('Erro ao calcular o preço:', error)
     return { success: false, error: 'Ocorreu um erro ao calcular o preço. Tente novamente.' }
   }
 } 

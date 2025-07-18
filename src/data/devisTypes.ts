@@ -1,7 +1,8 @@
 import { type LucideIcon } from 'lucide-react'
+import { type Selection } from '@/lib/schemas'
 
 export interface Room {
-  id: string
+  id: Selection['roomId']
   name: string
   icon: LucideIcon
   description: string

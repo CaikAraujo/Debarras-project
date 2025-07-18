@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { calculateSecurePrice } from '@/app/_actions/calculatePrice'
 import { createStripeCheckout } from '@/app/_actions/createStripeCheckout'
 import type { Selection, VALID_CANTONS } from '@/lib/schemas'
@@ -12,9 +12,22 @@ export function usePriceCalculation({ selections, selectedCanton }: UsePriceCalc
   const [calculatedPrice, setCalculatedPrice] = useState(0)
   const [isCalculating, setIsCalculating] = useState(false)
   const [isProcessingCheckout, setIsProcessingCheckout] = useState(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const updateCalculatedPrice = useCallback(async () => {
     if (!selectedCanton || selections.length === 0) {
+      setCalculatedPrice(0)
+      return
+    }
+
+    // Verificar se todas as seleções têm selectionId
+    const hasValidSelections = selections.every(s => 
+      s.selectionId && 
+      s.roomId && 
+      typeof s.quantity === 'number'
+    )
+
+    if (!hasValidSelections) {
       setCalculatedPrice(0)
       return
     }
@@ -25,14 +38,38 @@ export function usePriceCalculation({ selections, selectedCanton }: UsePriceCalc
         selections, 
         cantonId: selectedCanton as typeof VALID_CANTONS[number]
       })
-      setCalculatedPrice(result.success && result.totalPrice ? result.totalPrice : 0)
+      
+      if (result.success && typeof result.totalPrice === 'number' && result.totalPrice > 0) {
+        setCalculatedPrice(result.totalPrice)
+      } else {
+        setCalculatedPrice(0)
+      }
+    } catch (error) {
+      console.error('Error in price calculation:', error)
+      setCalculatedPrice(0)
     } finally {
       setIsCalculating(false)
     }
   }, [selectedCanton, selections])
 
+  // Debounced effect para evitar múltiplas chamadas
   useEffect(() => {
-    updateCalculatedPrice()
+    // Clear timeout anterior
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+
+    // Set novo timeout para debounce
+    timeoutRef.current = setTimeout(() => {
+      updateCalculatedPrice()
+    }, 1000) // 1000ms debounce para reduzir chamadas
+
+    // Cleanup
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
   }, [updateCalculatedPrice])
 
   const handleSecureCheckout = useCallback(async () => {

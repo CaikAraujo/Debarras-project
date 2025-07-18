@@ -5,12 +5,14 @@ export const VALID_CANTONS = ['geneve', 'vaud', 'valais', 'fribourg', 'neuchatel
 export const VALID_QUANTITIES = [5, 10, 15] as const
 
 export const SelectionSchema = z.object({
+  selectionId: z.string(), // ID único para cada seleção (permite múltiplos quartos)
   roomId: z.enum(VALID_ROOMS),
-  quantity: z.number().refine(val => VALID_QUANTITIES.includes(val as 5 | 10 | 15))
+  quantity: z.number().refine(val => VALID_QUANTITIES.includes(val as 5 | 10 | 15)),
+  roomNumber: z.number().optional() // Para identificar qual quarto (ex: Quarto 1, Quarto 2)
 })
 
 export const PriceCalculationSchema = z.object({
-  selections: z.array(SelectionSchema).min(1).max(20),
+  selections: z.array(SelectionSchema).min(1).max(10),
   cantonId: z.enum(VALID_CANTONS)
 })
 

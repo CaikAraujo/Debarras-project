@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect, useRef } from 'react'
 import { useDevisState } from '@/hooks/useDevisState'
 import { usePriceCalculation } from '@/hooks/usePriceCalculation'
 import ProgressStepper from '@/components/devis/ProgressStepper'
@@ -8,6 +9,8 @@ import RoomSelector from '@/components/devis/RoomSelector'
 import QuantitySelector from '@/components/devis/QuantitySelector'
 import OrderSummary from '@/components/devis/OrderSummary'
 import SelectionsSummary from '@/components/devis/SelectionsSummary'
+import AddRoomModal from '@/components/devis/AddRoomModal'
+import DateSelector from '@/components/devis/DateSelector'
 
 export default function DevisSwiss() {
   const {
@@ -21,8 +24,34 @@ export default function DevisSwiss() {
     removeSelection,
     goToStep,
     resetAll,
-    resetToRooms
+    resetToRooms,
+    selectedDate,
+    selectDate,
+    isRoomSelected,
+    getBedroomCount
   } = useDevisState()
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const stepContentRef = useRef<HTMLDivElement>(null)
+  const summaryRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (currentStep >= 3 && selections.length === 0) {
+      goToStep(1)
+    }
+  }, [selections, currentStep, goToStep])
+
+  // Scroll to top of step content when step changes
+  useEffect(() => {
+    stepContentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [currentStep])
+  
+  // Scroll to summary when it first appears
+  useEffect(() => {
+    if (selections.length === 1 && currentStep === 1) {
+      summaryRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }, [selections, currentStep])
 
   const {
     calculatedPrice,
@@ -33,7 +62,11 @@ export default function DevisSwiss() {
 
   const handleQuantitySelect = (quantity: number) => {
     if (selectedRoom) {
-      addSelection(selectedRoom, quantity)
+      addSelection({ 
+        roomId: selectedRoom, 
+        quantity,
+        roomNumber: selectedRoom === 'bedroom' ? getBedroomCount() + 1 : undefined
+      })
     }
   }
 
@@ -50,50 +83,85 @@ export default function DevisSwiss() {
 
           <ProgressStepper currentStep={currentStep} />
 
-          {currentStep === 0 && (
-            <CantonSelector onSelectCanton={selectCanton} />
-          )}
+          <div ref={stepContentRef}>
+            {currentStep === 0 && (
+              <CantonSelector onSelectCanton={selectCanton} />
+            )}
 
-          {currentStep === 1 && selectedCanton && (
-            <>
-              <RoomSelector onSelectRoom={selectRoom} />
-              {selections.length > 0 && (
-                <SelectionsSummary
-                  selectedCanton={selectedCanton}
-                  selections={selections}
-                  calculatedPrice={calculatedPrice}
-                  isCalculating={isCalculating}
-                  onRemoveSelection={removeSelection}
-                  onContinue={() => goToStep(3)}
-                  onChangeCanton={resetAll}
+            {currentStep === 1 && selectedCanton && (
+              <>
+                <RoomSelector 
+                  onSelectRoom={selectRoom} 
+                  selections={selections} 
+                  isRoomSelected={isRoomSelected}
+                  getBedroomCount={getBedroomCount}
                 />
-              )}
-            </>
-          )}
+                {selections.length > 0 && (
+                  <div ref={summaryRef}>
+                    <SelectionsSummary
+                      selectedCanton={selectedCanton}
+                      selections={selections}
+                      calculatedPrice={calculatedPrice}
+                      isCalculating={isCalculating}
+                      onRemoveSelection={removeSelection}
+                      onContinue={() => goToStep(3)}
+                      onChangeCanton={resetAll}
+                    />
+                  </div>
+                )}
+              </>
+            )}
 
-          {currentStep === 2 && selectedRoom && (
-            <QuantitySelector
-              selectedRoom={selectedRoom}
-              onSelectQuantity={handleQuantitySelect}
-              onBackToRooms={resetToRooms}
-              onChangeCanton={resetAll}
-            />
-          )}
+            {currentStep === 2 && selectedRoom && (
+              <QuantitySelector
+                selectedRoom={selectedRoom}
+                onSelectQuantity={handleQuantitySelect}
+                onBackToRooms={resetToRooms}
+                onChangeCanton={resetAll}
+              />
+            )}
 
-          {currentStep === 3 && selectedCanton && selections.length > 0 && (
-            <OrderSummary
-              selectedCanton={selectedCanton}
-              selections={selections}
-              calculatedPrice={calculatedPrice}
-              isCalculating={isCalculating}
-              isProcessingCheckout={isProcessingCheckout}
-              onCheckout={handleSecureCheckout}
-              onBackToRooms={() => goToStep(1)}
-              onChangeCanton={resetAll}
-            />
-          )}
+            {currentStep === 3 && selectedCanton && (
+              <DateSelector
+                selectedDate={selectedDate}
+                onSelectDate={(date) => {
+                  selectDate(date)
+                  if (date) {
+                    goToStep(4)
+                  }
+                }}
+                onBack={() => goToStep(1)}
+              />
+            )}
+
+            {currentStep === 4 && selectedCanton && selections.length > 0 && (
+              <OrderSummary
+                selectedCanton={selectedCanton}
+                selections={selections}
+                selectedDate={selectedDate}
+                calculatedPrice={calculatedPrice}
+                isCalculating={isCalculating}
+                isProcessingCheckout={isProcessingCheckout}
+                onCheckout={handleSecureCheckout}
+                onAddRoom={() => setIsModalOpen(true)}
+                onRemoveRoom={removeSelection}
+                onChangeCanton={resetAll}
+                onChangeDate={() => goToStep(3)}
+              />
+            )}
+          </div>
         </div>
       </div>
+
+      <AddRoomModal
+        isOpen={isModalOpen}
+        selections={selections}
+        onClose={() => setIsModalOpen(false)}
+        onAddRoom={(selection) => {
+          addSelection(selection)
+          setIsModalOpen(false)
+        }}
+      />
     </section>
   )
 } 

@@ -8,7 +8,7 @@ interface SelectionsSummaryProps {
   selections: Selection[]
   calculatedPrice: number
   isCalculating: boolean
-  onRemoveSelection: (roomId: string) => void
+  onRemoveSelection: (selectionId: string) => void
   onContinue: () => void
   onChangeCanton: () => void
 }
@@ -46,22 +46,28 @@ export default function SelectionsSummary({
           const quantityData = quantities.find(q => q.value === selection.quantity)
           const IconComponent = room?.icon
           
+          // Título do quarto com numeração se necessário
+          const roomTitle = selection.roomId === 'bedroom' && selection.roomNumber 
+            ? `${room?.name} ${selection.roomNumber}`
+            : room?.name
+          
           return (
-            <div key={selection.roomId} className="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+            <div key={selection.selectionId} className="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
               <div className="flex items-center space-x-3">
                 <div className="flex items-center justify-center">
                   {IconComponent && <IconComponent size={24} className="text-red-600" />}
                 </div>
                 <div>
-                  <div className="font-semibold text-primary">{room?.name}</div>
+                  <div className="font-semibold text-primary">{roomTitle}</div>
                   <div className="text-sm text-secondary">{quantityData?.label}</div>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
                 <span className="font-semibold text-red-600">Inclus dans le total</span>
                 <button 
-                  onClick={() => onRemoveSelection(selection.roomId)}
-                  className="text-red-500 hover:text-red-700"
+                  onClick={() => onRemoveSelection(selection.selectionId)}
+                  className="text-red-500 hover:text-red-700 w-6 h-6 flex items-center justify-center rounded-full hover:bg-red-100 transition-colors"
+                  title={`Supprimer ${roomTitle}`}
                 >
                   ✕
                 </button>

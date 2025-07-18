@@ -32,5 +32,6 @@ export const stepTitles: DevisStep[] = [
   { id: 0, title: 'Choisissez votre canton' },
   { id: 1, title: 'Choisissez une pièce' },
   { id: 2, title: 'Sélectionnez la quantité' },
-  { id: 3, title: 'Confirmez votre devis' }
+  { id: 3, title: 'Choisissez une date' },
+  { id: 4, title: 'Confirmez votre devis' }
 ] 
