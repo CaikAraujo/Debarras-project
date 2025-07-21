@@ -83,7 +83,7 @@ export default function ContactPage() {
                 <div>
                   <h4 className="font-semibold text-primary mb-3">Assurances et Garanties</h4>
                   <ul className="space-y-2">
-                    <li>• Assurance RC 2 millions CHF</li>
+                    <li>• Assurance RC 5 millions CHF</li>
                     <li>• Personnel formé et certifié</li>
                     <li>• Garantie satisfaction 100%</li>
                     <li>• Service après-vente inclus</li>

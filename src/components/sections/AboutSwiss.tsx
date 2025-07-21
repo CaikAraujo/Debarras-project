@@ -6,27 +6,63 @@ const AboutSwiss = () => {
       <div className="container-swiss">
         
         {/* Introduction */}
-        <div className="max-w-4xl mb-16">
-          <h2 className="text-primary mb-6">À propos de Débarras Pro</h2>
-          <p className="text-lg text-secondary leading-relaxed mb-6">
-            Nous sommes une entreprise de débarras et de nettoyage active dans toute la Suisse romande avec une succursale dans chaque canton.
-            <br />
-            <strong>(Genève – Vaud – Valais – Fribourg – Neuchâtel – Jura – Berne)</strong>
-          </p>
-          
-          <p className="text-secondary leading-relaxed mb-4">
-            Nos années d&apos;expérience nous ont forgé une réputation de leader du débarras en Suisse romande.
-            <br />
-            <strong>Bientôt 10 ans à votre service !</strong>
-          </p>
-          
-          <p className="text-secondary leading-relaxed mb-4">
-            Chaque année, nous intervenons sur environ 500 propriétés : appartements, maisons, chalets, granges, écuries, fermes, entreprises et bâtiments publics.
-          </p>
-          
-          <p className="text-secondary leading-relaxed">
-            Notre mission ? Débarrasser et nettoyer pour remettre votre bien en état impeccable au suivant.
-          </p>
+        <div
+          className=""
+          style={{
+            position: 'relative',
+            width: '100vw',
+            left: '50%',
+            right: '50%',
+            marginLeft: '-50vw',
+            marginRight: '-50vw',
+            backgroundImage: "url('/images/bg-a-propos.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            overflow: 'hidden',
+            marginBottom: '0',
+            marginTop: '0',
+            paddingTop: '0',
+            paddingBottom: '0',
+          }}
+        >
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(255,255,255,0.82)',
+            zIndex: 0,
+          }} />
+          <div style={{
+            position: 'relative',
+            zIndex: 1,
+            maxWidth: '900px',
+            margin: '0 auto',
+            padding: '32px 16px',
+          }}>
+            <h2 className="text-primary mb-6">À propos de Débarras Pro</h2>
+            <p className="text-lg text-secondary leading-relaxed mb-6">
+              Nous sommes une entreprise de débarras et de nettoyage active dans toute la Suisse romande avec une succursale dans chaque canton.
+              <br />
+              <strong>(Genève – Vaud – Valais – Fribourg – Neuchâtel – Jura – Berne)</strong>
+            </p>
+            
+            <p className="text-secondary leading-relaxed mb-4">
+              Nos années d&apos;expérience nous ont forgé une réputation de leader du débarras en Suisse romande.
+              <br />
+              <strong>Bientôt 10 ans à votre service !</strong>
+            </p>
+            
+            <p className="text-secondary leading-relaxed mb-4">
+              Chaque année, nous intervenons sur environ 500 propriétés : appartements, maisons, chalets, granges, écuries, fermes, entreprises et bâtiments publics.
+            </p>
+            
+            <p className="text-secondary leading-relaxed">
+              Notre mission ? Débarrasser et nettoyer pour remettre votre bien en état impeccable au suivant.
+            </p>
+          </div>
         </div>
 
         {/* Chiffres clés */}
@@ -58,7 +94,7 @@ const AboutSwiss = () => {
                 <div className="flex items-center justify-center gap-2 mb-1">
                   <span className="text-swiss-red">✓</span> Assurance responsabilité civile
                 </div>
-                <small>Couverture 2 millions CHF</small>
+                <small>Couverture 5 millions CHF</small>
               </div>
               
               <div className="text-secondary">

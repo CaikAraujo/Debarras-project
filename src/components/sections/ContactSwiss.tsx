@@ -144,7 +144,7 @@ const ContactSwiss = () => {
           
           <div className="admin-sidebar-item">
             <h4>Assurance</h4>
-            <p>Tous nos services sont couverts par une assurance responsabilité civile de 2 millions CHF.</p>
+            <p>Tous nos services sont couverts par une assurance responsabilité civile de 5 millions CHF.</p>
           </div>
         </div>
       </div>
