@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { useDevisState } from '@/hooks/useDevisState'
 import { usePriceCalculation } from '@/hooks/usePriceCalculation'
 import ProgressStepper from '@/components/devis/ProgressStepper'
@@ -13,6 +14,7 @@ import AddRoomModal from '@/components/devis/AddRoomModal'
 import DateSelector from '@/components/devis/DateSelector'
 
 export default function DevisSwiss() {
+  const searchParams = useSearchParams();
   const {
     currentStep,
     selectedCanton,
@@ -34,6 +36,14 @@ export default function DevisSwiss() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const stepContentRef = useRef<HTMLDivElement>(null)
   const summaryRef = useRef<HTMLDivElement>(null)
+
+  // Selecionar automaticamente o cantão se vier via URL
+  useEffect(() => {
+    const cantonParam = searchParams.get('canton');
+    if (cantonParam && !selectedCanton) {
+      selectCanton(cantonParam);
+    }
+  }, [searchParams, selectedCanton, selectCanton]);
 
   useEffect(() => {
     if (currentStep >= 3 && selections.length === 0) {

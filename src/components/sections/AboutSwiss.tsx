@@ -2,7 +2,7 @@
 
 const AboutSwiss = () => {
   return (
-    <section className="section-swiss bg-main border-b border-gray-200" id="about">
+    <section className="section-swiss bg-main border-b border-gray-200" id="about" style={{paddingTop: 0}}>
       <div className="container-swiss">
         
         {/* Introduction */}
@@ -41,26 +41,40 @@ const AboutSwiss = () => {
             maxWidth: '900px',
             margin: '0 auto',
             padding: '32px 16px',
+            color: 'var(--text-dark)',
           }}>
-            <h2 className="text-primary mb-6">À propos de Débarras Pro</h2>
-            <p className="text-lg text-secondary leading-relaxed mb-6">
-              Nous sommes une entreprise de débarras et de nettoyage active dans toute la Suisse romande avec une succursale dans chaque canton.
-              <br />
-              <strong>(Genève – Vaud – Valais – Fribourg – Neuchâtel – Jura – Berne)</strong>
+            <h2 className="text-primary mb-6" style={{fontSize: '2rem'}}>Suisse Débarras – Votre partenaire de confiance en Suisse romande</h2>
+            <p className="text-base text-secondary leading-relaxed mb-3" style={{fontSize: '1.05rem'}}>
+              Avec près de 10 ans d’expérience et des succursales dans chaque canton romand <br/>
+              <span style={{fontWeight:600}}>(Genève, Vaud, Valais, Fribourg, Neuchâtel, Jura, Berne)</span>,<br/>
+              Suisse Débarras est votre solution rapide, efficace et discrète pour tout type de débarras.
             </p>
-            
-            <p className="text-secondary leading-relaxed mb-4">
-              Nos années d&apos;expérience nous ont forgé une réputation de leader du débarras en Suisse romande.
-              <br />
-              <strong>Bientôt 10 ans à votre service !</strong>
+            <p className="text-sm text-secondary leading-relaxed mb-3" style={{fontSize: '0.98rem'}}>
+              Chaque année, nous intervenons sur plus de 500 biens : appartements, maisons, chalets, fermes, entreprises, granges, garages, et bâtiments publics.
             </p>
-            
-            <p className="text-secondary leading-relaxed mb-4">
-              Chaque année, nous intervenons sur environ 500 propriétés : appartements, maisons, chalets, granges, écuries, fermes, entreprises et bâtiments publics.
-            </p>
-            
-            <p className="text-secondary leading-relaxed">
-              Notre mission ? Débarrasser et nettoyer pour remettre votre bien en état impeccable au suivant.
+            <div className="text-secondary leading-relaxed mb-3" style={{lineHeight:'1.6', fontSize: '0.98rem'}}>
+              <div style={{marginBottom:'8px', fontWeight:600}}>Nos services incluent :</div>
+              <ul style={{listStyle:'none', paddingLeft:0, margin:0}}>
+                <li style={{display:'flex', alignItems:'center', gap:'8px'}}>
+                  <span style={{display:'inline-block', width:'8px', height:'8px', borderRadius:'50%', background:'var(--swiss-red)'}}></span>
+                  Tri, démontage et évacuation des encombrants
+                </li>
+                <li style={{display:'flex', alignItems:'center', gap:'8px'}}>
+                  <span style={{display:'inline-block', width:'8px', height:'8px', borderRadius:'50%', background:'var(--swiss-red)'}}></span>
+                  Recyclage en déchetteries agréées
+                </li>
+                <li style={{display:'flex', alignItems:'center', gap:'8px'}}>
+                  <span style={{display:'inline-block', width:'8px', height:'8px', borderRadius:'50%', background:'var(--swiss-red)'}}></span>
+                  Nettoyage après intervention (sur demande)
+                </li>
+                <li style={{display:'flex', alignItems:'center', gap:'8px'}}>
+                  <span style={{display:'inline-block', width:'8px', height:'8px', borderRadius:'50%', background:'var(--swiss-red)'}}></span>
+                  Devis gratuit et intervention rapide
+                </li>
+              </ul>
+            </div>
+            <p className="text-secondary leading-relaxed" style={{fontWeight:600, fontSize: '0.98rem'}}>
+              Notre mission ? Remettre votre bien en état impeccable, que ce soit pour une succession, un déménagement ou simplement faire de la place.
             </p>
           </div>
         </div>
