@@ -76,7 +76,8 @@ const NavSwiss = () => {
         <div className="admin-container">
           <Link href="/" className="admin-nav-item">À propos</Link>
           <Link href="/services" className="admin-nav-item">Services</Link>
-          <Link href="/devis" className="admin-nav-item">Devis</Link>
+          <Link href="/devis" className="admin-nav-item">Devis Online</Link>
+          <Link href="/contact" className="admin-nav-item">Contact</Link>
           <Link href="/feedback" className="admin-nav-item">Feedback</Link>
         </div>
       </div>

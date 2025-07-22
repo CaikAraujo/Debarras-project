@@ -22,6 +22,8 @@
     "react-email": "^4.0.17",
     "resend": "^4.6.0",
     "stripe": "^18.3.0",
+    "swr": "^2.3.4",
+    "swt": "^0.1.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
