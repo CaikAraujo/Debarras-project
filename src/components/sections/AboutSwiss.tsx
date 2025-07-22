@@ -2,7 +2,7 @@
 
 const AboutSwiss = () => {
   return (
-    <section className="section-swiss bg-main border-b border-gray-200" id="about" style={{paddingTop: 0}}>
+    <section className="section-swiss bg-main border-b border-gray-200" id="about" style={{paddingTop: 0, overflowX: 'hidden'}}>
       <div className="container-swiss">
         
         {/* Introduction */}

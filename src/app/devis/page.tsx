@@ -1,5 +1,7 @@
 'use client'
 
+export const dynamic = "force-dynamic";
+
 import NavSwiss from '@/components/sections/NavSwiss'
 import DevisSwiss from '@/components/sections/DevisSwiss'
 import FooterSwiss from '@/components/sections/FooterSwiss'
