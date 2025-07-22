@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 const ServicesSwiss = () => {
   return (
     <section className="section-swiss bg-main">
@@ -17,7 +19,7 @@ const ServicesSwiss = () => {
                           {/* Services Grid */}
          <div className="grid-swiss-2 mb-16 items-stretch">
            
-           <div className="card-swiss card-swiss-hover text-center h-full flex flex-col justify-between">
+           <Link href="/services/nettoyage" className="card-swiss card-swiss-hover text-center h-full flex flex-col justify-between" style={{textDecoration:'none'}}>
              <div>
                <h3 className="text-primary text-xl font-semibold mb-4">Nettoyage et Désinfection</h3>
                <p className="text-secondary mb-4">
@@ -36,9 +38,9 @@ const ServicesSwiss = () => {
                  <span className="text-swiss-red">✓</span> Locaux professionnels
                </div>
              </div>
-           </div>
+           </Link>
            
-                      <div className="card-swiss card-swiss-hover text-center h-full flex flex-col justify-between">
+                      <Link href="/services/entreprises" className="card-swiss card-swiss-hover text-center h-full flex flex-col justify-between" style={{textDecoration:'none'}}>
              <div>
                <h3 className="text-primary text-xl font-semibold mb-4">Débarras pour Entreprises</h3>
                <p className="text-secondary mb-4">
@@ -57,9 +59,9 @@ const ServicesSwiss = () => {
                  <span className="text-swiss-red">✓</span> Archives et documents
                </div>
              </div>
-           </div>
+           </Link>
            
-                      <div className="card-swiss card-swiss-hover text-center h-full flex flex-col justify-between">
+                      <Link href="/services/fin-chantier" className="card-swiss card-swiss-hover text-center h-full flex flex-col justify-between" style={{textDecoration:'none'}}>
              <div>
                <h3 className="text-primary text-xl font-semibold mb-4">Nettoyage de Fin de Chantier</h3>
                <p className="text-secondary mb-4">
@@ -78,9 +80,9 @@ const ServicesSwiss = () => {
                  <span className="text-swiss-red">✓</span> Remise en état
                </div>
              </div>
-           </div>
+           </Link>
            
-                      <div className="card-swiss card-swiss-hover text-center h-full flex flex-col justify-between">
+                      <Link href="/services/ecopoints" className="card-swiss card-swiss-hover text-center h-full flex flex-col justify-between" style={{textDecoration:'none'}}>
              <div>
                <h3 className="text-primary text-xl font-semibold mb-4">Écopoints d&apos;Intérieur</h3>
                <p className="text-secondary mb-4">
@@ -99,9 +101,9 @@ const ServicesSwiss = () => {
                  <span className="text-swiss-red">✓</span> Certification environnementale
                </div>
              </div>
-           </div>
+           </Link>
            
-                      <div className="card-swiss card-swiss-hover text-center h-full flex flex-col justify-between">
+                      <Link href="/services/destruction" className="card-swiss card-swiss-hover text-center h-full flex flex-col justify-between" style={{textDecoration:'none'}}>
              <div>
                <h3 className="text-primary text-xl font-semibold mb-4">Destruction de Matériel</h3>
                <p className="text-secondary mb-4">
@@ -120,9 +122,9 @@ const ServicesSwiss = () => {
                  <span className="text-swiss-red">✓</span> Certificat de destruction
                </div>
              </div>
-           </div>
+           </Link>
            
-                      <div className="card-swiss card-swiss-hover text-center h-full flex flex-col justify-between">
+                      <Link href="/services/dechets-speciaux" className="card-swiss card-swiss-hover text-center h-full flex flex-col justify-between" style={{textDecoration:'none'}}>
              <div>
                <h3 className="text-primary text-xl font-semibold mb-4">Déchets Spéciaux</h3>
                <p className="text-secondary mb-4">
@@ -141,7 +143,7 @@ const ServicesSwiss = () => {
                  <span className="text-swiss-red">✓</span> Traçabilité complète
                </div>
              </div>
-           </div>
+           </Link>
            
          </div>
         
