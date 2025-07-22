@@ -15,11 +15,12 @@ export default function CantonSelector({ onSelectCanton }: CantonSelectorProps) 
         </p>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div className="grid grid-cols-7 gap-20 mb-12 place-items-center">
         {cantons.map((canton) => (
           <Card 
             key={canton.id}
-            className="cursor-pointer hover:shadow-lg transition-shadow duration-200 text-center p-6"
+            className="cursor-pointer hover:shadow-lg transition-shadow duration-200 text-center p-4 flex flex-col items-center justify-center"
+            style={{ minWidth: '110px', minHeight: '130px', maxWidth: '120px', maxHeight: '140px' }}
             onClick={() => onSelectCanton(canton.id)}
           >
             <div className="mb-4 flex justify-center">
@@ -31,8 +32,7 @@ export default function CantonSelector({ onSelectCanton }: CantonSelectorProps) 
                 className="object-contain"
               />
             </div>
-            <h3 className="text-lg font-semibold text-primary mb-2">{canton.name}</h3>
-            <p className="text-sm text-secondary">Service de débarras professionnel</p>
+            <h3 className="text-base font-semibold text-primary mb-0">{canton.name}</h3>
           </Card>
         ))}
       </div>
