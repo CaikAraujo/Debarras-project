@@ -1,10 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { fr } from 'date-fns/locale'
 import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, isSameDay, isSameMonth, isToday, addMonths, subMonths } from 'date-fns'
 import Button from '@/components/ui/Button'
 import { ChevronLeft, ChevronRight, Calendar, Clock, CheckCircle } from 'lucide-react'
+import { supabase } from '@/lib/supabase'
+import { useDevisState } from '@/hooks/useDevisState'  // Assumindo que selectedCanton está disponível via state
 
 interface DateSelectorProps {
   selectedDate: Date | undefined
@@ -13,7 +15,27 @@ interface DateSelectorProps {
 }
 
 export default function DateSelector({ selectedDate, onSelectDate, onBack }: DateSelectorProps) {
+  const { selectedCanton } = useDevisState()  // Obter canton do state
   const [currentMonth, setCurrentMonth] = useState(new Date())
+  const [reservedDates, setReservedDates] = useState<Date[]>([])
+
+  useEffect(() => {
+    const fetchReservedDates = async () => {
+      const { data, error } = await supabase
+        .from('reservations')
+        .select('selected_date')
+        .eq('canton_id', selectedCanton)
+
+      if (error) {
+        console.error('Erro ao fetch reservas:', error)
+        return
+      }
+
+      setReservedDates(data.map(d => new Date(d.selected_date)))
+    }
+
+    if (selectedCanton) fetchReservedDates()
+  }, [selectedCanton])
 
   const formatSelectedDate = (date: Date) => {
     return format(date, "EEEE dd MMMM yyyy", { locale: fr })
@@ -50,7 +72,8 @@ export default function DateSelector({ selectedDate, onSelectDate, onBack }: Dat
       tomorrow.setDate(tomorrow.getDate() + 1)
       tomorrow.setHours(0, 0, 0, 0)
       const isTomorrow = isSameDay(day, tomorrow) // Não pode selecionar o dia seguinte
-      const isDisabled = isWeekend || isPast || isTomorrow
+      const isReserved = reservedDates.some(reserved => isSameDay(day, reserved))
+      const isDisabled = isWeekend || isPast || isTomorrow || isReserved
 
       days.push(
         <div

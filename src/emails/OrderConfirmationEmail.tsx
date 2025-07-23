@@ -8,12 +8,14 @@ import {
   Heading,
   Section,
 } from '@react-email/components'
+import Stripe from 'stripe'
 
 interface OrderConfirmationEmailProps {
   customerName: string
+  customerEmail: string
   orderId: string
   amountTotal: number
-  customerEmail: string
+  shippingAddress: Stripe.Address | null
 }
 
 const OrderConfirmationEmail: React.FC<OrderConfirmationEmailProps> = ({
@@ -21,6 +23,7 @@ const OrderConfirmationEmail: React.FC<OrderConfirmationEmailProps> = ({
   orderId,
   amountTotal,
   customerEmail,
+  shippingAddress
 }) => (
   <Html>
     <Head />
@@ -52,6 +55,21 @@ const OrderConfirmationEmail: React.FC<OrderConfirmationEmailProps> = ({
           <Text>
             <strong>Montant Total :</strong> CHF {amountTotal.toFixed(2)}
           </Text>
+          {shippingAddress && (
+            <>
+              <Text>
+                <strong>Adresse de livraison :</strong>
+              </Text>
+              <Text>
+                {shippingAddress.line1}
+                <br />
+                {shippingAddress.line2 && <>{shippingAddress.line2}<br /></>}
+                {shippingAddress.postal_code} {shippingAddress.city}
+                <br />
+                {shippingAddress.state}, {shippingAddress.country}
+              </Text>
+            </>
+          )}
         </Section>
       </Container>
     </Body>

@@ -34,14 +34,14 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
       return { success: false, error: 'Muitas tentativas. Aguarde 1 minuto.' }
     }
 
-    const validated = PriceCalculationSchema.parse(data)
-    const multiplier = PRICING.multipliers[validated.cantonId]
+    const { selections, cantonId, selectedDate } = PriceCalculationSchema.parse(data)  // Destructure selectedDate
+    const multiplier = PRICING.multipliers[cantonId]
     const seenNonBedroomRooms = new Set<string>()
 
     let total = 0
     const breakdown = []
 
-    for (const selection of validated.selections) {
+    for (const selection of selections) {
       // Para quartos, permitir múltiplas seleções
       // Para outros cômodos, verificar duplicatas
       if (selection.roomId !== 'bedroom') {

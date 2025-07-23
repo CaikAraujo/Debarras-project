@@ -6,9 +6,10 @@ import type { Selection, VALID_CANTONS } from '@/lib/schemas'
 interface UsePriceCalculationProps {
   selections: Selection[]
   selectedCanton: string | null
+  selectedDate: Date | undefined
 }
 
-export function usePriceCalculation({ selections, selectedCanton }: UsePriceCalculationProps) {
+export function usePriceCalculation({ selections, selectedCanton, selectedDate }: UsePriceCalculationProps) {
   const [calculatedPrice, setCalculatedPrice] = useState(0)
   const [isCalculating, setIsCalculating] = useState(false)
   const [isProcessingCheckout, setIsProcessingCheckout] = useState(false)
@@ -36,7 +37,8 @@ export function usePriceCalculation({ selections, selectedCanton }: UsePriceCalc
     try {
       const result = await calculateSecurePrice({ 
         selections, 
-        cantonId: selectedCanton as typeof VALID_CANTONS[number]
+        cantonId: selectedCanton as typeof VALID_CANTONS[number],
+        selectedDate: selectedDate as Date
       })
       
       if (result.success && typeof result.totalPrice === 'number' && result.totalPrice > 0) {
@@ -50,7 +52,7 @@ export function usePriceCalculation({ selections, selectedCanton }: UsePriceCalc
     } finally {
       setIsCalculating(false)
     }
-  }, [selectedCanton, selections])
+  }, [selectedCanton, selections, selectedDate])
 
   // Debounced effect para evitar múltiplas chamadas
   useEffect(() => {
@@ -73,8 +75,8 @@ export function usePriceCalculation({ selections, selectedCanton }: UsePriceCalc
   }, [updateCalculatedPrice])
 
   const handleSecureCheckout = useCallback(async () => {
-    if (!selectedCanton || selections.length === 0) {
-      alert('Sélectionnez un canton et au moins un espace.')
+    if (!selectedCanton || selections.length === 0 || !selectedDate) {
+      alert('Sélectionnez un canton, au moins un espace et une date.')
       return
     }
 
@@ -82,7 +84,8 @@ export function usePriceCalculation({ selections, selectedCanton }: UsePriceCalc
     try {
       const result = await createStripeCheckout({ 
         selections, 
-        cantonId: selectedCanton as typeof VALID_CANTONS[number] 
+        cantonId: selectedCanton as typeof VALID_CANTONS[number],
+        selectedDate: selectedDate as Date
       })
       if (result.success && result.checkoutUrl) {
         window.location.href = result.checkoutUrl
@@ -94,7 +97,7 @@ export function usePriceCalculation({ selections, selectedCanton }: UsePriceCalc
     } finally {
       setIsProcessingCheckout(false)
     }
-  }, [selectedCanton, selections])
+  }, [selectedCanton, selections, selectedDate])
 
   return {
     calculatedPrice,

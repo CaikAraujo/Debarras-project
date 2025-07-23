@@ -29,12 +29,17 @@ export async function createStripeCheckout(data: CheckoutData) {
       }],
       mode: 'payment',
       payment_method_types: ['card', 'twint'],
+      billing_address_collection: 'required',
+      shipping_address_collection: {
+        allowed_countries: ['CH'],
+      },
       success_url: `${process.env.NEXT_PUBLIC_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_URL}/devis`,
       customer_email: validated.customerEmail,
       metadata: {
         canton: validated.cantonId,
         selections: JSON.stringify(validated.selections),
+        selectedDate: validated.selectedDate.toISOString(),
         serverPrice: priceResult.totalPrice.toString(),
         timestamp: Date.now().toString()
       }
@@ -64,7 +69,8 @@ export async function validateStripePayment(sessionId: string) {
 
     const priceResult = await calculateSecurePrice({
       selections: JSON.parse(metadata.selections),
-      cantonId: metadata.canton as typeof VALID_CANTONS[number]
+      cantonId: metadata.canton as typeof VALID_CANTONS[number],
+      selectedDate: new Date(metadata.selectedDate)
     })
 
     const isValid = priceResult.success && 

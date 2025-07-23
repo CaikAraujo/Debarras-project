@@ -68,7 +68,7 @@ export default function DevisSwiss() {
     isCalculating,
     isProcessingCheckout,
     handleSecureCheckout
-  } = usePriceCalculation({ selections, selectedCanton })
+  } = usePriceCalculation({ selections, selectedCanton, selectedDate })
 
   const handleQuantitySelect = (quantity: number) => {
     if (selectedRoom) {
