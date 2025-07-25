@@ -10,7 +10,7 @@ export async function saveReservation(data: CheckoutData & { sessionId: string }
       .from('reservations')
       .insert({
         canton_id: data.cantonId,
-        selected_date: data.selectedDate.toISOString(),
+        selected_date: data.selectedDate?.toISOString(),
         selections: data.selections,
         customer_email: data.customerEmail,
         stripe_session_id: data.sessionId,

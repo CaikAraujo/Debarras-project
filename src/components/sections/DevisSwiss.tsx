@@ -12,6 +12,8 @@ import OrderSummary from '@/components/devis/OrderSummary'
 import SelectionsSummary from '@/components/devis/SelectionsSummary'
 import AddRoomModal from '@/components/devis/AddRoomModal'
 import DateSelector from '@/components/devis/DateSelector'
+import { getBookedDates } from '@/app/_actions/getBookedDates'
+import type { VALID_CANTONS } from '@/lib/schemas'
 
 export default function DevisSwiss() {
   const searchParams = useSearchParams();
@@ -34,6 +36,8 @@ export default function DevisSwiss() {
   } = useDevisState()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [bookedDates, setBookedDates] = useState<Date[]>([])
+  const [isLoadingDates, setIsLoadingDates] = useState(false)
   const stepContentRef = useRef<HTMLDivElement>(null)
   const summaryRef = useRef<HTMLDivElement>(null)
 
@@ -44,6 +48,21 @@ export default function DevisSwiss() {
       selectCanton(cantonParam);
     }
   }, [searchParams, selectedCanton, selectCanton]);
+
+  // Buscar datas reservadas quando o passo 3 é ativado
+  useEffect(() => {
+    if (currentStep === 3 && selectedCanton) {
+      const fetchBookedDates = async () => {
+        setIsLoadingDates(true)
+        const result = await getBookedDates(selectedCanton as typeof VALID_CANTONS[number])
+        if (result.success) {
+          setBookedDates(result.dates)
+        }
+        setIsLoadingDates(false)
+      }
+      fetchBookedDates()
+    }
+  }, [currentStep, selectedCanton])
 
   useEffect(() => {
     if (currentStep >= 3 && selections.length === 0) {
@@ -134,6 +153,8 @@ export default function DevisSwiss() {
             {currentStep === 3 && selectedCanton && (
               <DateSelector
                 selectedDate={selectedDate}
+                bookedDates={bookedDates}
+                isLoading={isLoadingDates}
                 onSelectDate={(date) => {
                   selectDate(date)
                   if (date) {

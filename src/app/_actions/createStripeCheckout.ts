@@ -7,6 +7,10 @@ import { calculateSecurePrice } from './calculatePrice'
 export async function createStripeCheckout(data: CheckoutData) {
   try {
     const validated = CheckoutSchema.parse(data)
+
+    if (!validated.selectedDate) {
+      return { success: false, error: 'A data da reserva é obrigatória.' }
+    }
     
     const priceResult = await calculateSecurePrice(validated)
     if (!priceResult.success || !priceResult.totalPrice) {
@@ -16,6 +20,8 @@ export async function createStripeCheckout(data: CheckoutData) {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
     
     const session = await stripe.checkout.sessions.create({
+      locale: 'fr',
+      currency: 'chf',
       line_items: [{
         price_data: {
           currency: 'chf',
@@ -56,34 +62,50 @@ export async function createStripeCheckout(data: CheckoutData) {
 export async function validateStripePayment(sessionId: string) {
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
-    const session = await stripe.checkout.sessions.retrieve(sessionId)
+    const session = await stripe.checkout.sessions.retrieve(sessionId, {
+      expand: ['customer_details']
+    })
     
     if (session.payment_status !== 'paid') {
       return { success: false, error: 'Pagamento não confirmado' }
     }
 
     const { metadata } = session
-    if (!metadata?.selections || !metadata?.canton) {
-      return { success: false, error: 'Dados de validação ausentes' }
+    if (!metadata?.selections || !metadata?.canton || !metadata.selectedDate || !metadata.serverPrice) {
+      return { success: false, error: 'Dados de validação ausentes nos metadados' }
     }
 
     const priceResult = await calculateSecurePrice({
       selections: JSON.parse(metadata.selections),
       cantonId: metadata.canton as typeof VALID_CANTONS[number],
-      selectedDate: new Date(metadata.selectedDate)
     })
 
-    const isValid = priceResult.success && 
-      priceResult.totalPrice === parseInt(metadata.serverPrice)
+    const serverPriceNum = parseFloat(metadata.serverPrice)
+    const isValid = priceResult.success && priceResult.totalPrice === serverPriceNum
 
     if (!isValid) {
-      console.error('FRAUDE DETECTADA:', { sessionId, metadata })
-      return { success: false, error: 'Validação falhou' }
+      console.error('FRAUDE DETECTADA:', { sessionId, metadata, calculated: priceResult.totalPrice })
+      return { success: false, error: 'Validação de preço falhou' }
     }
 
-    return { success: true, isValid: true }
+    // Retorna todos os dados da sessão necessários para a página de sucesso
+    return { 
+      success: true, 
+      isValid: true,
+      sessionData: {
+        cantonId: metadata.canton as typeof VALID_CANTONS[number],
+        selections: JSON.parse(metadata.selections),
+        selectedDate: new Date(metadata.selectedDate),
+        customerEmail: session.customer_email ?? '',
+        customerName: session.customer_details?.name ?? 'Cliente',
+        shippingAddress: session.customer_details?.address ?? null,
+        amountTotal: session.amount_total ? session.amount_total / 100 : 0,
+        sessionId,
+      }
+    }
 
-  } catch {
+  } catch (error) {
+    console.error('Erro na validação do Stripe:', error)
     return { success: false, error: 'Erro de validação' }
   }
 } 

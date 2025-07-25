@@ -37,8 +37,7 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate }
     try {
       const result = await calculateSecurePrice({ 
         selections, 
-        cantonId: selectedCanton as typeof VALID_CANTONS[number],
-        selectedDate: selectedDate as Date
+        cantonId: selectedCanton as typeof VALID_CANTONS[number]
       })
       
       if (result.success && typeof result.totalPrice === 'number' && result.totalPrice > 0) {

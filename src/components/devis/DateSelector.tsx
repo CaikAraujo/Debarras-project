@@ -1,41 +1,21 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { fr } from 'date-fns/locale'
 import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, isSameDay, isSameMonth, isToday, addMonths, subMonths } from 'date-fns'
 import Button from '@/components/ui/Button'
-import { ChevronLeft, ChevronRight, Calendar, Clock, CheckCircle } from 'lucide-react'
-import { supabase } from '@/lib/supabase'
-import { useDevisState } from '@/hooks/useDevisState'  // Assumindo que selectedCanton está disponível via state
+import { ChevronLeft, ChevronRight, Calendar, Clock, CheckCircle, Loader } from 'lucide-react'
 
 interface DateSelectorProps {
   selectedDate: Date | undefined
+  bookedDates: Date[]
+  isLoading: boolean
   onSelectDate: (date: Date | undefined) => void
   onBack: () => void
 }
 
-export default function DateSelector({ selectedDate, onSelectDate, onBack }: DateSelectorProps) {
-  const { selectedCanton } = useDevisState()  // Obter canton do state
+export default function DateSelector({ selectedDate, bookedDates, isLoading, onSelectDate, onBack }: DateSelectorProps) {
   const [currentMonth, setCurrentMonth] = useState(new Date())
-  const [reservedDates, setReservedDates] = useState<Date[]>([])
-
-  useEffect(() => {
-    const fetchReservedDates = async () => {
-      const { data, error } = await supabase
-        .from('reservations')
-        .select('selected_date')
-        .eq('canton_id', selectedCanton)
-
-      if (error) {
-        console.error('Erro ao fetch reservas:', error)
-        return
-      }
-
-      setReservedDates(data.map(d => new Date(d.selected_date)))
-    }
-
-    if (selectedCanton) fetchReservedDates()
-  }, [selectedCanton])
 
   const formatSelectedDate = (date: Date) => {
     return format(date, "EEEE dd MMMM yyyy", { locale: fr })
@@ -58,7 +38,6 @@ export default function DateSelector({ selectedDate, onSelectDate, onBack }: Dat
   let day = startDate
   let formattedDate = ""
 
-  // Gerar dias do calendário
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
       formattedDate = format(day, dateFormat)
@@ -66,13 +45,13 @@ export default function DateSelector({ selectedDate, onSelectDate, onBack }: Dat
       const isCurrentMonth = isSameMonth(day, monthStart)
       const isSelected = selectedDate && isSameDay(day, selectedDate)
       const isCurrentDay = isToday(day)
-      const isWeekend = day.getDay() === 0 || day.getDay() === 6 // Désactiver weekends
+      const isWeekend = day.getDay() === 0 || day.getDay() === 6
       const isPast = day < new Date(new Date().setHours(0, 0, 0, 0))
       const tomorrow = new Date()
       tomorrow.setDate(tomorrow.getDate() + 1)
       tomorrow.setHours(0, 0, 0, 0)
-      const isTomorrow = isSameDay(day, tomorrow) // Não pode selecionar o dia seguinte
-      const isReserved = reservedDates.some(reserved => isSameDay(day, reserved))
+      const isTomorrow = isSameDay(day, tomorrow)
+      const isReserved = bookedDates.some(reserved => isSameDay(day, reserved))
       const isDisabled = isWeekend || isPast || isTomorrow || isReserved
 
       days.push(
@@ -117,7 +96,6 @@ export default function DateSelector({ selectedDate, onSelectDate, onBack }: Dat
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4">
-      {/* Cabeçalho com instrução */}
       <div className="text-center mb-8">
         <div className="flex items-center justify-center gap-3 mb-4">
           <div className="bg-gradient-to-br from-red-500 to-red-600 p-3 rounded-xl shadow-lg">
@@ -130,12 +108,15 @@ export default function DateSelector({ selectedDate, onSelectDate, onBack }: Dat
         </p>
       </div>
 
-      {/* Container principal com layout responsivo */}
       <div className="grid lg:grid-cols-3 gap-6 items-start">
-        {/* Calendário - 2/3 da largura */}
         <div className="lg:col-span-2 order-2 lg:order-1">
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-xl overflow-hidden">
-            {/* Header do calendário */}
+          <div className="relative bg-white rounded-2xl border border-gray-200 shadow-xl overflow-hidden">
+            {isLoading && (
+              <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center z-10">
+                <Loader className="h-8 w-8 text-red-500 animate-spin" />
+                <p className="mt-4 text-primary font-semibold">Chargement des disponibilités...</p>
+              </div>
+            )}
             <div className="bg-gradient-to-r from-red-500 via-red-600 to-red-700 p-4">
               <div className="flex items-center justify-between text-white">
                 <div className="flex items-center gap-2">
@@ -149,7 +130,6 @@ export default function DateSelector({ selectedDate, onSelectDate, onBack }: Dat
             </div>
             
             <div className="p-6">
-              {/* Navegação do mês */}
               <div className="flex items-center justify-between mb-6">
                 <button
                   onClick={prevMonth}
@@ -170,7 +150,6 @@ export default function DateSelector({ selectedDate, onSelectDate, onBack }: Dat
                 </button>
               </div>
 
-              {/* Cabeçalho dos dias da semana */}
               <div className="grid grid-cols-7 gap-1 mb-2">
                 {['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di'].map((day) => (
                   <div
@@ -182,12 +161,10 @@ export default function DateSelector({ selectedDate, onSelectDate, onBack }: Dat
                 ))}
               </div>
 
-              {/* Grid dos dias */}
               <div className="space-y-1">
                 {rows}
               </div>
               
-              {/* Légende */}
               <div className="mt-6 pt-4 border-t border-gray-200">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                   <div className="flex items-center gap-2 p-2 bg-red-50 rounded-lg">
@@ -217,7 +194,7 @@ export default function DateSelector({ selectedDate, onSelectDate, onBack }: Dat
           </div>
         </div>
 
-        {/* Panel de confirmation - 1/3 da largura */}
+        {/* Painel de confirmação */}
         <div className="order-1 lg:order-2">
           <div className="sticky top-6 space-y-5">
             {/* Date sélectionnée */}

@@ -41,7 +41,7 @@ export async function sendEmail(formData: FormData) {
     // Agora enviamos um componente React em vez de texto
     const { data } = await resend.emails.send({
       from: 'Demande de Devis <info@suisse-debarras.ch>',
-      to: ['pablo.farina28@outlook.com'],
+      to: ['suissedebarras00@gmail.com'],
       subject: `Nouvelle demande de ${name} pour un service de ${service || 'débarras'}`,
       replyTo: [senderEmail],
       

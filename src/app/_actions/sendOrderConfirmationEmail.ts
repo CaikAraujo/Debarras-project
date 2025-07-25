@@ -23,7 +23,7 @@ export async function sendOrderConfirmationEmail(payload: EmailPayload) {
     // Envia o e-mail para o dono do negócio
     await resend.emails.send({
       from: 'Confirmation de Commande <info@suisse-debarras.ch>',
-      to: ['pablo.farina28@outlook.com'], // Seu e-mail
+      to: ['suissedebarras00@gmail.com'], // Seu e-mail
       subject: `Nouvelle commande confirmée de ${customerName} !`,
       react: React.createElement(OrderConfirmationEmail, {
         customerName,

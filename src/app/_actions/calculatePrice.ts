@@ -34,7 +34,7 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
       return { success: false, error: 'Muitas tentativas. Aguarde 1 minuto.' }
     }
 
-    const { selections, cantonId, selectedDate } = PriceCalculationSchema.parse(data)  // Destructure selectedDate
+    const { selections, cantonId } = PriceCalculationSchema.parse(data)
     const multiplier = PRICING.multipliers[cantonId]
     const seenNonBedroomRooms = new Set<string>()
 

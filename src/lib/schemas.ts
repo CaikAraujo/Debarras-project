@@ -14,7 +14,7 @@ export const SelectionSchema = z.object({
 export const PriceCalculationSchema = z.object({
   selections: z.array(SelectionSchema).min(1).max(10),
   cantonId: z.enum(VALID_CANTONS),
-  selectedDate: z.date()  // Adicionando a data
+  selectedDate: z.date().optional()  // Tornando a data opcional
 })
 
 export const CheckoutSchema = PriceCalculationSchema.extend({
