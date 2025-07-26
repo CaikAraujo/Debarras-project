@@ -19,10 +19,8 @@ export default function DevisSwiss() {
   const {
     currentStep,
     selectedCanton,
-    selectedRoom,
     selections,
     selectCanton,
-    selectRoom,
     addSelection,
     removeSelection,
     goToStep,
