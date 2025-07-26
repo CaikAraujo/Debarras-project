@@ -4,7 +4,6 @@ import type { Selection } from '@/lib/schemas'
 export function useDevisState() {
   const [currentStep, setCurrentStep] = useState(0)
   const [selectedCanton, setSelectedCanton] = useState<string | null>(null)
-  const [selectedRoom, setSelectedRoom] = useState<Selection['roomId'] | null>(null)
   const [selections, setSelections] = useState<Selection[]>([])
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
 
@@ -12,12 +11,6 @@ export function useDevisState() {
     setSelectedCanton(cantonId)
     setCurrentStep(1)
   }, [])
-
-  const selectRoom = useCallback((roomId: Selection['roomId']) => {
-    if (!selectedCanton) return
-    setSelectedRoom(roomId)
-    setCurrentStep(2)
-  }, [selectedCanton])
 
   const selectDate = useCallback((date: Date | undefined) => {
     setSelectedDate(date)
@@ -52,9 +45,6 @@ export function useDevisState() {
         }
       }
     })
-    // After adding/updating, go back to the room selection step
-    setSelectedRoom(null)
-    setCurrentStep(1)
   }, [])
 
   const removeSelection = useCallback((selectionId: string) => {
@@ -81,13 +71,7 @@ export function useDevisState() {
   const resetAll = useCallback(() => {
     setSelectedCanton(null)
     setSelections([])
-    setSelectedRoom(null)
     setCurrentStep(0)
-  }, [])
-
-  const resetToRooms = useCallback(() => {
-    setSelectedRoom(null)
-    setCurrentStep(1)
   }, [])
 
   // Função auxiliar para verificar se um cômodo não-quarto já foi selecionado
@@ -104,15 +88,12 @@ export function useDevisState() {
   return {
     currentStep,
     selectedCanton,
-    selectedRoom,
     selections,
     selectCanton,
-    selectRoom,
     addSelection,
     removeSelection,
     goToStep,
     resetAll,
-    resetToRooms,
     selectedDate,
     selectDate,
     isRoomSelected,

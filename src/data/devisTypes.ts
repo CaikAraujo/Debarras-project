@@ -6,6 +6,7 @@ export interface Room {
   name: string
   icon: LucideIcon
   description: string
+  imageUrl?: string // Imagem para o checkout da Stripe
 }
 
 export interface Canton {

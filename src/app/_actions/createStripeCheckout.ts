@@ -3,6 +3,7 @@
 import Stripe from 'stripe'
 import { CheckoutSchema, type CheckoutData, VALID_CANTONS } from '@/lib/schemas'
 import { calculateSecurePrice } from './calculatePrice'
+import { rooms } from '@/data/devisData'
 
 export async function createStripeCheckout(data: CheckoutData) {
   try {
@@ -13,26 +14,42 @@ export async function createStripeCheckout(data: CheckoutData) {
     }
     
     const priceResult = await calculateSecurePrice(validated)
-    if (!priceResult.success || !priceResult.totalPrice) {
-      return { success: false, error: priceResult.error }
+    if (!priceResult.success || !priceResult.totalPrice || !priceResult.breakdown) {
+      return { success: false, error: priceResult.error || 'Erro ao calcular o preço detalhado.' }
     }
 
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
     
-    const session = await stripe.checkout.sessions.create({
-      locale: 'fr',
-      currency: 'chf',
-      line_items: [{
+    const lineItems = priceResult.breakdown.map(item => {
+      const room = rooms.find(r => r.id === item.roomId)
+      const roomTitle = item.roomId === 'bedroom' && item.roomNumber
+        ? `${room?.name} ${item.roomNumber}`
+        : room?.name || 'Espace'
+
+      return {
         price_data: {
           currency: 'chf',
           product_data: {
-            name: `Débarras ${validated.cantonId}`,
-            description: `${validated.selections.length} espaces sélectionnés`
+            name: roomTitle,
+            description: `${item.quantity} objets à enlever.`,
           },
-          unit_amount: priceResult.totalPrice * 100,
+          unit_amount: item.finalPrice * 100, // Usar o finalPrice do breakdown
         },
         quantity: 1,
-      }],
+      }
+    })
+    
+    // Verificação de segurança: o total dos line items deve corresponder ao total calculado
+    const totalFromLineItems = lineItems.reduce((acc, item) => acc + item.price_data.unit_amount, 0)
+    if (totalFromLineItems !== priceResult.totalPrice * 100) {
+        console.error('Divergência de preço entre o total e a soma dos itens.')
+        return { success: false, error: 'Erro interno de cálculo de preço.' }
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      locale: 'fr',
+      currency: 'chf',
+      line_items: lineItems,
       mode: 'payment',
       payment_method_types: ['card', 'twint'],
       billing_address_collection: 'required',

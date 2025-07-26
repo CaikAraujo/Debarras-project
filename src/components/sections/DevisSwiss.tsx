@@ -7,7 +7,6 @@ import { usePriceCalculation } from '@/hooks/usePriceCalculation'
 import ProgressStepper from '@/components/devis/ProgressStepper'
 import CantonSelector from '@/components/devis/CantonSelector'
 import RoomSelector from '@/components/devis/RoomSelector'
-import QuantitySelector from '@/components/devis/QuantitySelector'
 import OrderSummary from '@/components/devis/OrderSummary'
 import SelectionsSummary from '@/components/devis/SelectionsSummary'
 import AddRoomModal from '@/components/devis/AddRoomModal'
@@ -28,7 +27,6 @@ export default function DevisSwiss() {
     removeSelection,
     goToStep,
     resetAll,
-    resetToRooms,
     selectedDate,
     selectDate,
     isRoomSelected,
@@ -89,14 +87,12 @@ export default function DevisSwiss() {
     handleSecureCheckout
   } = usePriceCalculation({ selections, selectedCanton, selectedDate })
 
-  const handleQuantitySelect = (quantity: number) => {
-    if (selectedRoom) {
-      addSelection({ 
-        roomId: selectedRoom, 
-        quantity,
-        roomNumber: selectedRoom === 'bedroom' ? getBedroomCount() + 1 : undefined
-      })
-    }
+  const handleRoomSelect = (roomId: string, quantity: number) => {
+    addSelection({ 
+      roomId: roomId as any, 
+      quantity,
+      roomNumber: roomId === 'bedroom' ? getBedroomCount() + 1 : undefined
+    })
   }
 
   return (
@@ -119,8 +115,13 @@ export default function DevisSwiss() {
 
             {currentStep === 1 && selectedCanton && (
               <>
+                <div className="mb-6 text-center">
+                  <p className="text-secondary text-sm md:text-base">
+                    💡 Cliquez sur une pièce pour sélectionner la quantité, puis ajoutez d'autres pièces si nécessaire.
+                  </p>
+                </div>
                 <RoomSelector 
-                  onSelectRoom={selectRoom} 
+                  onSelectRoom={handleRoomSelect} 
                   selections={selections} 
                   isRoomSelected={isRoomSelected}
                   getBedroomCount={getBedroomCount}
@@ -139,15 +140,6 @@ export default function DevisSwiss() {
                   </div>
                 )}
               </>
-            )}
-
-            {currentStep === 2 && selectedRoom && (
-              <QuantitySelector
-                selectedRoom={selectedRoom}
-                onSelectQuantity={handleQuantitySelect}
-                onBackToRooms={resetToRooms}
-                onChangeCanton={resetAll}
-              />
             )}
 
             {currentStep === 3 && selectedCanton && (
