@@ -1,15 +1,19 @@
 'use server'
 
-import { supabase } from '@/lib/supabase' // Corrigido para importar a instância
-import type { VALID_CANTONS } from '@/lib/schemas'
+import { supabase } from '@/lib/supabase'
+import { z } from 'zod'
+import { VALID_CANTONS } from '@/lib/schemas'
 
-export async function getBookedDates(cantonId: typeof VALID_CANTONS[number]) {
-  // Não precisa criar cliente, usa a instância importada
+const CantonSchema = z.enum(VALID_CANTONS)
+
+export async function getBookedDates(cantonId: string) {
   try {
+    const validatedCanton = CantonSchema.parse(cantonId)
+
     const { data, error } = await supabase
       .from('reservations')
       .select('selected_date')
-      .eq('canton_id', cantonId) // Nome da coluna corrigido
+      .eq('canton_id', validatedCanton)
 
     if (error) {
       console.error('Erro ao buscar datas reservadas:', error)
@@ -21,6 +25,9 @@ export async function getBookedDates(cantonId: typeof VALID_CANTONS[number]) {
     return { success: true, dates: bookedDates }
 
   } catch (error: any) {
+    if (error instanceof z.ZodError) {
+      return { success: false, error: 'Cantão inválido', dates: [] };
+    }
     console.error('Erro inesperado ao buscar datas:', error)
     return { success: false, error: 'Erro inesperado no servidor', dates: [] }
   }
