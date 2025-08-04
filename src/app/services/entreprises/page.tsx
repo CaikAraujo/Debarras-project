@@ -22,11 +22,11 @@ export default function EntreprisesPage() {
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
-              <Image 
-                src="/images/services/entreprises-hero1.png" 
-                alt="Bureaux et open-space" 
-                width={400} 
-                height={260} 
+              <Image
+                src="/images/services/Débarras pour Entreprises/Bureaux et open-space.jpg"
+                alt="Bureaux et open-space"
+                width={400}
+                height={260}
                 className="object-cover w-full h-full max-h-[260px] rounded-2xl"
               />
             </div>
@@ -45,11 +45,11 @@ export default function EntreprisesPage() {
                 </p>
               </div>
               <div className="flex-1 flex justify-center max-w-2xl">
-                <Image 
-                  src="/images/services/entreprises-hero2.png" 
-                  alt="Mobilier professionnel" 
-                  width={400} 
-                  height={260} 
+                <Image
+                  src="/images/services/Débarras pour Entreprises/Mobilier professionnel.jpg"
+                  alt="Mobilier professionnel"
+                  width={400}
+                  height={260}
                   className="object-cover w-full h-full max-h-[260px] rounded-2xl"
                 />
               </div>
@@ -65,11 +65,11 @@ export default function EntreprisesPage() {
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
-              <Image 
-                src="/images/services/entreprises-hero3.png" 
-                alt="Archives et documents" 
-                width={400} 
-                height={260} 
+              <Image
+                src="/images/services/Débarras pour Entreprises/Archives et documents.jpg"
+                alt="Archives et documents"
+                width={400}
+                height={260}
                 className="object-cover w-full h-full max-h-[260px] rounded-2xl"
               />
             </div>

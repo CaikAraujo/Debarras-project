@@ -22,11 +22,11 @@ export default function DestructionPage() {
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
-              <Image 
-                src="/images/services/destruction-hero1.png" 
-                alt="Documents confidentiels" 
-                width={400} 
-                height={260} 
+              <Image
+                src="/images/services/Destruction de Matériel/Documents confidentiels.jpg"
+                alt="Documents confidentiels"
+                width={400}
+                height={260}
                 className="object-cover w-full h-full max-h-[260px] rounded-2xl"
               />
             </div>
@@ -45,11 +45,11 @@ export default function DestructionPage() {
                 </p>
               </div>
               <div className="flex-1 flex justify-center max-w-2xl">
-                <Image 
-                  src="/images/services/destruction-hero2.png" 
-                  alt="Matériel informatique" 
-                  width={400} 
-                  height={260} 
+                <Image
+                  src="/images/services/Destruction de Matériel/Matériel informatique.jpg"
+                  alt="Matériel informatique"
+                  width={400}
+                  height={260}
                   className="object-cover w-full h-full max-h-[260px] rounded-2xl"
                 />
               </div>
@@ -65,11 +65,11 @@ export default function DestructionPage() {
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
-              <Image 
-                src="/images/services/destruction-hero3.png" 
-                alt="Certificat de destruction" 
-                width={400} 
-                height={260} 
+              <Image
+                src="/images/services/Destruction de Matériel/Certificat de destruction.jpg"
+                alt="Certificat de destruction"
+                width={400}
+                height={260}
                 className="object-cover w-full h-full max-h-[260px] rounded-2xl"
               />
             </div>

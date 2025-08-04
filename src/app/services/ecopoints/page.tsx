@@ -22,11 +22,11 @@ export default function EcopointsPage() {
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
-              <Image 
-                src="/images/services/ecopoints-hero1.png" 
-                alt="Tri écologique" 
-                width={400} 
-                height={260} 
+              <Image
+                src="/images/services/Écopoints d'Intérieur/Tri écologique.jpg"
+                alt="Tri écologique"
+                width={400}
+                height={260}
                 className="object-cover w-full h-full max-h-[260px] rounded-2xl"
               />
             </div>
@@ -46,7 +46,7 @@ export default function EcopointsPage() {
               </div>
               <div className="flex-1 flex justify-center max-w-2xl">
                 <Image 
-                  src="/images/services/ecopoints-hero2.png" 
+                  src="/images/services/Écopoints d'Intérieur/Tri écologique.jpg" 
                   alt="Recyclage responsable" 
                   width={400} 
                   height={260} 
@@ -65,11 +65,11 @@ export default function EcopointsPage() {
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
-              <Image 
-                src="/images/services/ecopoints-hero3.png" 
-                alt="Certification environnementale" 
-                width={400} 
-                height={260} 
+              <Image
+                src="/images/services/Écopoints d'Intérieur/Certification environnementale.jpg"
+                alt="Certification environnementale"
+                width={400}
+                height={260}
                 className="object-cover w-full h-full max-h-[260px] rounded-2xl"
               />
             </div>

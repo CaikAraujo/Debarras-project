@@ -22,11 +22,11 @@ export default function NettoyagePage() {
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
-              <Image 
-                src="/images/services/nettoyage-hero1.png" 
-                alt="Désinfection complète" 
-                width={400} 
-                height={260} 
+              <Image
+                src="/images/services/Nettoyage et Désinfection/Désinfection complète.jpg"
+                alt="Désinfection complète"
+                width={400}
+                height={260}
                 className="object-cover w-full h-full max-h-[260px] rounded-2xl"
               />
             </div>
@@ -45,12 +45,12 @@ export default function NettoyagePage() {
                 </p>
               </div>
               <div className="flex-1 flex justify-center max-w-2xl">
-                <Image 
-                  src="/images/services/nettoyage-hero2.png" 
-                  alt="Protocoles sanitaires" 
-                  width={400} 
-                  height={260} 
-                  className="object-cover w-full h-full max-h-[260px]"
+                <Image
+                  src="/images/services/Nettoyage et Désinfection/Protocoles sanitaires.jpg"
+                  alt="Protocoles sanitaires"
+                  width={400}
+                  height={260}
+                  className="object-cover w-full h-full max-h-[260px] rounded-2xl"
                 />
               </div>
             </div>
@@ -65,11 +65,11 @@ export default function NettoyagePage() {
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
-              <Image 
-                src="/images/services/nettoyage-hero3.png" 
-                alt="Locaux professionnels" 
-                width={400} 
-                height={260} 
+              <Image
+                src="/images/services/Nettoyage et Désinfection/Locaux professionnels.jpg"
+                alt="Locaux professionnels"
+                width={400}
+                height={260}
                 className="object-cover w-full h-full max-h-[260px] rounded-2xl"
               />
             </div>

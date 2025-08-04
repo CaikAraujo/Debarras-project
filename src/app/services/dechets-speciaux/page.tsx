@@ -22,11 +22,11 @@ export default function DechetsSpeciauxPage() {
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
-              <Image 
-                src="/images/services/dechets-speciaux-hero1.png" 
-                alt="Produits chimiques" 
-                width={400} 
-                height={260} 
+              <Image
+                src="/images/services/Déchets Spéciaux/Produits chimiques.jpg"
+                alt="Produits chimiques"
+                width={400}
+                height={260}
                 className="object-cover w-full h-full max-h-[260px] rounded-2xl"
               />
             </div>
@@ -45,11 +45,11 @@ export default function DechetsSpeciauxPage() {
                 </p>
               </div>
               <div className="flex-1 flex justify-center max-w-2xl">
-                <Image 
-                  src="/images/services/dechets-speciaux-hero2.png" 
-                  alt="Matériaux dangereux" 
-                  width={400} 
-                  height={260} 
+                <Image
+                  src="/images/services/Déchets Spéciaux/Matériaux dangereux.jpg"
+                  alt="Matériaux dangereux"
+                  width={400}
+                  height={260}
                   className="object-cover w-full h-full max-h-[260px] rounded-2xl"
                 />
               </div>
@@ -65,11 +65,11 @@ export default function DechetsSpeciauxPage() {
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
-              <Image 
-                src="/images/services/dechets-speciaux-hero3.png" 
-                alt="Traçabilité complète" 
-                width={400} 
-                height={260} 
+              <Image
+                src="/images/services/Déchets Spéciaux/Traçabilité complète.jpg"
+                alt="Traçabilité complète"
+                width={400}
+                height={260}
                 className="object-cover w-full h-full max-h-[260px] rounded-2xl"
               />
             </div>

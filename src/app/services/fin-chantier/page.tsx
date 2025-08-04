@@ -22,11 +22,11 @@ export default function FinChantierPage() {
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
-              <Image 
-                src="/images/services/fin-chantier-hero1.png" 
-                alt="Post-construction" 
-                width={400} 
-                height={260} 
+              <Image
+                src="/images/services/Nettoyage de Fin de Chantier/Post-construction.jpg"
+                alt="Post-construction"
+                width={400}
+                height={260}
                 className="object-cover w-full h-full max-h-[260px] rounded-2xl"
               />
             </div>
@@ -45,11 +45,11 @@ export default function FinChantierPage() {
                 </p>
               </div>
               <div className="flex-1 flex justify-center max-w-2xl">
-                <Image 
-                  src="/images/services/fin-chantier-hero2.png" 
-                  alt="Élimination gravats" 
-                  width={400} 
-                  height={260} 
+                <Image
+                  src="/images/services/Nettoyage de Fin de Chantier/Élimination gravats.jpg"
+                  alt="Élimination gravats"
+                  width={400}
+                  height={260}
                   className="object-cover w-full h-full max-h-[260px] rounded-2xl"
                 />
               </div>
@@ -65,11 +65,11 @@ export default function FinChantierPage() {
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
-              <Image 
-                src="/images/services/fin-chantier-hero3.png" 
-                alt="Remise en état" 
-                width={400} 
-                height={260} 
+              <Image
+                src="/images/services/Nettoyage de Fin de Chantier/remise en état.jpg"
+                alt="Remise en état"
+                width={400}
+                height={260}
                 className="object-cover w-full h-full max-h-[260px] rounded-2xl"
               />
             </div>
