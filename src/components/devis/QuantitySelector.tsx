@@ -21,9 +21,9 @@ export default function QuantitySelector({
   if (!room) {
     return (
       <div className="text-center p-6 md:p-8 px-4">
-        <p className="text-red-600 text-sm md:text-base">Erreur : Pièce non sélectionnée.</p>
+        <p className="text-red-600 text-sm md:text-base">Erreur : Objet non sélectionné.</p>
         <Button onClick={onBackToRooms} variant="outline" className="mt-4">
-          Retour à la sélection des pièces
+          Retour à la sélection des objets
         </Button>
       </div>
     )
@@ -51,7 +51,7 @@ export default function QuantitySelector({
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6 md:mt-8">
           <Button onClick={onBackToRooms} variant="secondary" className="w-full sm:w-auto">
-            Changer de pièce
+            Changer d&apos;objet
           </Button>
           <Button onClick={onChangeCanton} variant="secondary" className="w-full sm:w-auto">
             Changer de canton

@@ -15,11 +15,11 @@ export default function DevisPageClient() {
       {/* Seção de informações adicionais */}
       <section className="section-swiss bg-gray-50 border-b border-gray-200">
         <div className="container-swiss">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-primary mb-8">Comment ça marche ?</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
+              <div className="text-center max-w-xs">
                 <div className="w-16 h-16 bg-red-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                   1
                 </div>
@@ -29,7 +29,7 @@ export default function DevisPageClient() {
                 </p>
               </div>
               
-              <div className="text-center">
+              <div className="text-center max-w-xs">
                 <div className="w-16 h-16 bg-red-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                   2
                 </div>
@@ -39,7 +39,7 @@ export default function DevisPageClient() {
                 </p>
               </div>
               
-              <div className="text-center">
+              <div className="text-center max-w-xs">
                 <div className="w-16 h-16 bg-red-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                   3
                 </div>

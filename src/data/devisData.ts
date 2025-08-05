@@ -23,9 +23,9 @@ export const cantons: Canton[] = [
 ]
 
 export const quantities: QuantityOption[] = [
-  { value: 5, label: '5 pièces' },
-  { value: 10, label: '10 pièces' },
-  { value: 15, label: '15 pièces' }
+  { value: 5, label: '1-5 objets' },
+  { value: 10, label: '6-10 objets' },
+  { value: 15, label: '11-15 objets' }
 ]
 
 export const stepTitles: DevisStep[] = [

@@ -8,7 +8,7 @@ export default function ProgressStepper({ currentStep }: ProgressStepperProps) {
   // Mapear os steps para o novo fluxo simplificado
   const steps = [
     { id: 0, title: 'Choisissez votre canton' },
-    { id: 1, title: 'Choisissez vos pièces' },
+    { id: 1, title: 'Choisissez vos objets' },
     { id: 3, title: 'Choisissez une date' },
     { id: 4, title: 'Confirmez votre devis' }
   ]

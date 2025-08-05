@@ -101,8 +101,8 @@ export default function SelectionsSummary({
             <CheckCircle className="w-4 h-4 text-blue-600" />
             <span className="text-sm font-medium">
               {selections.length === 1 
-                ? 'Parfait ! Vous pouvez continuer ou ajouter d\'autres pièces.'
-                : `Excellent ! ${selections.length} pièces sélectionnées. Prêt pour la prochaine étape.`
+                ? 'Parfait ! Vous pouvez continuer ou ajouter d\'autres objets.'
+                : `Excellent ! ${selections.length} objets sélectionnés. Prêt pour la prochaine étape.`
               }
             </span>
           </div>

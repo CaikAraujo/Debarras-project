@@ -100,7 +100,7 @@ export default function DevisSwiss() {
           <div className="text-center mb-12">
             <h1 className="text-primary mb-4">Calculateur de Devis Personnalisé</h1>
             <p className="text-secondary text-lg">
-              Sélectionnez les pièces de votre logement et le nombre d&apos;objets à débarrasser pour obtenir votre devis instantané.
+              Sélectionnez les objets de votre logement et le nombre d&apos;objets à débarrasser pour obtenir votre devis instantané.
             </p>
           </div>
 
@@ -115,7 +115,7 @@ export default function DevisSwiss() {
               <>
                 <div className="mb-6 text-center">
                   <p className="text-secondary text-sm md:text-base">
-                    💡 Cliquez sur une pièce pour sélectionner la quantité, puis ajoutez d'autres pièces si nécessaire.
+                    💡 Cliquez sur un objet pour sélectionner la quantité, puis ajoutez d'autres objets si nécessaire.
                   </p>
                 </div>
                 <RoomSelector 

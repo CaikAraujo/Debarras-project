@@ -22,7 +22,7 @@ export default function ContactPage() {
                 <div className="space-y-4 text-secondary">
                   <div>
                     <strong>Raison sociale :</strong><br />
-                    Débarras Pro Sàrl
+                    Suisse Débarras
                   </div>
                   <div>
                     <strong>Numéro IDE :</strong><br />
@@ -30,8 +30,9 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <strong>Siège social :</strong><br />
-                    Route du Débarras 15<br />
-                    1950 Sion, Valais
+                    Avenue des Communes-Réunies 43<br />
+                    1212 Grand-Lancy<br />
+                    Genève, Suisse
                   </div>
                   <div>
                     <strong>Capital social :</strong><br />

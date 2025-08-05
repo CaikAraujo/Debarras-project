@@ -84,19 +84,19 @@ const ContactSwiss = () => {
                 <h3 style={{ marginBottom: '20px' }}>Informations</h3>
                 
                 <div className="admin-card">
-                  <h4 style={{ color: 'var(--text-dark)', marginBottom: '15px' }}>Débarras Pro Sàrl</h4>
+                  <h4 style={{ color: 'var(--text-dark)', marginBottom: '15px' }}>Suisse Débarras</h4>
                   <div style={{ fontSize: '14px', lineHeight: '1.6' }}>
                     <div style={{ marginBottom: '10px' }}>
                       <strong>Adresse:</strong><br/>
-                      Route Cantonale 15<br/>
-                      1950 Sion, Valais<br/>
-                      Suisse
+                      Avenue des Communes-Réunies 43<br/>
+                      1212 Grand-Lancy<br/>
+                      Genève, Suisse
                     </div>
                     
                     <div style={{ marginBottom: '10px' }}>
                       <strong>Téléphone:</strong><br/>
-                      <a href="tel:+41270001234" style={{ color: 'var(--link-blue)' }}>
-                        +41 27 000 12 34
+                      <a href="tel:+41229391549" style={{ color: 'var(--link-blue)' }}>
+                        +41 22 939 15 49
                       </a>
                     </div>
                     
@@ -110,7 +110,7 @@ const ContactSwiss = () => {
                     <div>
                       <strong>Horaires:</strong><br/>
                       Lundi - Vendredi: 8h00 - 18h00<br/>
-                      Samedi: 8h00 - 16h00<br/>
+                      Samedi: Sur rendez-vous<br/>
                       Dimanche: Fermé
                     </div>
                   </div>
@@ -123,7 +123,7 @@ const ContactSwiss = () => {
                     contactez-nous 24h/7j au:
                   </p>
                   <p style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--swiss-red)' }}>
-                    +41 79 123 45 67
+                    +41 22 939 15 49
                   </p>
                 </div>
               </div>
