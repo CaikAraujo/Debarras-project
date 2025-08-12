@@ -1,6 +1,27 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
 const HeroSwiss = () => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  
+  const images = [
+    '/images/carrossel/geneva-947315_1920.jpg',
+    '/images/carrossel/switzerland-5414899_1920.jpg',
+    '/images/carrossel/matterhorn-3019429_1920.jpg',
+    '/images/carrossel/mountains-7963159_1920.jpg',
+    '/images/carrossel/buildings-6262595_1920.jpg',
+    '/images/carrossel/pexels-tiohugo-16146279.jpg'
+  ]
+
+  // Navegação automática a cada 3 segundos
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % images.length)
+    }, 3000)
+
+    return () => clearInterval(timer)
+  }, [images.length])
   return (
     <div className="admin-container">
       <div className="admin-main-layout">
@@ -96,18 +117,32 @@ const HeroSwiss = () => {
             </div>
           </div>
           
-          {/* Article principal avec image */}
+          {/* Article principal avec carrossel d'images */}
           <div className="admin-section" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '20px' }}>
             <div style={{ 
-              background: '#f0f0f0', 
+              position: 'relative',
               height: '200px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#999',
-              fontSize: '14px'
+              overflow: 'hidden',
+              borderRadius: '8px',
+              border: '2px solid #ddd'
             }}>
-              Image débarras<br/>professionnel
+              {images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Image débarras ${index + 1}`}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    opacity: index === currentSlide ? 1 : 0,
+                    transition: 'opacity 1s ease-in-out'
+                  }}
+                />
+              ))}
             </div>
             <div>
               <h2 style={{ color: 'var(--link-blue)' }}>

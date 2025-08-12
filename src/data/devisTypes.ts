@@ -13,6 +13,7 @@ export interface Canton {
   id: string
   name: string
   image: string
+  basePrice: number
 }
 
 export interface QuantityOption {

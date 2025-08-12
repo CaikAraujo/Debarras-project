@@ -13,13 +13,13 @@ export const rooms: Room[] = [
 ]
 
 export const cantons: Canton[] = [
-  { id: 'geneve', name: 'Genève', image: '/images/escudos/geneve.png' },
-  { id: 'vaud', name: 'Vaud', image: '/images/escudos/vaud.png' },
-  { id: 'valais', name: 'Valais', image: '/images/escudos/valais.png' },
-  { id: 'fribourg', name: 'Fribourg', image: '/images/escudos/fribourg.svg' },
-  { id: 'neuchatel', name: 'Neuchâtel', image: '/images/escudos/neuchatel.png' },
-  { id: 'jura', name: 'Jura', image: '/images/escudos/jura.svg' },
-  { id: 'berne', name: 'Berne', image: '/images/escudos/berne.svg' }
+  { id: 'geneve', name: 'Genève', image: '/images/escudos/geneve.png', basePrice: 180 },
+  { id: 'vaud', name: 'Vaud', image: '/images/escudos/vaud.png', basePrice: 280 },
+  { id: 'valais', name: 'Valais', image: '/images/escudos/valais.png', basePrice: 540 },
+  { id: 'fribourg', name: 'Fribourg', image: '/images/escudos/fribourg.svg', basePrice: 540 },
+  { id: 'neuchatel', name: 'Neuchâtel', image: '/images/escudos/neuchatel.png', basePrice: 480 },
+  { id: 'jura', name: 'Jura', image: '/images/escudos/jura.svg', basePrice: 620 },
+  { id: 'berne', name: 'Berne', image: '/images/escudos/berne.svg', basePrice: 600 }
 ]
 
 export const quantities: QuantityOption[] = [

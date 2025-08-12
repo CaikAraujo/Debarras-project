@@ -1,11 +1,32 @@
 import { useState, useCallback } from 'react'
 import type { Selection } from '@/lib/schemas'
+import { cantons } from '@/data/devisData'
 
 export function useDevisState() {
   const [currentStep, setCurrentStep] = useState(0)
   const [selectedCanton, setSelectedCanton] = useState<string | null>(null)
   const [selections, setSelections] = useState<Selection[]>([])
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
+
+  // Função para calcular o preço total incluindo o valor base do cantão
+  const calculateTotalPrice = useCallback(() => {
+    if (!selectedCanton) return 0
+    
+    const canton = cantons.find(c => c.id === selectedCanton)
+    if (!canton) return 0
+    
+    let total = canton.basePrice // Começa com o valor base do cantão
+    
+    // Adiciona o preço de cada seleção
+    selections.forEach(selection => {
+      const quantityConfig = { 5: 150, 10: 280, 15: 400 }[selection.quantity]
+      if (quantityConfig) {
+        total += Math.round(quantityConfig * 0.5)
+      }
+    })
+    
+    return total
+  }, [selectedCanton, selections])
 
   const selectCanton = useCallback((cantonId: string) => {
     setSelectedCanton(cantonId)
@@ -85,6 +106,13 @@ export function useDevisState() {
     return selections.filter(s => s.roomId === 'bedroom').length
   }, [selections])
 
+  // Função para obter o valor base do cantão selecionado
+  const getCantonBasePrice = useCallback(() => {
+    if (!selectedCanton) return 0
+    const canton = cantons.find(c => c.id === selectedCanton)
+    return canton?.basePrice || 0
+  }, [selectedCanton])
+
   return {
     currentStep,
     selectedCanton,
@@ -97,6 +125,8 @@ export function useDevisState() {
     selectedDate,
     selectDate,
     isRoomSelected,
-    getBedroomCount
+    getBedroomCount,
+    calculateTotalPrice,
+    getCantonBasePrice
   }
 } 

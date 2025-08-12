@@ -1,6 +1,28 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
 const AboutSwiss = () => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  
+  const images = [
+    '/images/carrossel/geneva-947315_1920.jpg',
+    '/images/carrossel/switzerland-5414899_1920.jpg',
+    '/images/carrossel/matterhorn-3019429_1920.jpg',
+    '/images/carrossel/mountains-7963159_1920.jpg',
+    '/images/carrossel/buildings-6262595_1920.jpg',
+    '/images/carrossel/pexels-tiohugo-16146279.jpg'
+  ]
+
+  // Navegação automática a cada 6 segundos
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % images.length)
+    }, 6000)
+
+    return () => clearInterval(timer)
+  }, [images.length])
+
   return (
     <section className="section-swiss bg-main border-b border-gray-200" id="about" style={{paddingTop: 0, overflowX: 'hidden'}}>
       <div className="container-swiss">
@@ -15,10 +37,6 @@ const AboutSwiss = () => {
             right: '50%',
             marginLeft: '-50vw',
             marginRight: '-50vw',
-            backgroundImage: "url('/images/bg-a-propos.png')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
             overflow: 'hidden',
             marginBottom: '0',
             marginTop: '0',
@@ -26,18 +44,39 @@ const AboutSwiss = () => {
             paddingBottom: '0',
           }}
         >
+                     {/* Carrossel de imagens de fundo */}
+           {images.map((image, index) => (
+             <div
+               key={index}
+               style={{
+                 position: 'absolute',
+                 top: 0,
+                 left: 0,
+                 width: '100%',
+                 height: '100%',
+                 backgroundImage: `url('${image}')`,
+                 backgroundSize: 'cover',
+                                   backgroundPosition: index === 0 ? 'center 85%' : 'center',
+                 backgroundRepeat: 'no-repeat',
+                 opacity: index === currentSlide ? 1 : 0,
+                 transition: 'opacity 1s ease-in-out',
+                 zIndex: index === currentSlide ? 1 : 0
+               }}
+             />
+           ))}
+          
           <div style={{
             position: 'absolute',
             top: 0,
             left: 0,
             width: '100%',
             height: '100%',
-            background: 'rgba(255,255,255,0.82)',
-            zIndex: 0,
+            background: 'rgba(255,255,255,0.6)',
+            zIndex: 2,
           }} />
           <div style={{
             position: 'relative',
-            zIndex: 1,
+            zIndex: 3,
             maxWidth: '900px',
             margin: '0 auto',
             padding: '32px 16px',
@@ -45,7 +84,7 @@ const AboutSwiss = () => {
           }}>
             <h2 className="text-primary mb-6" style={{fontSize: '2rem'}}>Suisse Débarras – Votre partenaire de confiance en Suisse romande</h2>
             <p className="text-base text-secondary leading-relaxed mb-3" style={{fontSize: '1.05rem'}}>
-              Avec près de 10 ans d’expérience et des succursales dans chaque canton romand <br/>
+              Avec près de 10 ans d'expérience et des succursales dans chaque canton romand <br/>
               <span style={{fontWeight:600}}>(Genève, Vaud, Valais, Fribourg, Neuchâtel, Jura, Berne)</span>,<br/>
               Suisse Débarras est votre solution rapide, efficace et discrète pour tout type de débarras.
             </p>

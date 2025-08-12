@@ -25,6 +25,20 @@ export default function SelectionsSummary({
 }: SelectionsSummaryProps) {
   const currentCanton = cantons.find(c => c.id === selectedCanton)
 
+  // Função para calcular o preço individual de cada seleção
+  const calculateItemPrice = (selection: Selection) => {
+    const canton = cantons.find(c => c.id === selectedCanton)
+    if (!canton) return 0
+    
+    // Valores hardcoded para as quantidades
+    const quantityPrices = { 5: 150, 10: 280, 15: 400 }
+    const quantityPrice = quantityPrices[selection.quantity as keyof typeof quantityPrices]
+    if (!quantityPrice) return 0
+    
+    // Fórmula: cantonBasePrice + (quantidade * 0.5)
+    return Math.round(canton.basePrice + (quantityPrice * 0.5))
+  }
+
   return (
     <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gray-200 px-4">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 md:mb-6 gap-2">
@@ -40,12 +54,26 @@ export default function SelectionsSummary({
           <span>Canton: {currentCanton?.name}</span>
         </div>
       </div>
+
+      {/* Valor base do cantão */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+        <div className="text-center">
+          <p className="text-sm text-blue-700 mb-1">Valeur de base du canton</p>
+          <div className="text-2xl font-bold text-blue-800">
+            {currentCanton?.basePrice} CHF
+          </div>
+          <p className="text-xs text-blue-600 mt-1">
+            Prix de base pour {currentCanton?.name} (déjà inclus dans le total)
+          </p>
+        </div>
+      </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-6">
         {selections.map((selection) => {
           const room = rooms.find(r => r.id === selection.roomId)
           const quantityData = quantities.find(q => q.value === selection.quantity)
           const IconComponent = room?.icon
+          const itemPrice = calculateItemPrice(selection)
           
           // Título do quarto com numeração se necessário
           const roomTitle = selection.roomId === 'bedroom' && selection.roomNumber 
@@ -61,6 +89,7 @@ export default function SelectionsSummary({
                 <div className="min-w-0 flex-1">
                   <div className="font-semibold text-primary text-sm md:text-base truncate">{roomTitle}</div>
                   <div className="text-xs md:text-sm text-secondary truncate">{quantityData?.label}</div>
+                  <div className="text-sm font-bold text-blue-600">{itemPrice} CHF</div>
                 </div>
               </div>
               <div className="flex items-center space-x-2 md:space-x-3 flex-shrink-0">

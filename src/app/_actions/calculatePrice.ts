@@ -8,7 +8,15 @@ const PRICING = {
     { quantity: 10, price: 280 },
     { quantity: 15, price: 400 }
   ],
-  multipliers: { geneve: 1.3, vaud: 1.2, valais: 1.0, fribourg: 1.1, neuchatel: 1.15, jura: 0.9, berne: 1.25 }
+  cantonBasePrices: { 
+    geneve: 180, 
+    vaud: 280, 
+    valais: 540, 
+    fribourg: 540, 
+    neuchatel: 480, 
+    jura: 620, 
+    berne: 600 
+  }
 } as const
 
 const requestCounts = new Map<string, { count: number, reset: number }>()
@@ -35,7 +43,7 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
     }
 
     const { selections, cantonId } = PriceCalculationSchema.parse(data)
-    const multiplier = PRICING.multipliers[cantonId]
+    const cantonBasePrice = PRICING.cantonBasePrices[cantonId]
     const seenNonBedroomRooms = new Set<string>()
 
     let total = 0
@@ -56,8 +64,9 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
         return { success: false, error: `Quantidade inválida: ${selection.quantity}` }
       }
 
-      const finalPrice = Math.round(priceConfig.price * multiplier)
-      breakdown.push({ ...selection, basePrice: priceConfig.price, finalPrice })
+      // Calcular preço baseado no valor do cantão + quantidade
+      const finalPrice = Math.round(cantonBasePrice + (priceConfig.price * 0.5))
+      breakdown.push({ ...selection, basePrice: cantonBasePrice, finalPrice })
       total += finalPrice
     }
 

@@ -117,17 +117,17 @@ export default function OrderSummary({
             </Card.Header>
             <Card.Content className="space-y-4">
               <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-gray-600" />
+                <div className="grid grid-cols-2 items-center p-3 bg-gray-50 rounded-lg gap-4">
+                  <div className="flex items-center gap-3">
+                    <MapPin className="w-4 h-4 text-gray-600 flex-shrink-0" />
                     <span className="font-semibold text-primary text-sm">Canton</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 flex-shrink-0">
+                  <div className="flex items-center gap-3 justify-end">
+                    <div className="w-6 h-6 flex-shrink-0">
                       <Image 
                         src={currentCanton?.image || ''} 
                         alt={currentCanton?.name || ''}
-                        width={20} height={20}
+                        width={24} height={24}
                         className="object-contain"
                       />
                     </div>
@@ -136,14 +136,14 @@ export default function OrderSummary({
                 </div>
 
                 {selectedDate && (
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-gray-600" />
+                  <div className="grid grid-cols-2 items-center p-3 bg-gray-50 rounded-lg gap-4">
+                    <div className="flex items-center gap-3">
+                      <Calendar className="w-4 h-4 text-gray-600 flex-shrink-0" />
                       <span className="font-semibold text-primary text-sm">Date</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-3 h-3 text-gray-500" />
+                    <div className="flex items-center gap-3 justify-end">
                       <span className="font-bold text-primary text-sm">{format(selectedDate, 'd MMM yyyy', { locale: fr })}</span>
+                      <Clock className="w-4 h-4 text-gray-500 flex-shrink-0" />
                     </div>
                   </div>
                 )}

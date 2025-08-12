@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useDevisState } from '@/hooks/useDevisState'
-import { usePriceCalculation } from '@/hooks/usePriceCalculation'
 import ProgressStepper from '@/components/devis/ProgressStepper'
 import CantonSelector from '@/components/devis/CantonSelector'
 import RoomSelector from '@/components/devis/RoomSelector'
@@ -28,7 +27,8 @@ export default function DevisSwiss() {
     selectedDate,
     selectDate,
     isRoomSelected,
-    getBedroomCount
+    getBedroomCount,
+    calculateTotalPrice
   } = useDevisState()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -78,13 +78,6 @@ export default function DevisSwiss() {
     }
   }, [selections, currentStep])
 
-  const {
-    calculatedPrice,
-    isCalculating,
-    isProcessingCheckout,
-    handleSecureCheckout
-  } = usePriceCalculation({ selections, selectedCanton, selectedDate })
-
   const handleRoomSelect = (roomId: string, quantity: number) => {
     addSelection({ 
       roomId: roomId as any, 
@@ -129,8 +122,8 @@ export default function DevisSwiss() {
                     <SelectionsSummary
                       selectedCanton={selectedCanton}
                       selections={selections}
-                      calculatedPrice={calculatedPrice}
-                      isCalculating={isCalculating}
+                      calculatedPrice={calculateTotalPrice()}
+                      isCalculating={false}
                       onRemoveSelection={removeSelection}
                       onContinue={() => goToStep(3)}
                       onChangeCanton={resetAll}
@@ -160,10 +153,13 @@ export default function DevisSwiss() {
                 selectedCanton={selectedCanton}
                 selections={selections}
                 selectedDate={selectedDate}
-                calculatedPrice={calculatedPrice}
-                isCalculating={isCalculating}
-                isProcessingCheckout={isProcessingCheckout}
-                onCheckout={handleSecureCheckout}
+                calculatedPrice={calculateTotalPrice()}
+                isCalculating={false}
+                isProcessingCheckout={false}
+                onCheckout={() => {
+                  // Implementar checkout aqui se necessário
+                  alert('Fonctionnalité de checkout à implémenter')
+                }}
                 onAddRoom={() => setIsModalOpen(true)}
                 onRemoveRoom={removeSelection}
                 onChangeCanton={resetAll}

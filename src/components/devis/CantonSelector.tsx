@@ -7,6 +7,7 @@ interface CantonSelectorProps {
 }
 
 export default function CantonSelector({ onSelectCanton }: CantonSelectorProps) {
+
   return (
     <div className="max-w-4xl mx-auto px-4">
       <div className="text-center mb-6 md:mb-8">
