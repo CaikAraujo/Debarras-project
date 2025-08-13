@@ -44,14 +44,14 @@ export default function RoomSelector({ onSelectRoom, selections, isRoomSelected,
                 ? 'bg-gray-100 cursor-not-allowed opacity-50 pointer-events-none' 
                 : 'hover:shadow-lg hover:scale-105'
               }
-              ${isBedroom && bedroomCount > 0 ? 'ring-2 ring-red-200 bg-red-50' : ''}
-              ${isExpanded ? 'ring-2 ring-red-500 shadow-lg' : ''}
+              ${isBedroom && bedroomCount > 0 ? 'ring-2 ring-green-200 bg-green-50' : ''}
+              ${isExpanded ? `${isBedroom ? 'ring-2 ring-green-500' : 'ring-2 ring-red-500'} shadow-lg` : ''}
             `}
             onClick={() => (!isSelected || isBedroom) && handleRoomClick(room.id)}
           >
             {/* Badge para quartos múltiplos */}
             {isBedroom && bedroomCount > 0 && (
-              <div className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 md:w-8 md:h-8 flex items-center justify-center text-xs md:text-sm font-bold">
+              <div className="absolute -top-2 -right-2 bg-green-600 text-white rounded-full w-6 h-6 md:w-8 md:h-8 flex items-center justify-center text-xs md:text-sm font-bold">
                 {bedroomCount}
               </div>
             )}
@@ -59,8 +59,8 @@ export default function RoomSelector({ onSelectRoom, selections, isRoomSelected,
             <div className="mb-3 md:mb-4 flex justify-center">
               {isBedroom && bedroomCount > 0 ? (
                 <div className="relative">
-                  <room.icon size={40} className="text-red-600 md:w-12 md:h-12" />
-                  <Plus size={16} className="absolute -bottom-1 -right-1 bg-red-500 text-white rounded-full p-1 md:w-5 md:h-5" />
+                  <room.icon size={40} className="text-green-600 md:w-12 md:h-12" />
+                  <Plus size={16} className="absolute -bottom-1 -right-1 bg-green-600 text-white rounded-full p-1 md:w-5 md:h-5" />
                 </div>
               ) : (
                 <room.icon 
@@ -75,7 +75,7 @@ export default function RoomSelector({ onSelectRoom, selections, isRoomSelected,
             }`}>
               {room.name}
               {isBedroom && bedroomCount > 0 && (
-                <span className="text-xs md:text-sm font-normal text-red-600 block">
+                <span className="text-xs md:text-sm font-normal text-green-600 block">
                   {bedroomCount} sélectionné{bedroomCount > 1 ? 's' : ''}
                 </span>
               )}

@@ -14,18 +14,18 @@ const NavSwiss = () => {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
               {/* Logo da Empresa */}
-              <div style={{ 
-                width: '60px', 
-                height: '60px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center'
-              }}>
+	              <div style={{ 
+	                width: '96px', 
+	                height: '96px', 
+	                display: 'flex', 
+	                alignItems: 'center', 
+	                justifyContent: 'center'
+	              }}>
                 <Image 
                   src="/images/logo debarras.png" 
                   alt="Suisse Débarras Logo" 
-                  width={60}
-                  height={60}
+	                  width={96}
+	                  height={96}
                   style={{ 
                     objectFit: 'contain' 
                   }}
@@ -34,13 +34,10 @@ const NavSwiss = () => {
               
               {/* Textos do header */}
               <div>
-                <div style={{ fontSize: '13px', color: 'var(--text-medium)', marginBottom: '2px' }}>
-                  Service Professionnel Suisse
-                </div>
                 <div style={{ fontSize: '18px', fontWeight: 'bold', color: 'var(--text-dark)' }}>
                   Suisse Débarras
                 </div>
-                <div style={{ fontSize: '14px', color: 'var(--text-medium)' }}>
+	                <div style={{ fontSize: '12px', color: 'var(--text-medium)' }}>
                   Solutions de débarras et nettoyage
                 </div>
               </div>

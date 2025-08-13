@@ -27,16 +27,11 @@ export default function SelectionsSummary({
 
   // Função para calcular o preço individual de cada seleção
   const calculateItemPrice = (selection: Selection) => {
-    const canton = cantons.find(c => c.id === selectedCanton)
-    if (!canton) return 0
-    
-    // Valores hardcoded para as quantidades
+    // Mostrar apenas o subtotal do item (sem o valor base do cantão)
     const quantityPrices = { 5: 150, 10: 280, 15: 400 }
     const quantityPrice = quantityPrices[selection.quantity as keyof typeof quantityPrices]
     if (!quantityPrice) return 0
-    
-    // Fórmula: cantonBasePrice + (quantidade * 0.5)
-    return Math.round(canton.basePrice + (quantityPrice * 0.5))
+    return Math.round(quantityPrice * 0.5)
   }
 
   return (
@@ -55,16 +50,27 @@ export default function SelectionsSummary({
         </div>
       </div>
 
-      {/* Valor base do cantão */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-        <div className="text-center">
-          <p className="text-sm text-blue-700 mb-1">Valeur de base du canton</p>
-          <div className="text-2xl font-bold text-blue-800">
-            {currentCanton?.basePrice} CHF
+      {/* HUD de valores: base do cantão + total estimé */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="text-center">
+            <p className="text-sm text-blue-700 mb-1">Valeur de base du canton</p>
+            <div className="text-2xl font-bold text-blue-800">
+              {currentCanton?.basePrice} CHF
+            </div>
+            <p className="text-xs text-blue-600 mt-1">
+              Prix de base pour {currentCanton?.name} (déjà inclus dans le total)
+            </p>
           </div>
-          <p className="text-xs text-blue-600 mt-1">
-            Prix de base pour {currentCanton?.name} (déjà inclus dans le total)
-          </p>
+        </div>
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4" aria-live="polite">
+          <div className="text-center">
+            <p className="text-sm text-red-700 mb-1">Total estimé</p>
+            <div className="text-2xl font-bold text-red-700">
+              {isCalculating ? '...' : `${calculatedPrice} CHF`}
+            </div>
+            <p className="text-xs text-red-600 mt-1">Mise à jour selon vos sélections</p>
+          </div>
         </div>
       </div>
       

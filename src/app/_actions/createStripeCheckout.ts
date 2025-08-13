@@ -33,11 +33,23 @@ export async function createStripeCheckout(data: CheckoutData) {
             name: roomTitle,
             description: `${item.quantity} objets à enlever.`,
           },
-          unit_amount: item.finalPrice * 100, // Usar o finalPrice do breakdown
+          unit_amount: item.finalPrice * 100,
         },
         quantity: 1,
       }
     })
+    
+    // Adiciona uma linha separada para o valor base do cantão
+    if (priceResult.cantonBasePrice) {
+      lineItems.unshift({
+        price_data: {
+          currency: 'chf',
+          product_data: { name: 'Frais de base du canton', description: 'Montant fixe requis par le canton sélectionné.' },
+          unit_amount: priceResult.cantonBasePrice * 100,
+        },
+        quantity: 1,
+      })
+    }
     
     // Verificação de segurança: o total dos line items deve corresponder ao total calculado
     const totalFromLineItems = lineItems.reduce((acc, item) => acc + item.price_data.unit_amount, 0)

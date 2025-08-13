@@ -49,6 +49,9 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
     let total = 0
     const breakdown = []
 
+    // Soma apenas dos itens (sem o valor base do cantão)
+    let itemsSubtotal = 0
+
     for (const selection of selections) {
       // Para quartos, permitir múltiplas seleções
       // Para outros cômodos, verificar duplicatas
@@ -64,17 +67,20 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
         return { success: false, error: `Quantidade inválida: ${selection.quantity}` }
       }
 
-      // Calcular preço baseado no valor do cantão + quantidade
-      const finalPrice = Math.round(cantonBasePrice + (priceConfig.price * 0.5))
-      breakdown.push({ ...selection, basePrice: cantonBasePrice, finalPrice })
-      total += finalPrice
+      // Preço do item NÃO inclui o valor base do cantão
+      const itemPrice = Math.round(priceConfig.price * 0.5)
+      breakdown.push({ ...selection, basePrice: cantonBasePrice, finalPrice: itemPrice })
+      itemsSubtotal += itemPrice
     }
+
+    // Total = valor base do cantão + soma dos itens
+    total = cantonBasePrice + itemsSubtotal
 
     if (total <= 0 || total > 50000) {
       return { success: false, error: 'Total inválido' }
     }
 
-    return { success: true, totalPrice: total, breakdown }
+    return { success: true, totalPrice: total, breakdown, cantonBasePrice }
 
   } catch (error) {
     console.error('Erro ao calcular o preço:', error)
