@@ -95,6 +95,42 @@ export default function DevisSwiss() {
     })
   }
 
+  // Função para navegar entre steps já completados
+  const handleStepClick = (stepId: number) => {
+    console.log('Step clicked:', stepId, 'Current step:', currentStep)
+    
+    // Validações específicas para cada step
+    if (stepId === 0) {
+      // Sempre pode voltar para seleção de cantão
+      console.log('Navigating to canton selection')
+      goToStep(stepId)
+    } else if (stepId === 1) {
+      // Só pode ir para seleção de objetos se tiver cantão selecionado
+      if (selectedCanton) {
+        console.log('Navigating to room selection')
+        goToStep(stepId)
+      } else {
+        console.log('Cannot navigate to room selection: no canton selected')
+      }
+    } else if (stepId === 3) {
+      // Só pode ir para seleção de data se tiver objetos selecionados
+      if (selectedCanton && selections.length > 0) {
+        console.log('Navigating to date selection')
+        goToStep(stepId)
+      } else {
+        console.log('Cannot navigate to date selection: missing canton or selections')
+      }
+    } else if (stepId === 4) {
+      // Só pode ir para confirmação se tiver tudo selecionado
+      if (selectedCanton && selections.length > 0 && selectedDate) {
+        console.log('Navigating to confirmation')
+        goToStep(stepId)
+      } else {
+        console.log('Cannot navigate to confirmation: missing required data')
+      }
+    }
+  }
+
   return (
     <section className="section-swiss bg-white">
       <div className="container-swiss">
@@ -106,7 +142,7 @@ export default function DevisSwiss() {
             </p>
           </div>
 
-          <ProgressStepper currentStep={currentStep} />
+          <ProgressStepper currentStep={currentStep} onStepClick={handleStepClick} />
 
           <div ref={stepContentRef}>
             {currentStep === 0 && (

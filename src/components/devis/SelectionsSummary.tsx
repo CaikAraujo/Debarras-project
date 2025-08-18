@@ -4,6 +4,51 @@ import { rooms, quantities, cantons } from '@/data/devisData'
 import type { Selection } from '@/lib/schemas'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 
+const PRICING = {
+  rooms: {
+    kitchen: { // Cozinha
+      5: 580,
+      10: 780,
+      15: 980
+    },
+    bedroom: { // Quarto (Chambre)
+      5: 580,
+      10: 780,
+      15: 980
+    },
+    living: { // Salon
+      5: 580,
+      10: 780,
+      15: 980
+    },
+    office: { // Bureau
+      5: 580,
+      10: 780,
+      15: 980
+    },
+    garage: { // Garage
+      5: 350,
+      10: 480,
+      15: 690
+    },
+    basement: { // Cave
+      5: 350,
+      10: 480,
+      15: 690
+    },
+    garden: { // Jardin
+      5: 350,
+      10: 480,
+      15: 690
+    },
+    bathroom: { // Salle de bain
+      5: 350,
+      10: 480,
+      15: 690
+    }
+  }
+} as const
+
 interface SelectionsSummaryProps {
   selectedCanton: string
   selections: Selection[]
@@ -27,11 +72,11 @@ export default function SelectionsSummary({
 
   // Função para calcular o preço individual de cada seleção
   const calculateItemPrice = (selection: Selection) => {
-    // Mostrar apenas o subtotal do item (sem o valor base do cantão)
-    const quantityPrices = { 5: 150, 10: 280, 15: 400 }
-    const quantityPrice = quantityPrices[selection.quantity as keyof typeof quantityPrices]
-    if (!quantityPrice) return 0
-    return Math.round(quantityPrice * 0.5)
+    const roomPricing = PRICING.rooms[selection.roomId]
+    if (roomPricing) {
+      return roomPricing[selection.quantity as keyof typeof roomPricing] || 0
+    }
+    return 0
   }
 
   return (

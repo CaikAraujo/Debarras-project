@@ -2,13 +2,58 @@ import { useState, useCallback } from 'react'
 import type { Selection } from '@/lib/schemas'
 import { cantons } from '@/data/devisData'
 
+const PRICING = {
+  rooms: {
+    kitchen: { // Cozinha
+      5: 580,
+      10: 780,
+      15: 980
+    },
+    bedroom: { // Quarto (Chambre)
+      5: 580,
+      10: 780,
+      15: 980
+    },
+    living: { // Salon
+      5: 580,
+      10: 780,
+      15: 980
+    },
+    office: { // Bureau
+      5: 580,
+      10: 780,
+      15: 980
+    },
+    garage: { // Garage
+      5: 350,
+      10: 480,
+      15: 690
+    },
+    basement: { // Cave
+      5: 350,
+      10: 480,
+      15: 690
+    },
+    garden: { // Jardin
+      5: 350,
+      10: 480,
+      15: 690
+    },
+    bathroom: { // Salle de bain
+      5: 350,
+      10: 480,
+      15: 690
+    }
+  }
+} as const
+
 export function useDevisState() {
   const [currentStep, setCurrentStep] = useState(0)
   const [selectedCanton, setSelectedCanton] = useState<string | null>(null)
   const [selections, setSelections] = useState<Selection[]>([])
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
 
-  // Função para calcular o preço total incluindo o valor base do cantão
+  // Função para calcular o preço total baseado no cantão + quartos e quantidades selecionados
   const calculateTotalPrice = useCallback(() => {
     if (!selectedCanton) return 0
     
@@ -17,11 +62,14 @@ export function useDevisState() {
     
     let total = canton.basePrice // Começa com o valor base do cantão
     
-    // Adiciona o preço de cada seleção
+    // Adiciona o preço de cada seleção baseado no quarto e quantidade
     selections.forEach(selection => {
-      const quantityConfig = { 5: 150, 10: 280, 15: 400 }[selection.quantity]
-      if (quantityConfig) {
-        total += Math.round(quantityConfig * 0.5)
+      const roomPricing = PRICING.rooms[selection.roomId]
+      if (roomPricing) {
+        const price = roomPricing[selection.quantity as keyof typeof roomPricing]
+        if (price) {
+          total += price
+        }
       }
     })
     
@@ -86,7 +134,9 @@ export function useDevisState() {
   }, [])
 
   const goToStep = useCallback((step: number) => {
+    console.log('useDevisState: goToStep called with step:', step, 'Current step before:', currentStep)
     setCurrentStep(step)
+    console.log('useDevisState: setCurrentStep called, new step should be:', step)
   }, [])
 
   const resetAll = useCallback(() => {
@@ -105,6 +155,15 @@ export function useDevisState() {
   const getBedroomCount = useCallback(() => {
     return selections.filter(s => s.roomId === 'bedroom').length
   }, [selections])
+
+  // Função para obter o preço de um quarto específico com quantidade
+  const getRoomPrice = useCallback((roomId: Selection['roomId'], quantity: number) => {
+    const roomPricing = PRICING.rooms[roomId]
+    if (roomPricing) {
+      return roomPricing[quantity as keyof typeof roomPricing] || 0
+    }
+    return 0
+  }, [])
 
   // Função para obter o valor base do cantão selecionado
   const getCantonBasePrice = useCallback(() => {
@@ -127,6 +186,7 @@ export function useDevisState() {
     isRoomSelected,
     getBedroomCount,
     calculateTotalPrice,
+    getRoomPrice,
     getCantonBasePrice
   }
 } 
