@@ -18,16 +18,17 @@ export default function FinChantierPage() {
             <div className="flex-1 max-w-2xl">
               <h2 className="text-xl font-bold text-primary mb-2">Post-construction</h2>
               <p className="text-secondary text-lg">
-                Élimination des poussières, résidus et gravats pour livrer un espace propre et prêt à l’emploi.
+                Nettoyage complet après chantier: poussières, résidus et traces sont supprimés pour une livraison impeccable de
+                vos espaces.
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
               <Image
-                src="/images/services/Nettoyage de Fin de Chantier/Post-construction.jpg"
+                src="/images/services/Nettoyage-de-Fin-de-Chantier/Post-construction.jpg"
                 alt="Post-construction"
-                width={400}
-                height={260}
-                className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                width={640}
+                height={360}
+                className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
               />
             </div>
           </div>
@@ -41,16 +42,17 @@ export default function FinChantierPage() {
               <div className="flex-1 max-w-2xl">
                 <h2 className="text-xl font-bold text-primary mb-2">Élimination gravats</h2>
                 <p className="text-secondary text-lg">
-                  Prise en charge de l’évacuation des gravats et déchets de chantier dans le respect des normes environnementales.
+                  Évacuation sécurisée des gravats vers des centres agréés. Nous gérons la logistique et la traçabilité, du
+                  chargement au dépôt.
                 </p>
               </div>
               <div className="flex-1 flex justify-center max-w-2xl">
                 <Image
-                  src="/images/services/Nettoyage de Fin de Chantier/Élimination gravats.jpg"
+                  src="/images/services/Nettoyage-de-Fin-de-Chantier/Élimination gravats.jpg"
                   alt="Élimination gravats"
-                  width={400}
-                  height={260}
-                  className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                  width={640}
+                  height={360}
+                  className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
                 />
               </div>
             </div>
@@ -61,16 +63,17 @@ export default function FinChantierPage() {
             <div className="flex-1 max-w-2xl">
               <h2 className="text-xl font-bold text-primary mb-2">Remise en état</h2>
               <p className="text-secondary text-lg">
-                Remise en état des lieux pour une réception sans défaut, avec finitions soignées et contrôle qualité.
+                Dernières finitions, dépoussiérage minutieux et contrôle qualité: nous préparons vos locaux pour une prise en
+                main immédiate.
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
               <Image
-                src="/images/services/Nettoyage de Fin de Chantier/remise en état.jpg"
+                src="/images/services/Nettoyage-de-Fin-de-Chantier/Remise en état.jpg"
                 alt="Remise en état"
-                width={400}
-                height={260}
-                className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                width={640}
+                height={360}
+                className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
               />
             </div>
           </div>

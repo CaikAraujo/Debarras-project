@@ -18,16 +18,17 @@ export default function EntreprisesPage() {
             <div className="flex-1 max-w-2xl">
               <h2 className="text-xl font-bold text-primary mb-2">Bureaux et open-space</h2>
               <p className="text-secondary text-lg">
-                Débarras rapide et discret de bureaux, open-spaces et espaces professionnels, avec respect de la confidentialité et des horaires d’activité.
+                Intervention rapide et discrète dans vos bureaux et open-spaces, sans perturber l’activité. Nous organisons le
+                tri, l’évacuation et la remise en ordre des postes de travail avec le plus grand soin et confidentialité.
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
               <Image
-                src="/images/services/Débarras pour Entreprises/Bureaux et open-space.jpg"
+                src="/images/services/Débarras-pour-Entreprises/Bureaux et open-space.jpg"
                 alt="Bureaux et open-space"
-                width={400}
-                height={260}
-                className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                width={640}
+                height={360}
+                className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
               />
             </div>
           </div>
@@ -41,16 +42,17 @@ export default function EntreprisesPage() {
               <div className="flex-1 max-w-2xl">
                 <h2 className="text-xl font-bold text-primary mb-2">Mobilier professionnel</h2>
                 <p className="text-secondary text-lg">
-                  Gestion complète du mobilier usagé, démontage, évacuation et recyclage selon les normes suisses.
+                  Démontage sécurisé, reprise et valorisation de votre mobilier professionnel. Acheminement vers des filières
+                  agréées, avec traçabilité et objectif de réemploi lorsque c’est possible.
                 </p>
               </div>
               <div className="flex-1 flex justify-center max-w-2xl">
                 <Image
-                  src="/images/services/Débarras pour Entreprises/Mobilier professionnel.jpg"
+                  src="/images/services/Débarras-pour-Entreprises/Mobilier professionnel.jpg"
                   alt="Mobilier professionnel"
-                  width={400}
-                  height={260}
-                  className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                  width={640}
+                  height={360}
+                  className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
                 />
               </div>
             </div>
@@ -61,16 +63,17 @@ export default function EntreprisesPage() {
             <div className="flex-1 max-w-2xl">
               <h2 className="text-xl font-bold text-primary mb-2">Archives et documents</h2>
               <p className="text-secondary text-lg">
-                Prise en charge sécurisée des archives et documents confidentiels, avec possibilité de destruction certifiée.
+                Prise en charge et acheminement des archives en toute confidentialité. Sur demande, destruction certifiée et
+                attestation fournie pour vos conformités internes.
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
               <Image
-                src="/images/services/Débarras pour Entreprises/Archives et documents.jpg"
+                src="/images/services/Débarras-pour-Entreprises/Archives et documents.jpg"
                 alt="Archives et documents"
-                width={400}
-                height={260}
-                className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                width={640}
+                height={360}
+                className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
               />
             </div>
           </div>

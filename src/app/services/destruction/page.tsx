@@ -18,16 +18,17 @@ export default function DestructionPage() {
             <div className="flex-1 max-w-2xl">
               <h2 className="text-xl font-bold text-primary mb-2">Documents confidentiels</h2>
               <p className="text-secondary text-lg">
-                Prise en charge, transport et destruction de documents confidentiels avec certificat de destruction à l’appui.
+                Collecte scellée, chaîne de garde maîtrisée et destruction sécurisée de vos documents. Un certificat officiel
+                atteste chaque intervention.
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
               <Image
-                src="/images/services/Destruction de Matériel/Documents confidentiels.jpg"
+                src="/images/services/Destruction-de-Matériel/Documents confidentiels.jpg"
                 alt="Documents confidentiels"
-                width={400}
-                height={260}
-                className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                width={640}
+                height={360}
+                className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
               />
             </div>
           </div>
@@ -41,16 +42,17 @@ export default function DestructionPage() {
               <div className="flex-1 max-w-2xl">
                 <h2 className="text-xl font-bold text-primary mb-2">Matériel informatique</h2>
                 <p className="text-secondary text-lg">
-                  Effacement sécurisé des données et destruction physique de matériel informatique obsolète ou sensible.
+                  Effacement certifié des données (selon standards reconnus) puis destruction physique du matériel. Rapports
+                  détaillés fournis à l’issue de l’opération.
                 </p>
               </div>
               <div className="flex-1 flex justify-center max-w-2xl">
                 <Image
-                  src="/images/services/Destruction de Matériel/Matériel informatique.jpg"
+                  src="/images/services/Destruction-de-Matériel/Matériel informatique.jpg"
                   alt="Matériel informatique"
-                  width={400}
-                  height={260}
-                  className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                  width={640}
+                  height={360}
+                  className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
                 />
               </div>
             </div>
@@ -61,16 +63,17 @@ export default function DestructionPage() {
             <div className="flex-1 max-w-2xl">
               <h2 className="text-xl font-bold text-primary mb-2">Certificat de destruction</h2>
               <p className="text-secondary text-lg">
-                Remise d’un certificat officiel attestant la destruction conforme aux normes en vigueur.
+                À chaque intervention, un certificat nominatif vous est remis, garantissant la conformité et la traçabilité de la
+                destruction opérée.
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
               <Image
-                src="/images/services/Destruction de Matériel/Certificat de destruction.jpg"
+                src="/images/services/Destruction-de-Matériel/Certificat de destruction.png"
                 alt="Certificat de destruction"
-                width={400}
-                height={260}
-                className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                width={640}
+                height={360}
+                className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
               />
             </div>
           </div>

@@ -18,16 +18,17 @@ export default function NettoyagePage() {
             <div className="flex-1 max-w-2xl">
               <h2 className="text-xl font-bold text-primary mb-2">Désinfection complète</h2>
               <p className="text-secondary text-lg">
-                Intervention approfondie de tous vos espaces (sols, surfaces, aérations) pour éliminer bactéries, virus et moisissures. Idéal après des incidents sanitaires ou en prévention d’épidémies, pour garantir un environnement sain et sécurisé.
+                Traitements ciblés des sols, surfaces et aérations pour éliminer bactéries, virus et moisissures. Résultat: des
+                espaces sains et rassurants pour vos équipes et vos clients.
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
               <Image
-                src="/images/services/Nettoyage et Désinfection/Désinfection complète.jpg"
+                src="/images/services/Nettoyage-et-Désinfection/Désinfection complète.jpg"
                 alt="Désinfection complète"
-                width={400}
-                height={260}
-                className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                width={640}
+                height={360}
+                className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
               />
             </div>
           </div>
@@ -41,16 +42,17 @@ export default function NettoyagePage() {
               <div className="flex-1 max-w-2xl">
                 <h2 className="text-xl font-bold text-primary mb-2">Protocoles sanitaires</h2>
                 <p className="text-secondary text-lg">
-                  Mise en place de procédures sur mesure (fréquence, produits, zones sensibles) afin de standardiser et d’optimiser vos opérations de nettoyage. Chaque protocole est ajusté à votre activité pour une efficacité maximale.
+                  Plans d’entretien sur-mesure: fréquences, produits adaptés, zones sensibles. Une méthode claire et efficace
+                  pour un résultat constant.
                 </p>
               </div>
               <div className="flex-1 flex justify-center max-w-2xl">
                 <Image
-                  src="/images/services/Nettoyage et Désinfection/Protocoles sanitaires.jpg"
+                  src="/images/services/Nettoyage-et-Désinfection/Protocoles sanitaires.jpg"
                   alt="Protocoles sanitaires"
-                  width={400}
-                  height={260}
-                  className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                  width={640}
+                  height={360}
+                  className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
                 />
               </div>
             </div>
@@ -61,16 +63,17 @@ export default function NettoyagePage() {
             <div className="flex-1 max-w-2xl">
               <h2 className="text-xl font-bold text-primary mb-2">Locaux professionnels</h2>
               <p className="text-secondary text-lg">
-                Nettoyage régulier et entretien courant de vos bureaux, ateliers et showrooms. Nous adaptons nos prestations à la configuration de vos locaux pour un rendu irréprochable, jour après jour.
+                Entretien quotidien ou périodique de vos bureaux et espaces d’accueil. Notre exigence: un rendu irréprochable,
+                durablement.
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
               <Image
-                src="/images/services/Nettoyage et Désinfection/Locaux professionnels.jpg"
+                src="/images/services/Nettoyage-et-Désinfection/Locaux professionnels.jpg"
                 alt="Locaux professionnels"
-                width={400}
-                height={260}
-                className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                width={640}
+                height={360}
+                className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
               />
             </div>
           </div>

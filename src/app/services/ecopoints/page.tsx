@@ -18,16 +18,17 @@ export default function EcopointsPage() {
             <div className="flex-1 max-w-2xl">
               <h2 className="text-xl font-bold text-primary mb-2">Tri écologique</h2>
               <p className="text-secondary text-lg">
-                Mise en place de solutions de tri sélectif pour optimiser le recyclage et réduire l’empreinte environnementale de votre entreprise.
+                Installation d’écopoints ergonomiques et pédagogiques. Le tri devient simple et efficace pour vos équipes,
+                avec des flux clairement identifiés.
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
               <Image
-                src="/images/services/Écopoints d'Intérieur/Tri écologique.jpg"
+                src="/images/services/Écopoints-d’Intérieur/Tri écologique.jpg"
                 alt="Tri écologique"
-                width={400}
-                height={260}
-                className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                width={640}
+                height={360}
+                className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
               />
             </div>
           </div>
@@ -41,16 +42,17 @@ export default function EcopointsPage() {
               <div className="flex-1 max-w-2xl">
                 <h2 className="text-xl font-bold text-primary mb-2">Recyclage responsable</h2>
                 <p className="text-secondary text-lg">
-                  Acheminement des déchets vers des filières de recyclage agréées, avec traçabilité et reporting sur demande.
+                  Collecte régulière et acheminement vers des filières locales agréées. Nous favorisons la valorisation et le
+                  réemploi pour réduire l’impact global.
                 </p>
               </div>
               <div className="flex-1 flex justify-center max-w-2xl">
                 <Image 
-                  src="/images/services/Écopoints d'Intérieur/Tri écologique.jpg" 
+                  src="/images/services/Écopoints-d’Intérieur/Recyclage responsable.jpg" 
                   alt="Recyclage responsable" 
-                  width={400} 
-                  height={260} 
-                  className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                  width={640} 
+                  height={360} 
+                  className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
                 />
               </div>
             </div>
@@ -61,16 +63,17 @@ export default function EcopointsPage() {
             <div className="flex-1 max-w-2xl">
               <h2 className="text-xl font-bold text-primary mb-2">Certification environnementale</h2>
               <p className="text-secondary text-lg">
-                Accompagnement pour l’obtention de certifications environnementales grâce à une gestion exemplaire des déchets.
+                Nous vous accompagnons vers les labels et certifications (ISO 14001, etc.) par une organisation rigoureuse des
+                flux et des preuves tangibles.
               </p>
             </div>
             <div className="flex-1 flex justify-center max-w-2xl">
               <Image
-                src="/images/services/Écopoints d'Intérieur/Certification environnementale.jpg"
+                src="/images/services/Écopoints-d’Intérieur/Certification environnementale.jpg"
                 alt="Certification environnementale"
-                width={400}
-                height={260}
-                className="object-cover w-full h-full max-h-[260px] rounded-2xl"
+                width={640}
+                height={360}
+                className="object-cover w-full h-auto max-h-[360px] rounded-2xl"
               />
             </div>
           </div>
