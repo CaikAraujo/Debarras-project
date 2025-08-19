@@ -4,51 +4,6 @@ import { rooms, quantities, cantons } from '@/data/devisData'
 import type { Selection } from '@/lib/schemas'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 
-const PRICING = {
-  rooms: {
-    kitchen: { // Cozinha
-      5: 580,
-      10: 780,
-      15: 980
-    },
-    bedroom: { // Quarto (Chambre)
-      5: 580,
-      10: 780,
-      15: 980
-    },
-    living: { // Salon
-      5: 580,
-      10: 780,
-      15: 980
-    },
-    office: { // Bureau
-      5: 580,
-      10: 780,
-      15: 980
-    },
-    garage: { // Garage
-      5: 350,
-      10: 480,
-      15: 690
-    },
-    basement: { // Cave
-      5: 350,
-      10: 480,
-      15: 690
-    },
-    garden: { // Jardin
-      5: 350,
-      10: 480,
-      15: 690
-    },
-    bathroom: { // Salle de bain
-      5: 350,
-      10: 480,
-      15: 690
-    }
-  }
-} as const
-
 interface SelectionsSummaryProps {
   selectedCanton: string
   selections: Selection[]
@@ -71,11 +26,30 @@ export default function SelectionsSummary({
   const currentCanton = cantons.find(c => c.id === selectedCanton)
 
   // Função para calcular o preço individual de cada seleção
+  // Mostra preços baseados na quantidade para exibição
+  // NOTA: Estes preços são apenas para exibição. O preço real final
+  // é calculado pelo servidor e mostrado no total geral.
   const calculateItemPrice = (selection: Selection) => {
-    const roomPricing = PRICING.rooms[selection.roomId]
-    if (roomPricing) {
-      return roomPricing[selection.quantity as keyof typeof roomPricing] || 0
+    // Preços baseados na quantidade (apenas para exibição)
+    const basePrices = {
+      kitchen: { 5: 580, 10: 780, 15: 980 },
+      bedroom: { 5: 580, 10: 780, 15: 980 },
+      living: { 5: 580, 10: 780, 15: 980 },
+      office: { 5: 580, 10: 780, 15: 980 },
+      garage: { 5: 350, 10: 480, 15: 690 },
+      basement: { 5: 350, 10: 480, 15: 690 },
+      garden: { 5: 350, 10: 480, 15: 690 },
+      bathroom: { 5: 350, 10: 480, 15: 690 }
+    } as const
+    
+    const roomPricing = basePrices[selection.roomId]
+    if (roomPricing && roomPricing[selection.quantity as keyof typeof roomPricing]) {
+      const price = roomPricing[selection.quantity as keyof typeof roomPricing]
+      console.log(`Preço calculado para ${selection.roomId} (${selection.quantity}): ${price} CHF`)
+      return price
     }
+    
+    console.log(`Preço não encontrado para ${selection.roomId} (${selection.quantity})`)
     return 0
   }
 

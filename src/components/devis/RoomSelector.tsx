@@ -1,20 +1,28 @@
 import Card from '@/components/ui/Card'
 import { rooms, quantities } from '@/data/devisData'
 import type { Selection } from '@/lib/schemas'
-import { Plus, Check } from 'lucide-react'
+import { Plus, Check, Edit } from 'lucide-react'
 import { useState } from 'react'
+import { SecurityValidators } from '@/lib/security'
 
 interface RoomSelectorProps {
   onSelectRoom: (roomId: Selection['roomId'], quantity: number) => void
+  onEditRoom: (roomId: Selection['roomId']) => void
   selections: Selection[]
   isRoomSelected: (roomId: Selection['roomId']) => boolean
   getBedroomCount: () => number
 }
 
-export default function RoomSelector({ onSelectRoom, selections, isRoomSelected, getBedroomCount }: RoomSelectorProps) {
+export default function RoomSelector({ onSelectRoom, onEditRoom, selections, isRoomSelected, getBedroomCount }: RoomSelectorProps) {
   const [expandedRoom, setExpandedRoom] = useState<Selection['roomId'] | null>(null)
 
   const handleRoomClick = (roomId: Selection['roomId']) => {
+    // Validar se o roomId é válido usando o validador de segurança
+    if (!SecurityValidators.isValidRoomId(roomId)) {
+      console.error('RoomId inválido:', roomId)
+      return
+    }
+
     if (roomId === expandedRoom) {
       setExpandedRoom(null)
     } else {
@@ -23,8 +31,29 @@ export default function RoomSelector({ onSelectRoom, selections, isRoomSelected,
   }
 
   const handleQuantitySelect = (roomId: Selection['roomId'], quantity: number) => {
+    // Validar se a quantidade é válida usando o validador de segurança
+    if (!SecurityValidators.isValidQuantity(quantity)) {
+      console.error('Quantidade inválida:', quantity)
+      return
+    }
+
     onSelectRoom(roomId, quantity)
     setExpandedRoom(null)
+  }
+
+  const handleEditClick = (e: React.MouseEvent, roomId: Selection['roomId']) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    // Validar se o roomId é válido usando o validador de segurança
+    if (!SecurityValidators.isValidRoomId(roomId)) {
+      console.error('RoomId inválido para edição:', roomId)
+      return
+    }
+    
+    onEditRoom(roomId)
+    // Expande o cômodo para seleção de quantidade
+    setExpandedRoom(roomId)
   }
 
   return (
@@ -41,13 +70,16 @@ export default function RoomSelector({ onSelectRoom, selections, isRoomSelected,
             className={`
               text-center p-4 md:p-6 transition-all duration-200 relative cursor-pointer
               ${isSelected && !isBedroom
-                ? 'bg-gray-100 cursor-not-allowed opacity-50 pointer-events-none' 
+                ? 'bg-gray-100' 
                 : 'hover:shadow-lg hover:scale-105'
               }
               ${isBedroom && bedroomCount > 0 ? 'ring-2 ring-green-200 bg-green-50' : ''}
               ${isExpanded ? `${isBedroom ? 'ring-2 ring-green-500' : 'ring-2 ring-red-500'} shadow-lg` : ''}
             `}
-            onClick={() => (!isSelected || isBedroom) && handleRoomClick(room.id)}
+            onClick={() => (!isSelected || isBedroom || isExpanded) && handleRoomClick(room.id)}
+            style={{ 
+              pointerEvents: (isSelected && !isBedroom && !isExpanded) ? 'none' : 'auto'
+            }}
           >
             {/* Badge para quartos múltiplos */}
             {isBedroom && bedroomCount > 0 && (
@@ -93,9 +125,11 @@ export default function RoomSelector({ onSelectRoom, selections, isRoomSelected,
             </p>
 
             {/* Seletor de quantidade expandido */}
-            {isExpanded && !isSelected && (
+            {isExpanded && (
               <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                <p className="text-xs text-gray-600 mb-3">Choisissez la quantité :</p>
+                <p className="text-xs text-gray-600 mb-3">
+                  {isSelected ? 'Modifiez la quantité :' : 'Choisissez la quantité :'}
+                </p>
                 <div className="grid grid-cols-3 gap-2">
                   {quantities.map(q => (
                     <button
@@ -113,12 +147,26 @@ export default function RoomSelector({ onSelectRoom, selections, isRoomSelected,
               </div>
             )}
             
-            {isSelected && !isBedroom && (
-              <div className="absolute inset-0 flex items-center justify-center bg-white/80 rounded-lg">
-                <span className="text-green-600 font-semibold text-sm md:text-base flex items-center gap-1">
+            {/* Overlay para cômodos selecionados com botão de edição */}
+            {isSelected && !isBedroom && !isExpanded && (
+              <div 
+                className="absolute inset-0 flex flex-col items-center justify-center bg-white rounded-lg"
+                style={{ zIndex: 50 }}
+              >
+                <span className="text-green-600 font-semibold text-sm md:text-base flex items-center gap-1 mb-3">
                   <Check className="w-4 h-4" />
                   Sélectionné
                 </span>
+                <button
+                  type="button"
+                  onClick={(e) => handleEditClick(e, room.id)}
+                  className="flex items-center gap-2 text-blue-600 hover:text-blue-800 px-3 py-2 rounded-md hover:bg-blue-50 transition-colors text-sm font-medium border border-blue-200 hover:border-blue-300 bg-white"
+                  title={`Éditer ${room.name}`}
+                  style={{ pointerEvents: 'auto' }}
+                >
+                  <Edit className="w-4 h-4" />
+                  Éditer
+                </button>
               </div>
             )}
           </Card>

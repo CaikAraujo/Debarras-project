@@ -1,4 +1,5 @@
-import { stepTitles } from '@/data/devisData'
+import { CheckCircle } from 'lucide-react'
+import { SecurityValidators } from '@/lib/security'
 
 interface ProgressStepperProps {
   currentStep: number
@@ -6,23 +7,25 @@ interface ProgressStepperProps {
 }
 
 export default function ProgressStepper({ currentStep, onStepClick }: ProgressStepperProps) {
-  // Mapear os steps para o novo fluxo simplificado
   const steps = [
-    { id: 0, title: 'Choisissez votre canton' },
-    { id: 1, title: 'Choisissez vos objets' },
-    { id: 3, title: 'Choisissez une date' },
-    { id: 4, title: 'Confirmez votre devis' }
+    { id: 0, title: 'Sélection du canton', description: 'Choisissez votre canton' },
+    { id: 1, title: 'Sélection des objets', description: 'Sélectionnez les objets à débarrasser' },
+    { id: 2, title: 'Résumé', description: 'Vérifiez vos sélections' },
+    { id: 3, title: 'Date de réservation', description: 'Choisissez la date' },
+    { id: 4, title: 'Confirmation', description: 'Confirmez votre commande' }
   ]
 
   const handleStepClick = (stepId: number) => {
-    console.log('ProgressStepper: Step clicked:', stepId, 'Current step:', currentStep)
+    // Validar se o stepId é válido usando o validador de segurança
+    if (!SecurityValidators.isValidStep(stepId)) {
+      console.error('StepId inválido:', stepId)
+      return
+    }
     
-    // Só permite navegar para steps já completados (marcados de vermelho)
     if (stepId <= currentStep) {
-      console.log('ProgressStepper: Calling onStepClick with stepId:', stepId)
       onStepClick(stepId)
     } else {
-      console.log('ProgressStepper: Step not accessible yet:', stepId)
+      console.error('Step não acessível ainda:', stepId)
     }
   }
 

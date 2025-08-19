@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { calculateSecurePrice } from '@/app/_actions/calculatePrice'
 import { createStripeCheckout } from '@/app/_actions/createStripeCheckout'
 import type { Selection, VALID_CANTONS } from '@/lib/schemas'
+import { SecurityValidators, SECURITY_CONSTANTS } from '@/lib/security'
 
 interface UsePriceCalculationProps {
   selections: Selection[]
@@ -10,6 +11,7 @@ interface UsePriceCalculationProps {
 }
 
 export function usePriceCalculation({ selections, selectedCanton, selectedDate }: UsePriceCalculationProps) {
+  
   const [calculatedPrice, setCalculatedPrice] = useState(0)
   const [isCalculating, setIsCalculating] = useState(false)
   const [isProcessingCheckout, setIsProcessingCheckout] = useState(false)
@@ -33,6 +35,35 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate }
       return
     }
 
+    // Validação adicional: verificar se as quantidades são válidas
+    const hasValidQuantities = selections.every(s => 
+      SecurityValidators.isValidQuantity(s.quantity)
+    )
+
+    if (!hasValidQuantities) {
+      console.error('Quantidades inválidas detectadas')
+      setCalculatedPrice(0)
+      return
+    }
+
+    // Validação adicional: verificar se os roomIds são válidos
+    const hasValidRoomIds = selections.every(s => 
+      SecurityValidators.isValidRoomId(s.roomId)
+    )
+
+    if (!hasValidRoomIds) {
+      console.error('RoomIds inválidos detectados')
+      setCalculatedPrice(0)
+      return
+    }
+
+    // Validação adicional: verificar se não excede o limite máximo de seleções
+    if (selections.length > SECURITY_CONSTANTS.MAX_SELECTIONS) {
+      console.error('Número máximo de seleções excedido')
+      setCalculatedPrice(0)
+      return
+    }
+
     setIsCalculating(true)
     try {
       const result = await calculateSecurePrice({ 
@@ -41,6 +72,12 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate }
       })
       
       if (result.success && typeof result.totalPrice === 'number' && result.totalPrice > 0) {
+        // Validação adicional: verificar se o preço não excede o limite máximo
+        if (result.totalPrice > SECURITY_CONSTANTS.MAX_TOTAL_PRICE) {
+          console.error('Preço total excede o limite máximo')
+          setCalculatedPrice(0)
+          return
+        }
         setCalculatedPrice(result.totalPrice)
       } else {
         setCalculatedPrice(0)

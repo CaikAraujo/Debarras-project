@@ -1,51 +1,8 @@
 import { useState, useCallback } from 'react'
 import type { Selection } from '@/lib/schemas'
+import { SelectionSchema } from '@/lib/schemas'
 import { cantons } from '@/data/devisData'
-
-const PRICING = {
-  rooms: {
-    kitchen: { // Cozinha
-      5: 580,
-      10: 780,
-      15: 980
-    },
-    bedroom: { // Quarto (Chambre)
-      5: 580,
-      10: 780,
-      15: 980
-    },
-    living: { // Salon
-      5: 580,
-      10: 780,
-      15: 980
-    },
-    office: { // Bureau
-      5: 580,
-      10: 780,
-      15: 980
-    },
-    garage: { // Garage
-      5: 350,
-      10: 480,
-      15: 690
-    },
-    basement: { // Cave
-      5: 350,
-      10: 480,
-      15: 690
-    },
-    garden: { // Jardin
-      5: 350,
-      10: 480,
-      15: 690
-    },
-    bathroom: { // Salle de bain
-      5: 350,
-      10: 480,
-      15: 690
-    }
-  }
-} as const
+import { SecurityValidators, generateSecureId } from '@/lib/security'
 
 export function useDevisState() {
   const [currentStep, setCurrentStep] = useState(0)
@@ -53,30 +10,12 @@ export function useDevisState() {
   const [selections, setSelections] = useState<Selection[]>([])
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
 
-  // Função para calcular o preço total baseado no cantão + quartos e quantidades selecionados
-  const calculateTotalPrice = useCallback(() => {
-    if (!selectedCanton) return 0
-    
-    const canton = cantons.find(c => c.id === selectedCanton)
-    if (!canton) return 0
-    
-    let total = canton.basePrice // Começa com o valor base do cantão
-    
-    // Adiciona o preço de cada seleção baseado no quarto e quantidade
-    selections.forEach(selection => {
-      const roomPricing = PRICING.rooms[selection.roomId]
-      if (roomPricing) {
-        const price = roomPricing[selection.quantity as keyof typeof roomPricing]
-        if (price) {
-          total += price
-        }
-      }
-    })
-    
-    return total
-  }, [selectedCanton, selections])
-
   const selectCanton = useCallback((cantonId: string) => {
+    // Validar se o cantão é válido usando o validador de segurança
+    if (!SecurityValidators.isValidCantonId(cantonId)) {
+      console.error('Cantão inválido:', cantonId)
+      return
+    }
     setSelectedCanton(cantonId)
     setCurrentStep(1)
   }, [])
@@ -87,36 +26,61 @@ export function useDevisState() {
   }, [])
 
   const addSelection = useCallback((selection: Omit<Selection, 'selectionId'>) => {
-    setSelections(prev => {
-      // Para quartos, sempre adiciona nova instância
-      if (selection.roomId === 'bedroom') {
-        const bedroomCount = prev.filter(s => s.roomId === 'bedroom').length
-        const newSelection: Selection = {
-          ...selection,
-          selectionId: `bedroom-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-          roomNumber: bedroomCount + 1
-        }
-        return [...prev, newSelection]
-      } else {
-        // Para outros cômodos, substitui se já existe
-        const existingIndex = prev.findIndex(s => s.roomId === selection.roomId)
-        const newSelection: Selection = {
-          ...selection,
-          selectionId: `${selection.roomId}-${Date.now()}-${Math.floor(Math.random() * 1000)}`
-        }
-        
-        if (existingIndex > -1) {
-          const newSelections = [...prev]
-          newSelections[existingIndex] = newSelection
-          return newSelections
-        } else {
-          return [...prev, newSelection]
-        }
+    try {
+      // Validar a seleção antes de adicionar
+      const validatedSelection = SelectionSchema.omit({ selectionId: true }).parse(selection)
+      
+      // Validação adicional usando os validadores de segurança
+      if (!SecurityValidators.isValidRoomId(validatedSelection.roomId)) {
+        console.error('RoomId inválido:', validatedSelection.roomId)
+        return
       }
-    })
+      
+      if (!SecurityValidators.isValidQuantity(validatedSelection.quantity)) {
+        console.error('Quantidade inválida:', validatedSelection.quantity)
+        return
+      }
+      
+      setSelections(prev => {
+        // Para quartos, sempre adiciona nova instância
+        if (validatedSelection.roomId === 'bedroom') {
+          const bedroomCount = prev.filter(s => s.roomId === 'bedroom').length
+          const newSelection: Selection = {
+            ...validatedSelection,
+            selectionId: generateSecureId(),
+            roomNumber: bedroomCount + 1
+          }
+          return [...prev, newSelection]
+        } else {
+          // Para outros cômodos, substitui se já existe
+          const existingIndex = prev.findIndex(s => s.roomId === validatedSelection.roomId)
+          const newSelection: Selection = {
+            ...validatedSelection,
+            selectionId: generateSecureId()
+          }
+          
+          if (existingIndex > -1) {
+            const newSelections = [...prev]
+            newSelections[existingIndex] = newSelection
+            return newSelections
+          } else {
+            return [...prev, newSelection]
+          }
+        }
+      })
+    } catch (error) {
+      console.error('Erro ao validar seleção:', error)
+      // Não adiciona seleção inválida
+    }
   }, [])
 
   const removeSelection = useCallback((selectionId: string) => {
+    // Validar se o ID é válido usando o validador de segurança
+    if (!SecurityValidators.isValidId(selectionId)) {
+      console.error('ID de seleção inválido:', selectionId)
+      return
+    }
+
     setSelections(prev => {
       const newSelections = prev.filter(s => s.selectionId !== selectionId)
       
@@ -134,9 +98,12 @@ export function useDevisState() {
   }, [])
 
   const goToStep = useCallback((step: number) => {
-    console.log('useDevisState: goToStep called with step:', step, 'Current step before:', currentStep)
+    // Validar se o step é válido usando o validador de segurança
+    if (!SecurityValidators.isValidStep(step)) {
+      console.error('Step inválido:', step)
+      return
+    }
     setCurrentStep(step)
-    console.log('useDevisState: setCurrentStep called, new step should be:', step)
   }, [])
 
   const resetAll = useCallback(() => {
@@ -155,15 +122,6 @@ export function useDevisState() {
   const getBedroomCount = useCallback(() => {
     return selections.filter(s => s.roomId === 'bedroom').length
   }, [selections])
-
-  // Função para obter o preço de um quarto específico com quantidade
-  const getRoomPrice = useCallback((roomId: Selection['roomId'], quantity: number) => {
-    const roomPricing = PRICING.rooms[roomId]
-    if (roomPricing) {
-      return roomPricing[quantity as keyof typeof roomPricing] || 0
-    }
-    return 0
-  }, [])
 
   // Função para obter o valor base do cantão selecionado
   const getCantonBasePrice = useCallback(() => {
@@ -185,8 +143,6 @@ export function useDevisState() {
     selectDate,
     isRoomSelected,
     getBedroomCount,
-    calculateTotalPrice,
-    getRoomPrice,
     getCantonBasePrice
   }
 } 
