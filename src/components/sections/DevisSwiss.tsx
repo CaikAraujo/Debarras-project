@@ -13,6 +13,7 @@ import AddRoomModal from '@/components/devis/AddRoomModal'
 import DateSelector from '@/components/devis/DateSelector'
 import { getBookedDates } from '@/app/_actions/getBookedDates'
 import type { VALID_CANTONS } from '@/lib/schemas'
+import { SecurityValidators } from '@/lib/security'
 
 export default function DevisSwiss() {
   const searchParams = useSearchParams();
@@ -29,7 +30,7 @@ export default function DevisSwiss() {
     selectDate,
     isRoomSelected,
     getBedroomCount,
-    calculateTotalPrice
+    getCantonBasePrice
   } = useDevisState()
 
   // Cálculo e checkout seguros (server actions)
@@ -50,7 +51,12 @@ export default function DevisSwiss() {
   useEffect(() => {
     const cantonParam = searchParams.get('canton');
     if (cantonParam && !selectedCanton) {
-      selectCanton(cantonParam);
+      // Validar o parâmetro da URL antes de usar
+      if (SecurityValidators.isValidCantonId(cantonParam)) {
+        selectCanton(cantonParam);
+      } else {
+        console.error('Parâmetro de cantão inválido na URL:', cantonParam)
+      }
     }
   }, [searchParams, selectedCanton, selectCanton]);
 
@@ -88,11 +94,69 @@ export default function DevisSwiss() {
   }, [selections, currentStep])
 
   const handleRoomSelect = (roomId: string, quantity: number) => {
+    // Validação adicional antes de adicionar
+    if (!SecurityValidators.isValidRoomId(roomId) || !SecurityValidators.isValidQuantity(quantity)) {
+      console.error('Dados inválidos para seleção de cômodo:', { roomId, quantity })
+      return
+    }
+
     addSelection({ 
       roomId: roomId as any, 
       quantity,
       roomNumber: roomId === 'bedroom' ? getBedroomCount() + 1 : undefined
     })
+  }
+
+  // Função para editar um cômodo diretamente do card
+  const handleEditRoom = (roomId: string) => {
+    // Validar se o roomId é válido usando o validador de segurança
+    if (!SecurityValidators.isValidRoomId(roomId)) {
+      console.error('RoomId inválido:', roomId)
+      return
+    }
+    
+    // Remove todas as seleções deste cômodo (exceto quartos)
+    if (roomId !== 'bedroom') {
+      const selectionsToRemove = selections.filter(s => s.roomId === roomId)
+      selectionsToRemove.forEach(selection => removeSelection(selection.selectionId))
+    }
+    // O usuário pode agora clicar novamente no cômodo para selecionar nova quantidade
+  }
+
+  // Função para navegar entre steps já completados
+  const handleStepClick = (stepId: number) => {
+    // Validar se o stepId é válido usando o validador de segurança
+    if (!SecurityValidators.isValidStep(stepId)) {
+      console.error('StepId inválido:', stepId)
+      return
+    }
+    
+    // Validações específicas para cada step
+    if (stepId === 0) {
+      // Sempre pode voltar para seleção de cantão
+      goToStep(stepId)
+    } else if (stepId === 1) {
+      // Só pode ir para seleção de objetos se tiver cantão selecionado
+      if (selectedCanton) {
+        goToStep(stepId)
+      } else {
+        console.error('Cannot navigate to room selection: no canton selected')
+      }
+    } else if (stepId === 3) {
+      // Só pode ir para seleção de data se tiver objetos selecionados
+      if (selectedCanton && selections.length > 0) {
+        goToStep(stepId)
+      } else {
+        console.error('Cannot navigate to date selection: missing canton or selections')
+      }
+    } else if (stepId === 4) {
+      // Só pode ir para confirmação se tiver tudo selecionado
+      if (selectedCanton && selections.length > 0 && selectedDate) {
+        goToStep(stepId)
+      } else {
+        console.error('Cannot navigate to confirmation: missing required data')
+      }
+    }
   }
 
   return (
@@ -106,7 +170,7 @@ export default function DevisSwiss() {
             </p>
           </div>
 
-          <ProgressStepper currentStep={currentStep} />
+          <ProgressStepper currentStep={currentStep} onStepClick={handleStepClick} />
 
           <div ref={stepContentRef}>
             {currentStep === 0 && (
@@ -122,6 +186,7 @@ export default function DevisSwiss() {
                 </div>
                 <RoomSelector 
                   onSelectRoom={handleRoomSelect} 
+                  onEditRoom={handleEditRoom}
                   selections={selections} 
                   isRoomSelected={isRoomSelected}
                   getBedroomCount={getBedroomCount}

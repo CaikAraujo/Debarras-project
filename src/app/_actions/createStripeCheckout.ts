@@ -4,6 +4,7 @@ import Stripe from 'stripe'
 import { CheckoutSchema, type CheckoutData, VALID_CANTONS } from '@/lib/schemas'
 import { calculateSecurePrice } from './calculatePrice'
 import { rooms } from '@/data/devisData'
+import { SecurityValidators, SECURITY_CONSTANTS } from '@/lib/security'
 
 export async function createStripeCheckout(data: CheckoutData) {
   try {
@@ -13,11 +14,37 @@ export async function createStripeCheckout(data: CheckoutData) {
       return { success: false, error: 'A data da reserva é obrigatória.' }
     }
     
+    // Validação adicional de segurança
+    if (!validated.selections || validated.selections.length === 0) {
+      return { success: false, error: 'Nenhuma seleção válida encontrada.' }
+    }
+
+    // Verificar se todas as seleções têm dados válidos
+    const hasValidSelections = validated.selections.every(s => 
+      SecurityValidators.isValidId(s.selectionId) &&
+      SecurityValidators.isValidRoomId(s.roomId) &&
+      SecurityValidators.isValidQuantity(s.quantity)
+    )
+
+    if (!hasValidSelections) {
+      return { success: false, error: 'Dados de seleção inválidos.' }
+    }
+
+    // Verificar se não excede o limite máximo de seleções
+    if (validated.selections.length > SECURITY_CONSTANTS.MAX_SELECTIONS) {
+      return { success: false, error: 'Número máximo de seleções excedido.' }
+    }
+    
     const priceResult = await calculateSecurePrice(validated)
     if (!priceResult.success || !priceResult.totalPrice || !priceResult.breakdown) {
       return { success: false, error: priceResult.error || 'Erro ao calcular o preço detalhado.' }
     }
 
+    // Verificar se o preço não excede o limite máximo
+    if (priceResult.totalPrice > SECURITY_CONSTANTS.MAX_TOTAL_PRICE) {
+      return { success: false, error: 'Preço total excede o limite máximo permitido.' }
+    }
+    
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
     
     const lineItems = priceResult.breakdown.map(item => {

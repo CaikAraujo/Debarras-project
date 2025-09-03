@@ -3,11 +3,48 @@
 import { PriceCalculationSchema, type PriceCalculationData } from '@/lib/schemas'
 
 const PRICING = {
-  base: [
-    { quantity: 5, price: 150 },
-    { quantity: 10, price: 280 },
-    { quantity: 15, price: 400 }
-  ],
+  rooms: {
+    kitchen: { // Cozinha
+      5: 580,
+      10: 780,
+      15: 980
+    },
+    bedroom: { // Quarto (Chambre)
+      5: 580,
+      10: 780,
+      15: 980
+    },
+    living: { // Salon
+      5: 580,
+      10: 780,
+      15: 980
+    },
+    office: { // Bureau
+      5: 580,
+      10: 780,
+      15: 980
+    },
+    garage: { // Garage
+      5: 350,
+      10: 480,
+      15: 690
+    },
+    basement: { // Cave
+      5: 350,
+      10: 480,
+      15: 690
+    },
+    garden: { // Jardin
+      5: 350,
+      10: 480,
+      15: 690
+    },
+    bathroom: { // Salle de bain
+      5: 350,
+      10: 480,
+      15: 690
+    }
+  },
   cantonBasePrices: { 
     geneve: 180, 
     vaud: 280, 
@@ -46,11 +83,8 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
     const cantonBasePrice = PRICING.cantonBasePrices[cantonId]
     const seenNonBedroomRooms = new Set<string>()
 
-    let total = 0
+    let total = cantonBasePrice // Começa com o valor base do cantão
     const breakdown = []
-
-    // Soma apenas dos itens (sem o valor base do cantão)
-    let itemsSubtotal = 0
 
     for (const selection of selections) {
       // Para quartos, permitir múltiplas seleções
@@ -62,19 +96,19 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
         seenNonBedroomRooms.add(selection.roomId)
       }
 
-      const priceConfig = PRICING.base.find(p => p.quantity === selection.quantity)
-      if (!priceConfig) {
+      const roomPricing = PRICING.rooms[selection.roomId]
+      if (!roomPricing) {
+        return { success: false, error: `Quarto inválido: ${selection.roomId}` }
+      }
+
+      const itemPrice = roomPricing[selection.quantity as keyof typeof roomPricing]
+      if (!itemPrice) {
         return { success: false, error: `Quantidade inválida: ${selection.quantity}` }
       }
 
-      // Preço do item NÃO inclui o valor base do cantão
-      const itemPrice = Math.round(priceConfig.price * 0.5)
-      breakdown.push({ ...selection, basePrice: cantonBasePrice, finalPrice: itemPrice })
-      itemsSubtotal += itemPrice
+      breakdown.push({ ...selection, basePrice: itemPrice, finalPrice: itemPrice })
+      total += itemPrice
     }
-
-    // Total = valor base do cantão + soma dos itens
-    total = cantonBasePrice + itemsSubtotal
 
     if (total <= 0 || total > 50000) {
       return { success: false, error: 'Total inválido' }
