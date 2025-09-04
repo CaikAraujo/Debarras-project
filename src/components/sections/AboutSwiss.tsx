@@ -80,18 +80,18 @@ const AboutSwiss = () => {
             maxWidth: '900px',
             margin: '0 auto',
             padding: '32px 16px',
-            color: 'var(--text-dark)',
+            color: '#000',
           }}>
-            <h2 className="text-primary mb-6" style={{fontSize: '2rem'}}>Suisse Débarras – Votre partenaire de confiance en Suisse romande</h2>
-            <p className="text-base text-secondary leading-relaxed mb-3" style={{fontSize: '1.05rem'}}>
+            <h2 className="text-black mb-6" style={{fontSize: '2rem'}}>Suisse Débarras – Votre partenaire de confiance en Suisse romande</h2>
+            <p className="text-base leading-relaxed mb-3" style={{fontSize: '1.05rem', color: '#000'}}>
               Avec près de 10 ans d'expérience et des succursales dans chaque canton romand <br/>
               <span style={{fontWeight:600}}>(Genève, Vaud, Valais, Fribourg, Neuchâtel, Jura, Berne)</span>,<br/>
               Suisse Débarras est votre solution rapide, efficace et discrète pour tout type de débarras.
             </p>
-            <p className="text-sm text-secondary leading-relaxed mb-3" style={{fontSize: '0.98rem'}}>
+            <p className="text-sm leading-relaxed mb-3" style={{fontSize: '0.98rem', color: '#000'}}>
               Chaque année, nous intervenons sur plus de 500 biens : appartements, maisons, chalets, fermes, entreprises, granges, garages, et bâtiments publics.
             </p>
-            <div className="text-secondary leading-relaxed mb-3" style={{lineHeight:'1.6', fontSize: '0.98rem'}}>
+            <div className="leading-relaxed mb-3" style={{lineHeight:'1.6', fontSize: '0.98rem', color: '#000'}}>
               <div style={{marginBottom:'8px', fontWeight:600}}>Nos services incluent :</div>
               <ul style={{listStyle:'none', paddingLeft:0, margin:0}}>
                 <li style={{display:'flex', alignItems:'center', gap:'8px'}}>
@@ -112,7 +112,7 @@ const AboutSwiss = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-secondary leading-relaxed" style={{fontWeight:600, fontSize: '0.98rem'}}>
+            <p className="leading-relaxed" style={{fontWeight:600, fontSize: '0.98rem', color: '#000'}}>
               Notre mission ? Remettre votre bien en état impeccable, que ce soit pour une succession, un déménagement ou simplement faire de la place.
             </p>
           </div>

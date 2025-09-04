@@ -99,6 +99,11 @@ export default function SelectionsSummary({
           const quantityData = quantities.find(q => q.value === selection.quantity)
           const IconComponent = room?.icon
           const itemPrice = calculateItemPrice(selection)
+          const cartonsText = selection.quantity === 5
+            ? 'Avec 5 cartons'
+            : selection.quantity === 10
+              ? 'Avec 10 cartons'
+              : 'Avec 15 cartons'
           
           // Título do quarto com numeração se necessário
           const roomTitle = selection.roomId === 'bedroom' && selection.roomNumber 
@@ -106,7 +111,7 @@ export default function SelectionsSummary({
             : room?.name
           
           return (
-            <div key={selection.selectionId} className="flex items-center justify-between bg-gray-50 p-3 md:p-4 rounded-lg">
+            <div key={selection.selectionId} className="relative flex items-center justify-between bg-gray-50 p-3 md:p-4 rounded-lg">
               <div className="flex items-center space-x-2 md:space-x-3 min-w-0 flex-1">
                 <div className="flex items-center justify-center flex-shrink-0">
                   {IconComponent && <IconComponent size={20} className="text-red-600 md:w-6 md:h-6" />}
@@ -127,20 +132,34 @@ export default function SelectionsSummary({
                   ✕
                 </button>
               </div>
+              <div className="absolute bottom-1 right-3 text-[11px] text-secondary">{cartonsText}</div>
             </div>
           )
         })}
       </div>
       
       <div className="flex flex-col space-y-3 md:space-y-4">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="text-lg md:text-xl font-bold text-primary text-center sm:text-left">
             {isCalculating ? 'Calcul en cours...' : `Total: CHF ${calculatedPrice}.-`}
           </div>
-          <Button onClick={onContinue} className="w-full sm:w-auto flex items-center gap-2">
-            Continuer vers la date
-            <ArrowRight className="w-4 h-4" />
-          </Button>
+          <div className="w-full sm:w-auto flex flex-col items-stretch gap-2">
+            <Button onClick={onContinue} className="w-full sm:w-auto flex items-center justify-center gap-2">
+              Continuer vers la date
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                }
+              }}
+              className="h-9 text-sm"
+            >
+              Ajouter plus de cartons
+            </Button>
+          </div>
         </div>
         
         <div className="flex justify-center">
@@ -160,6 +179,42 @@ export default function SelectionsSummary({
               }
             </span>
           </div>
+        </div>
+
+        {/* Redes sociais */}
+        <div className="mt-6 flex items-center justify-center gap-6">
+          <a
+            href="https://www.instagram.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="group"
+            title="Instagram"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              className="w-6 h-6 fill-current text-gray-600 group-hover:text-pink-600 transition-colors"
+            >
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zM17.25 6a1.25 1.25 0 1 1-1.25 1.25A1.25 1.25 0 0 1 17.25 6z"/>
+            </svg>
+          </a>
+          <a
+            href="https://www.linkedin.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="group"
+            title="LinkedIn"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              className="w-6 h-6 fill-current text-gray-600 group-hover:text-blue-700 transition-colors"
+            >
+              <path d="M4.98 3.5A2.5 2.5 0 1 1 2.5 6 2.5 2.5 0 0 1 4.98 3.5zM3 8h4v13H3zM9 8h3.8v1.8h.05a4.17 4.17 0 0 1 3.75-2.06C19.92 7.74 21 9.9 21 13.06V21h-4v-6.61c0-1.58-.03-3.61-2.2-3.61-2.21 0-2.55 1.72-2.55 3.5V21H8.99z"/>
+            </svg>
+          </a>
         </div>
       </div>
     </div>

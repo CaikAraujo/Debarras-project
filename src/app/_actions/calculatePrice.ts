@@ -79,7 +79,7 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
       return { success: false, error: 'Muitas tentativas. Aguarde 1 minuto.' }
     }
 
-    const { selections, cantonId } = PriceCalculationSchema.parse(data)
+    const { selections, cantonId, selectedDate } = PriceCalculationSchema.parse(data)
     const cantonBasePrice = PRICING.cantonBasePrices[cantonId]
     const seenNonBedroomRooms = new Set<string>()
 
@@ -112,6 +112,21 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
 
     if (total <= 0 || total > 50000) {
       return { success: false, error: 'Total inválido' }
+    }
+
+    // Aplicar sobretaxa de 10% para amanhã ou fim de semana
+    if (selectedDate) {
+      const date = new Date(selectedDate)
+      date.setHours(0, 0, 0, 0)
+      const today = new Date()
+      today.setHours(0, 0, 0, 0)
+      const tomorrow = new Date(today)
+      tomorrow.setDate(today.getDate() + 1)
+      const isTomorrow = date.getTime() === tomorrow.getTime()
+      const isWeekend = date.getDay() === 0 || date.getDay() === 6
+      if (isTomorrow || isWeekend) {
+        total = Math.round(total * 1.1)
+      }
     }
 
     return { success: true, totalPrice: total, breakdown, cantonBasePrice }

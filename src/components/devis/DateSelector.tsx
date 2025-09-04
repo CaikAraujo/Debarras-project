@@ -52,23 +52,28 @@ export default function DateSelector({ selectedDate, bookedDates, isLoading, onS
       tomorrow.setHours(0, 0, 0, 0)
       const isTomorrow = isSameDay(day, tomorrow)
       const isReserved = bookedDates.some(reserved => isSameDay(day, reserved))
-      const isDisabled = isWeekend || isPast || isTomorrow || isReserved
+      // Permitir amanhã e fins de semana (com sinalização visual). Bloquear apenas passados, hoje e reservados.
+      const isDisabled = isPast || isCurrentDay || isReserved
 
       days.push(
         <div
           key={day.toString()}
           className={`
-            h-8 md:h-12 flex items-center justify-center cursor-pointer rounded-lg text-xs md:text-sm font-medium transition-all duration-200
+            h-8 md:h-12 flex items-center justify-center cursor-pointer rounded-lg text-xs md:text-sm font-medium transition-colors duration-150
             ${isCurrentMonth ? 'text-gray-900' : 'text-gray-300'}
             ${isSelected 
-              ? 'bg-red-500 text-white shadow-lg ring-2 ring-red-200 scale-105' 
+              ? 'bg-red-500 text-white shadow-md ring-1 ring-red-200' 
               : isCurrentDay 
-                ? 'bg-blue-100 text-blue-700 font-bold ring-2 ring-blue-200'
-                : 'hover:bg-red-50 hover:text-red-600'
+                ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                : isTomorrow
+                  ? 'bg-orange-50 text-orange-700 border border-orange-200'
+                  : isWeekend
+                    ? 'bg-purple-50 text-purple-700 border border-purple-200'
+                    : 'hover:bg-gray-50 hover:text-red-600'
             }
             ${isDisabled 
               ? 'cursor-not-allowed opacity-50 line-through hover:bg-transparent hover:text-gray-300' 
-              : 'hover:scale-105'
+              : ''
             }
           `}
           onClick={() => !isDisabled && onSelectDate(cloneDay)}
@@ -165,7 +170,7 @@ export default function DateSelector({ selectedDate, bookedDates, isLoading, onS
                 {rows}
               </div>
               
-              <div className="mt-4 md:mt-6 pt-3 md:pt-4 border-t border-gray-200">
+              <div className="mt-4 md:mt-6 pt-3 md:pt-4 border-t border-gray-100">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
                   <div className="flex items-center gap-2 p-2 bg-red-50 rounded-lg">
                     <div className="w-3 h-3 md:w-4 md:h-4 bg-red-500 rounded-md"></div>
@@ -175,18 +180,18 @@ export default function DateSelector({ selectedDate, bookedDates, isLoading, onS
                     <div className="w-3 h-3 md:w-4 md:h-4 bg-blue-100 rounded-md border border-blue-300"></div>
                     <span className="text-gray-700 text-xs md:text-sm font-medium">Aujourd'hui</span>
                   </div>
-                  <div className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg">
-                    <div className="w-3 h-3 md:w-4 md:h-4 bg-gray-300 rounded-md opacity-60"></div>
-                    <span className="text-gray-700 text-xs md:text-sm font-medium">Week-ends</span>
-                  </div>
                   <div className="flex items-center gap-2 p-2 bg-orange-50 rounded-lg">
-                    <div className="w-3 h-3 md:w-4 md:h-4 bg-orange-300 rounded-md opacity-60"></div>
-                    <span className="text-gray-700 text-xs md:text-sm font-medium">Délai minimum</span>
+                    <div className="w-3 h-3 md:w-4 md:h-4 bg-orange-300 rounded-md border border-orange-400"></div>
+                    <span className="text-gray-700 text-xs md:text-sm font-medium">Demain (+10%)</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 bg-purple-50 rounded-lg">
+                    <div className="w-3 h-3 md:w-4 md:h-4 bg-purple-300 rounded-md border border-purple-400"></div>
+                    <span className="text-gray-700 text-xs md:text-sm font-medium">Week-ends (+10%)</span>
                   </div>
                 </div>
-                <div className="mt-3 p-2 md:p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                  <p className="text-yellow-800 text-xs font-medium">
-                    ⚠️ Intervention minimum 48h après la demande (hors week-ends)
+                <div className="mt-3 p-2 md:p-3 bg-yellow-50 border border-yellow-100 rounded-lg">
+                  <p className="text-yellow-800 text-xs">
+                    ⚠️ Week-ends et réservations pour le lendemain entraînent une majoration de 10%.
                   </p>
                 </div>
               </div>
