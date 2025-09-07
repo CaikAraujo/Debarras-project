@@ -14,13 +14,16 @@ export const SelectionSchema = z.object({
 export const PriceCalculationSchema = z.object({
   selections: z.array(SelectionSchema).min(1).max(10),
   cantonId: z.enum(VALID_CANTONS),
-  selectedDate: z.date().optional()  // Tornando a data opcional
+  selectedDate: z.date().optional(),  // Tornando a data opcional
+  hasComuneLetter: z.boolean().optional()
 })
 
 export const CheckoutSchema = PriceCalculationSchema.extend({
-  customerEmail: z.string().email().optional()
+  customerEmail: z.string().email().optional(),
+  // Aceita URL pública ou caminho no storage
+  comuneLetterUrl: z.string().min(1).optional()
 })
 
 export type Selection = z.infer<typeof SelectionSchema>
 export type PriceCalculationData = z.infer<typeof PriceCalculationSchema>
-export type CheckoutData = z.infer<typeof CheckoutSchema> 
+export type CheckoutData = z.infer<typeof CheckoutSchema>

@@ -4,6 +4,7 @@ import { Resend } from 'resend'
 import React from 'react'
 import OrderConfirmationEmail from '@/emails/OrderConfirmationEmail'
 import Stripe from 'stripe'
+import { supabaseAdmin } from '@/lib/supabaseAdmin'
 
 
 interface EmailPayload {
@@ -12,14 +13,38 @@ interface EmailPayload {
   orderId: string
   amountTotal: number
   shippingAddress: Stripe.Address | null
+  comuneLetterUrl?: string
 }
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function sendOrderConfirmationEmail(payload: EmailPayload) {
-  const { customerName, customerEmail, orderId, amountTotal, shippingAddress } = payload
+  const { customerName, customerEmail, orderId, amountTotal, shippingAddress, comuneLetterUrl } = payload
 
   try {
+    let attachments: { filename: string; content: string }[] | undefined
+    if (comuneLetterUrl) {
+      try {
+        if (comuneLetterUrl.startsWith('http')) {
+          const res = await fetch(comuneLetterUrl)
+          const arrayBuf = await res.arrayBuffer()
+          const base64 = Buffer.from(arrayBuf).toString('base64')
+          const ext = comuneLetterUrl.split('.').pop()?.split('?')[0] || 'png'
+          attachments = [{ filename: `lettre-commune.${ext}`, content: base64 }]
+        } else {
+          const path = comuneLetterUrl
+          const { data, error } = await supabaseAdmin.storage.from('uploads').download(path)
+          if (error) throw error
+          const arrayBuf = await data.arrayBuffer()
+          const base64 = Buffer.from(arrayBuf).toString('base64')
+          const ext = path.split('.').pop() || 'png'
+          attachments = [{ filename: `lettre-commune.${ext}`, content: base64 }]
+        }
+      } catch (e) {
+        console.error('Falha ao obter a carta de comune para anexo:', e)
+      }
+    }
+
     // Envia o e-mail para o dono do negócio
     await resend.emails.send({
       from: 'Confirmation de Commande <info@suisse-debarras.ch>',
@@ -32,6 +57,7 @@ export async function sendOrderConfirmationEmail(payload: EmailPayload) {
         customerEmail,
         shippingAddress
       }),
+      attachments,
     })
 
     // Opcional: Enviar um e-mail de confirmação para o cliente

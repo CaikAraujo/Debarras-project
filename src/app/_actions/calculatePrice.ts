@@ -79,11 +79,11 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
       return { success: false, error: 'Muitas tentativas. Aguarde 1 minuto.' }
     }
 
-    const { selections, cantonId, selectedDate } = PriceCalculationSchema.parse(data)
+    const { selections, cantonId, selectedDate, hasComuneLetter } = PriceCalculationSchema.parse(data)
     const cantonBasePrice = PRICING.cantonBasePrices[cantonId]
     const seenNonBedroomRooms = new Set<string>()
 
-    let total = cantonBasePrice // Começa com o valor base do cantão
+    let total: number = cantonBasePrice // Começa com o valor base do cantão
     const breakdown = []
 
     for (const selection of selections) {
@@ -127,6 +127,11 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
       if (isTomorrow || isWeekend) {
         total = Math.round(total * 1.1)
       }
+    }
+
+    // Desconto de 10% se houver carta de commune
+    if (hasComuneLetter) {
+      total = Math.max(0, Math.round(total * 0.9))
     }
 
     return { success: true, totalPrice: total, breakdown, cantonBasePrice }

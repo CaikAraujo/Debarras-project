@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import { useState } from 'react'
+import uploadComuneLetter from '@/data/uploadComuneLetter'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 import { Trash2, Calendar, MapPin, PlusCircle, Edit, Package, Clock, Shield, Truck, Clock as ClockIcon } from 'lucide-react'
@@ -14,11 +16,12 @@ interface OrderSummaryProps {
   calculatedPrice: number
   isCalculating: boolean
   isProcessingCheckout: boolean
-  onCheckout: () => void
+  onCheckout: (comuneLetterUrl?: string) => void
   onAddRoom: () => void
   onRemoveRoom: (selectionId: string) => void
   onChangeCanton: () => void
   onChangeDate: () => void
+  onComuneLetterFlagChange?: (has: boolean) => void
 }
 
 export default function OrderSummary({
@@ -32,9 +35,30 @@ export default function OrderSummary({
   onAddRoom,
   onRemoveRoom,
   onChangeCanton,
-  onChangeDate
+  onChangeDate,
+  onComuneLetterFlagChange
 }: OrderSummaryProps) {
   const currentCanton = cantons.find(c => c.id === selectedCanton)
+  const [uploading, setUploading] = useState(false)
+  const [comuneLetterPath, setComuneLetterPath] = useState<string | undefined>(undefined)
+  const [preview, setPreview] = useState<string | undefined>(undefined)
+  const [uploadError, setUploadError] = useState<string | null>(null)
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    setUploadError(null)
+    const previewUrl = URL.createObjectURL(file)
+    setPreview(previewUrl)
+    const res = await uploadComuneLetter(file)
+    if (res.success) {
+      setComuneLetterPath(res.path)
+      onComuneLetterFlagChange?.(true)
+    }
+    else setUploadError('Échec du téléversement. Réessayez.')
+    setUploading(false)
+  }
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -116,6 +140,38 @@ export default function OrderSummary({
               </Card.Title>
             </Card.Header>
             <Card.Content className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-primary">Lettre de la commune (optionnel)</label>
+                <p className="text-xs text-green-700">En ajoutant la lettre de la commune, vous bénéficiez de 10% de remise.</p>
+                <div className="border-2 border-dashed rounded-lg p-4 bg-gray-50 hover:bg-gray-100 transition-colors">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      {preview ? (
+                        <Image src={preview} alt="Prévisualisation" width={56} height={56} className="rounded border w-14 h-14 object-cover" />
+                      ) : (
+                        <div className="w-14 h-14 bg-white border rounded flex items-center justify-center text-gray-400 text-xs">IMG</div>
+                      )}
+                      <div>
+                        <p className="text-sm text-primary font-medium">
+                          {preview ? 'Fichier ajouté' : 'Glissez-déposez ou choisissez une image'}
+                        </p>
+                        <p className="text-xs text-secondary">PNG, JPG, até 5MB</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <label className="inline-flex items-center px-3 py-2 text-sm bg-white border rounded cursor-pointer hover:bg-gray-50">
+                        Choisir
+                        <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+                      </label>
+                      {preview && (
+                        <button type="button" className="text-xs text-red-600 hover:underline" onClick={() => { setPreview(undefined); setComuneLetterPath(undefined); onComuneLetterFlagChange?.(false) }}>Retirer</button>
+                      )}
+                    </div>
+                  </div>
+                  {uploading && <p className="text-xs text-secondary mt-2">Téléversement...</p>}
+                  {uploadError && <p className="text-xs text-red-600 mt-2">{uploadError}</p>}
+                </div>
+              </div>
               <div className="space-y-3">
                 <div className="grid grid-cols-2 items-center p-3 bg-gray-50 rounded-lg gap-4">
                   <div className="flex items-center gap-3">
@@ -159,6 +215,9 @@ export default function OrderSummary({
                     <div className="text-xs text-secondary mt-1">
                       Prix final garanti
                     </div>
+                    {comuneLetterPath && (
+                      <div className="text-xs text-green-700 mt-1">Remise -10% (Lettre de la commune)</div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -191,7 +250,7 @@ export default function OrderSummary({
 
           <div className="space-y-4">
             <Button 
-              onClick={onCheckout}
+              onClick={() => onCheckout(comuneLetterPath)}
               disabled={isProcessingCheckout || isCalculating || selections.length === 0}
               className="w-full h-12 text-base font-bold shadow-lg hover:shadow-xl transition-all duration-300"
             >

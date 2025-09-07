@@ -34,12 +34,13 @@ export default function DevisSwiss() {
   } = useDevisState()
 
   // Cálculo e checkout seguros (server actions)
+  const [hasComuneLetter, setHasComuneLetter] = useState(false)
   const {
     calculatedPrice,
     isCalculating,
     isProcessingCheckout,
     handleSecureCheckout
-  } = usePriceCalculation({ selections, selectedCanton, selectedDate })
+  } = usePriceCalculation({ selections, selectedCanton, selectedDate, hasComuneLetter })
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [bookedDates, setBookedDates] = useState<Date[]>([])
@@ -230,11 +231,12 @@ export default function DevisSwiss() {
                 calculatedPrice={calculatedPrice}
                 isCalculating={isCalculating}
                 isProcessingCheckout={isProcessingCheckout}
-                onCheckout={handleSecureCheckout}
+                onCheckout={(url?: string) => handleSecureCheckout(url)}
                 onAddRoom={() => setIsModalOpen(true)}
                 onRemoveRoom={removeSelection}
                 onChangeCanton={resetAll}
                 onChangeDate={() => goToStep(3)}
+                onComuneLetterFlagChange={(has) => setHasComuneLetter(has)}
               />
             )}
           </div>

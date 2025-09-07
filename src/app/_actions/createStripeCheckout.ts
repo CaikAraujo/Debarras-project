@@ -78,12 +78,47 @@ export async function createStripeCheckout(data: CheckoutData) {
       })
     }
     
-    // Verificação de segurança: o total dos line items deve corresponder ao total calculado
-    const totalFromLineItems = lineItems.reduce((acc, item) => acc + item.price_data.unit_amount, 0)
-    if (totalFromLineItems !== priceResult.totalPrice * 100) {
-        console.error('Divergência de preço entre o total e a soma dos itens.')
-        return { success: false, error: 'Erro interno de cálculo de preço.' }
+    // Ajustar para sobretaxas/descontos (amanhã/fim de semana e carta de commune)
+    let totalFromLineItems = lineItems.reduce((acc, item) => acc + item.price_data.unit_amount, 0)
+    let targetTotal = priceResult.totalPrice * 100
+
+    if (targetTotal > totalFromLineItems) {
+      // Sobretaxa: adicionar item de ajuste positivo
+      lineItems.push({
+        price_data: {
+          currency: 'chf',
+          product_data: { name: 'Ajuste de data', description: 'Sobretaxe (demain/week-end) 10%' },
+          unit_amount: targetTotal - totalFromLineItems,
+        },
+        quantity: 1,
+      })
+      totalFromLineItems = targetTotal
+    } else if (targetTotal < totalFromLineItems) {
+      // Desconto: reduzir valores dos itens até atingir o total alvo (sem valores negativos)
+      let remainingDiscount = totalFromLineItems - targetTotal
+
+      // Priorizar reduzir o item de base do cantão se existir (foi adicionado com unshift)
+      const startIndex = priceResult.cantonBasePrice ? 0 : 1
+      for (let i = 0; i < lineItems.length && remainingDiscount > 0; i++) {
+        const idx = i // ordem natural já tem base no início quando existe
+        const item = lineItems[idx]
+        const current = item.price_data.unit_amount
+        const reducible = Math.min(current, remainingDiscount)
+        item.price_data.unit_amount = current - reducible
+        remainingDiscount -= reducible
+      }
+
+      totalFromLineItems = lineItems.reduce((acc, item) => acc + item.price_data.unit_amount, 0)
     }
+
+    // Segurança final
+    if (totalFromLineItems !== targetTotal) {
+      console.error('Divergência de preço entre o total e a soma dos itens após ajuste.')
+      return { success: false, error: 'Erro interno de cálculo de preço (ajuste).' }
+    }
+
+    const hasComune = Boolean(validated.comuneLetterUrl || (validated as any).hasComuneLetter)
+    const couponId = process.env.STRIPE_COMUNE_COUPON_ID
 
     const session = await stripe.checkout.sessions.create({
       locale: 'fr',
@@ -98,12 +133,14 @@ export async function createStripeCheckout(data: CheckoutData) {
       success_url: `${process.env.NEXT_PUBLIC_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_URL}/devis`,
       customer_email: validated.customerEmail,
+      discounts: couponId && hasComune ? [{ coupon: couponId }] : undefined,
       metadata: {
         canton: validated.cantonId,
         selections: JSON.stringify(validated.selections),
         selectedDate: validated.selectedDate.toISOString(),
         serverPrice: priceResult.totalPrice.toString(),
-        timestamp: Date.now().toString()
+        timestamp: Date.now().toString(),
+        comuneLetterUrl: validated.comuneLetterUrl || ''
       }
     })
 

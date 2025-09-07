@@ -65,6 +65,7 @@ export async function POST(req: Request) {
         orderId: session.id,
         amountTotal: amount_total ? amount_total / 100 : 0,
         shippingAddress: customer_details.address,
+        comuneLetterUrl: metadata.comuneLetterUrl || undefined,
       })
       
       console.log(`✅ Reserva salva e e-mail enviado para a sessão: ${session.id}`)
