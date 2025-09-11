@@ -11,12 +11,14 @@ import OrderSummary from '@/components/devis/OrderSummary'
 import SelectionsSummary from '@/components/devis/SelectionsSummary'
 import AddRoomModal from '@/components/devis/AddRoomModal'
 import DateSelector from '@/components/devis/DateSelector'
+import CustomerInfoForm from '@/components/devis/CustomerInfoForm'
 import { getBookedDates } from '@/app/_actions/getBookedDates'
 import type { VALID_CANTONS } from '@/lib/schemas'
 import { SecurityValidators } from '@/lib/security'
 
 export default function DevisSwiss() {
   const searchParams = useSearchParams();
+  const [customerInfo, setCustomerInfo] = useState<{ name: string; email: string; phone?: string; address?: string; notes?: string } | null>(null)
   const {
     currentStep,
     selectedCanton,
@@ -40,7 +42,7 @@ export default function DevisSwiss() {
     isCalculating,
     isProcessingCheckout,
     handleSecureCheckout
-  } = usePriceCalculation({ selections, selectedCanton, selectedDate, hasComuneLetter })
+  } = usePriceCalculation({ selections, selectedCanton, selectedDate, hasComuneLetter, customerInfo })
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [bookedDates, setBookedDates] = useState<Date[]>([])
@@ -143,6 +145,12 @@ export default function DevisSwiss() {
       } else {
         console.error('Cannot navigate to room selection: no canton selected')
       }
+    } else if (stepId === 2) {
+      if (selectedCanton && selections.length > 0) {
+        goToStep(stepId)
+      } else {
+        console.error('Cannot navigate to customer info: missing canton or selections')
+      }
     } else if (stepId === 3) {
       // Só pode ir para seleção de data se tiver objetos selecionados
       if (selectedCanton && selections.length > 0) {
@@ -200,12 +208,25 @@ export default function DevisSwiss() {
                       calculatedPrice={calculatedPrice}
                       isCalculating={isCalculating}
                       onRemoveSelection={removeSelection}
-                      onContinue={() => goToStep(3)}
+                      onContinue={() => goToStep(2)}
                       onChangeCanton={resetAll}
                     />
                   </div>
                 )}
               </>
+            )}
+
+            {currentStep === 2 && selectedCanton && selections.length > 0 && (
+              <CustomerInfoForm
+                initial={customerInfo || undefined}
+                onSubmit={(info) => {
+                  setCustomerInfo(info)
+                  // manter também o e-mail para checkout
+                  // avanço para seleção de data
+                  goToStep(3)
+                }}
+                onBack={() => goToStep(1)}
+              />
             )}
 
             {currentStep === 3 && selectedCanton && (
@@ -231,7 +252,7 @@ export default function DevisSwiss() {
                 calculatedPrice={calculatedPrice}
                 isCalculating={isCalculating}
                 isProcessingCheckout={isProcessingCheckout}
-                onCheckout={(url?: string) => handleSecureCheckout(url)}
+                onCheckout={() => handleSecureCheckout()}
                 onAddRoom={() => setIsModalOpen(true)}
                 onRemoveRoom={removeSelection}
                 onChangeCanton={resetAll}

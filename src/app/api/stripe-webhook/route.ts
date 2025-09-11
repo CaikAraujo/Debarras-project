@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     const { metadata, customer_details, customer_email, amount_total } = sessionWithDetails
 
     if (!metadata || !customer_details) {
-      console.error('Webhook Error: Metadados ou detalhes do cliente ausentes na sessão.')
+      console.error('[Webhook] Error: Metadados ou detalhes do cliente ausentes na sessão.')
       return new Response('Webhook Error: Missing metadata or customer details.', { status: 400 })
     }
 
@@ -54,24 +54,27 @@ export async function POST(req: Request) {
       const saveResult = await saveReservation(reservationData)
       if (!saveResult.success) {
         // Se a reserva falhar, não enviar email e logar o erro
-        console.error(`Webhook Error: Falha ao salvar reserva para a sessão ${session.id}. Erro: ${saveResult.error}`)
+        console.error(`[Webhook] Error: Falha ao salvar reserva para a sessão ${session.id}. Erro: ${saveResult.error}`)
         return new Response(`Webhook Error: Failed to save reservation for session ${session.id}`, { status: 500 })
       }
       
       // 2. Enviar o email de confirmação
       await sendOrderConfirmationEmail({
-        customerName: customer_details.name ?? 'Cliente',
-        customerEmail: finalCustomerEmail, // Usar o email corrigido
+        customerName: (metadata.customerName && metadata.customerName.length > 1) ? metadata.customerName : (customer_details.name ?? 'Cliente'),
+        customerEmail: finalCustomerEmail,
         orderId: session.id,
         amountTotal: amount_total ? amount_total / 100 : 0,
         shippingAddress: customer_details.address,
         comuneLetterUrl: metadata.comuneLetterUrl || undefined,
+        customerPhone: metadata.customerPhone || undefined,
+        customerAddress: metadata.customerAddress || undefined,
+        customerNotes: metadata.customerNotes || undefined,
       })
       
       console.log(`✅ Reserva salva e e-mail enviado para a sessão: ${session.id}`)
 
     } catch (error: any) {
-      console.error(`Webhook Error: Erro ao processar a sessão ${session.id}:`, error)
+      console.error(`Webhook Error ao processar a sessão ${session.id}:`, error)
       return new Response(`Webhook Error: Internal processing error for session ${session.id}`, { status: 500 })
     }
   }

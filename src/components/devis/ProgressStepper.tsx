@@ -10,7 +10,7 @@ export default function ProgressStepper({ currentStep, onStepClick }: ProgressSt
   const steps = [
     { id: 0, title: 'Sélection du canton', description: 'Choisissez votre canton' },
     { id: 1, title: 'Sélection des objets', description: 'Sélectionnez les objets à débarrasser' },
-    { id: 2, title: 'Résumé', description: 'Vérifiez vos sélections' },
+    { id: 2, title: 'Infos du client', description: 'Nom, e-mail, téléphone' },
     { id: 3, title: 'Date de réservation', description: 'Choisissez la date' },
     { id: 4, title: 'Confirmation', description: 'Confirmez votre commande' }
   ]
@@ -28,9 +28,6 @@ export default function ProgressStepper({ currentStep, onStepClick }: ProgressSt
       console.error('Step não acessível ainda:', stepId)
     }
   }
-
-  // Teste simples para verificar se a função está sendo passada
-  console.log('ProgressStepper: onStepClick function:', typeof onStepClick)
 
   return (
     <>

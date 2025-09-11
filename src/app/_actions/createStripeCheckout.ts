@@ -117,7 +117,7 @@ export async function createStripeCheckout(data: CheckoutData) {
       return { success: false, error: 'Erro interno de cálculo de preço (ajuste).' }
     }
 
-    const hasComune = Boolean(validated.comuneLetterUrl || (validated as any).hasComuneLetter)
+    const hasComune = Boolean(validated.comuneLetterUrl || validated.hasComuneLetter)
     const couponId = process.env.STRIPE_COMUNE_COUPON_ID
 
     const session = await stripe.checkout.sessions.create({
@@ -140,7 +140,11 @@ export async function createStripeCheckout(data: CheckoutData) {
         selectedDate: validated.selectedDate.toISOString(),
         serverPrice: priceResult.totalPrice.toString(),
         timestamp: Date.now().toString(),
-        comuneLetterUrl: validated.comuneLetterUrl || ''
+        comuneLetterUrl: validated.comuneLetterUrl || '',
+        customerName: validated.customerName || '',
+        customerPhone: validated.customerPhone || '',
+        customerAddress: validated.customerAddress || '',
+        customerNotes: validated.customerNotes || ''
       }
     })
 

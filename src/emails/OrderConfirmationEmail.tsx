@@ -20,17 +20,18 @@ interface OrderConfirmationEmailProps {
   orderId: string
   amountTotal: number
   shippingAddress: Stripe.Address | null
+  customerPhone?: string
+  customerAddress?: string
+  customerNotes?: string
 }
 
 const formatAddress = (address: Stripe.Address | null) => {
   if (!address) return 'Non fournie'
-  const parts = [
-    address.line1,
-    address.line2,
-    `${address.postal_code || ''} ${address.city || ''}`.trim(),
-    `${address.state || ''}, ${address.country || ''}`.trim()
-  ].filter(Boolean) // Remove partes vazias
-  return parts.join(', ')
+  const cityLine = [address.postal_code, address.city].filter(Boolean).join(' ').trim()
+  const stateCountry = [address.state, address.country].filter(Boolean).join(' ').trim()
+  const parts = [address.line1, address.line2, cityLine, stateCountry]
+    .filter((p) => Boolean(p && p.toString().trim().length > 0))
+  return parts.length ? parts.join(', ') : 'Non fournie'
 }
 
 export default function OrderConfirmationEmail({
@@ -39,8 +40,15 @@ export default function OrderConfirmationEmail({
   amountTotal,
   customerEmail,
   shippingAddress,
+  customerPhone,
+  customerAddress,
+  customerNotes,
 }: OrderConfirmationEmailProps) {
   const preview = `Nouvelle commande de ${customerName} confirmée`
+  const shippingText = formatAddress(shippingAddress)
+  const providedText = (customerAddress || '').trim()
+  const showProvided = providedText.length > 0
+  const showShipping = shippingText !== 'Non fournie' && (!showProvided || shippingText !== providedText)
 
   return (
     <Html>
@@ -78,9 +86,26 @@ export default function OrderConfirmationEmail({
               <Text className="text-base text-gray-600 my-1">
                 <strong>E-mail :</strong> <Link href={`mailto:${customerEmail}`} className="text-blue-600">{customerEmail}</Link>
               </Text>
-              <Text className="text-base text-gray-600 my-1">
-                <strong>Adresse de livraison :</strong> {formatAddress(shippingAddress)}
-              </Text>
+              {customerPhone && (
+                <Text className="text-base text-gray-600 my-1">
+                  <strong>Téléphone :</strong> {customerPhone}
+                </Text>
+              )}
+              {showProvided && (
+                <Text className="text-base text-gray-600 my-1">
+                  <strong>Adresse fournie :</strong> {providedText}
+                </Text>
+              )}
+              {showShipping && (
+                <Text className="text-base text-gray-600 my-1">
+                  <strong>Adresse de livraison :</strong> {shippingText}
+                </Text>
+              )}
+              {customerNotes && (
+                <Text className="text-base text-gray-600 my-1">
+                  <strong>Notes :</strong> {customerNotes}
+                </Text>
+              )}
             </Section>
 
             <Hr className="my-6 border-gray-300" />

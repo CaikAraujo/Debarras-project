@@ -21,7 +21,12 @@ export const PriceCalculationSchema = z.object({
 export const CheckoutSchema = PriceCalculationSchema.extend({
   customerEmail: z.string().email().optional(),
   // Aceita URL pública ou caminho no storage
-  comuneLetterUrl: z.string().min(1).optional()
+  comuneLetterUrl: z.string().min(1).optional(),
+  // Informações básicas do cliente para e-mail/webhook
+  customerName: z.string().min(2).optional(),
+  customerPhone: z.string().min(3).optional(),
+  customerAddress: z.string().min(3).optional(),
+  customerNotes: z.string().min(3).optional()
 })
 
 export type Selection = z.infer<typeof SelectionSchema>

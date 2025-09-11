@@ -8,9 +8,11 @@ interface UsePriceCalculationProps {
   selections: Selection[]
   selectedCanton: string | null
   selectedDate: Date | undefined
+  hasComuneLetter?: boolean
+  customerInfo?: { name: string; email: string; phone?: string; address?: string; notes?: string } | null
 }
 
-export function usePriceCalculation({ selections, selectedCanton, selectedDate }: UsePriceCalculationProps) {
+export function usePriceCalculation({ selections, selectedCanton, selectedDate, hasComuneLetter, customerInfo }: UsePriceCalculationProps) {
   
   const [calculatedPrice, setCalculatedPrice] = useState(0)
   const [isCalculating, setIsCalculating] = useState(false)
@@ -69,7 +71,8 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate }
       const result = await calculateSecurePrice({ 
         selections, 
         cantonId: selectedCanton as typeof VALID_CANTONS[number],
-        selectedDate
+        selectedDate,
+        hasComuneLetter
       })
       
       if (result.success && typeof result.totalPrice === 'number' && result.totalPrice > 0) {
@@ -122,7 +125,13 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate }
       const result = await createStripeCheckout({ 
         selections, 
         cantonId: selectedCanton as typeof VALID_CANTONS[number],
-        selectedDate: selectedDate as Date
+        selectedDate: selectedDate as Date,
+        hasComuneLetter,
+        customerEmail: customerInfo?.email,
+        customerName: customerInfo?.name,
+        customerPhone: customerInfo?.phone,
+        customerAddress: customerInfo?.address,
+        customerNotes: customerInfo?.notes,
       })
       if (result.success && result.checkoutUrl) {
         window.location.href = result.checkoutUrl

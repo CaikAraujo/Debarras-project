@@ -14,12 +14,16 @@ interface EmailPayload {
   amountTotal: number
   shippingAddress: Stripe.Address | null
   comuneLetterUrl?: string
+  customerPhone?: string
+  customerAddress?: string
+  customerNotes?: string
 }
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function sendOrderConfirmationEmail(payload: EmailPayload) {
-  const { customerName, customerEmail, orderId, amountTotal, shippingAddress, comuneLetterUrl } = payload
+  const { customerName, customerEmail, orderId, amountTotal, shippingAddress, comuneLetterUrl, customerPhone, customerAddress, customerNotes } = payload
+
 
   try {
     let attachments: { filename: string; content: string }[] | undefined
@@ -46,7 +50,7 @@ export async function sendOrderConfirmationEmail(payload: EmailPayload) {
     }
 
     // Envia o e-mail para o dono do negócio
-    await resend.emails.send({
+    const sendResult = await resend.emails.send({
       from: 'Confirmation de Commande <info@suisse-debarras.ch>',
       to: ['suissedebarras00@gmail.com'], // Seu e-mail
       subject: `Nouvelle commande confirmée de ${customerName} !`,
@@ -55,17 +59,21 @@ export async function sendOrderConfirmationEmail(payload: EmailPayload) {
         orderId,
         amountTotal,
         customerEmail,
-        shippingAddress
+        shippingAddress,
+        customerPhone,
+        customerAddress,
+        customerNotes,
       }),
       attachments,
     })
+    // Opcional: inspecione sendResult no dashboard do Resend, não logamos em prod
 
     // Opcional: Enviar um e-mail de confirmação para o cliente
     // await resend.emails.send({ ... })
 
     return { success: true }
   } catch (error) {
-    console.error('Erro ao enviar e-mail de confirmação de pedido:', error)
+    console.error('[Email] Erro ao enviar e-mail de confirmação de pedido:', error)
     return { success: false, error: 'Falha ao enviar o e-mail.' }
   }
 } 
