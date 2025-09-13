@@ -5,6 +5,7 @@ import Modal from '@/components/ui/Modal'
 import Button from '@/components/ui/Button'
 import { rooms, quantities } from '@/data/devisData'
 import type { Selection } from '@/lib/schemas'
+import useI18n from '@/components/i18n/useI18n'
 
 interface AddRoomModalProps {
   isOpen: boolean
@@ -16,6 +17,7 @@ interface AddRoomModalProps {
 export default function AddRoomModal({ isOpen, selections, onClose, onAddRoom }: AddRoomModalProps) {
   const [selectedRoomId, setSelectedRoomId] = useState<Selection['roomId'] | null>(null)
   const [selectedQuantity, setSelectedQuantity] = useState<number | null>(null)
+  const { t } = useI18n()
 
   // Filtrar cômodos disponíveis - quartos sempre disponíveis, outros apenas se não selecionados
   const availableRooms = rooms.filter(room => {
@@ -47,20 +49,19 @@ export default function AddRoomModal({ isOpen, selections, onClose, onAddRoom }:
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>
-      <h2 className="text-2xl font-bold text-primary mb-6">Ajouter une pièce</h2>
+      <h2 className="text-2xl font-bold text-primary mb-6">{t.devis.summary.addAnother}</h2>
       
       {bedroomCount > 0 && (
         <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
           <p className="text-blue-800 text-sm">
-            💡 Vous avez déjà {bedroomCount} chambre{bedroomCount > 1 ? 's' : ''} sélectionnée{bedroomCount > 1 ? 's' : ''}. 
-            Vous pouvez en ajouter d'autres si nécessaire.
+            💡 {bedroomCount} {t.devis.rooms.selectedCount}{bedroomCount > 1 ? 's' : ''}. {t.devis.rooms.addAnotherBedroom}
           </p>
         </div>
       )}
       
       <div className="space-y-4">
         <div>
-          <h3 className="text-lg font-semibold text-primary mb-2">1. Choisissez la pièce</h3>
+          <h3 className="text-lg font-semibold text-primary mb-2">1. {t.devis.quantity.changeRoom}</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {availableRooms.map(room => {
               const isBedroom = room.id === 'bedroom'
@@ -81,18 +82,19 @@ export default function AddRoomModal({ isOpen, selections, onClose, onAddRoom }:
                     {room.name}
                     {isBedroom && bedroomCount > 0 && (
                       <span className="block text-xs text-red-600 font-medium">
-                        +{bedroomCount} déjà
+                        +{bedroomCount}
                       </span>
                     )}
                   </span>
                 </Button>
-              )
-            })}
+              )}
+            )}
           </div>
           
           {availableRooms.length === 0 && (
             <p className="text-center text-gray-500 py-8">
-              Tous les cômodos disponibles ont été sélectionnés.
+              {/* mantemos genérico */}
+              {t.devis.summary.addAnother}
             </p>
           )}
         </div>
@@ -100,10 +102,11 @@ export default function AddRoomModal({ isOpen, selections, onClose, onAddRoom }:
         {selectedRoomId && (
           <div>
             <h3 className="text-lg font-semibold text-primary mb-2">
-              2. Choisissez la quantité
+              2. {t.devis.rooms.qtySelect.choose}
               {selectedRoomId === 'bedroom' && bedroomCount > 0 && (
                 <span className="text-sm font-normal text-red-600 block">
-                  Pour la {bedroomCount + 1}ème chambre
+                  {/* indicação ordinal simples */}
+                  +{bedroomCount + 1}
                 </span>
               )}
             </h3>
@@ -124,15 +127,12 @@ export default function AddRoomModal({ isOpen, selections, onClose, onAddRoom }:
       </div>
 
       <div className="mt-8 flex justify-end gap-4">
-        <Button variant="secondary" onClick={handleClose}>Annuler</Button>
+        <Button variant="secondary" onClick={handleClose}>{t.devis.customer.back}</Button>
         <Button 
           onClick={handleAdd} 
           disabled={!selectedRoomId || !selectedQuantity}
         >
-          {selectedRoomId === 'bedroom' && bedroomCount > 0 
-            ? `Ajouter chambre ${bedroomCount + 1}`
-            : 'Ajouter la pièce'
-          }
+          {t.devis.summary.addAnother}
         </Button>
       </div>
     </Modal>

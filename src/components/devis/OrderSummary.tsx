@@ -8,6 +8,7 @@ import { rooms, cantons } from '@/data/devisData'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import type { Selection } from '@/lib/schemas'
+import useI18n from '@/components/i18n/useI18n'
 
 interface OrderSummaryProps {
   selectedCanton: string
@@ -43,6 +44,7 @@ export default function OrderSummary({
   const [comuneLetterPath, setComuneLetterPath] = useState<string | undefined>(undefined)
   const [preview, setPreview] = useState<string | undefined>(undefined)
   const [uploadError, setUploadError] = useState<string | null>(null)
+  const { t } = useI18n()
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -56,24 +58,24 @@ export default function OrderSummary({
       setComuneLetterPath(res.path)
       onComuneLetterFlagChange?.(true)
     }
-    else setUploadError('Échec du téléversement. Réessayez.')
+    else setUploadError(t.devis.summary.uploadFail)
     setUploading(false)
   }
 
   return (
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-12">
-        <h3 className="text-3xl font-bold text-primary mb-4">Votre Devis Personnalisé</h3>
-        <p className="text-secondary text-base">Vérifiez les informations avant de finaliser votre réservation.</p>
+        <h3 className="text-3xl font-bold text-primary mb-4">{t.devis.summary.yourQuote}</h3>
+        <p className="text-secondary text-base">{t.devis.summary.checkInfo}</p>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
         <div className="lg:col-span-2 space-y-6">
           <div className="flex items-center justify-between mb-6">
-            <h4 className="text-xl font-bold text-primary">Espaces à débarrasser</h4>
+            <h4 className="text-xl font-bold text-primary">{t.devis.summary.spacesTitle}</h4>
             <div className="flex items-center gap-2 text-secondary">
               <Package className="w-4 h-4" />
-              <span className="font-medium text-sm">{selections.length} espace{selections.length > 1 ? 's' : ''}</span>
+              <span className="font-medium text-sm">{selections.length} {t.devis.summary.items}</span>
             </div>
           </div>
           
@@ -97,11 +99,9 @@ export default function OrderSummary({
                         <div className="flex items-center gap-3 text-secondary">
                           <span className="flex items-center gap-1 text-sm">
                             <Package className="w-3 h-3" />
-                            {selection.quantity} objets
+                            {selection.quantity} {t.devis.summary.items}
                           </span>
-                          <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">
-                            #{index + 1}
-                          </span>
+                          <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">#{index + 1}</span>
                         </div>
                         <p className="text-xs text-secondary mt-1 truncate">{room?.description}</p>
                       </div>
@@ -125,7 +125,7 @@ export default function OrderSummary({
             <Card.Content className="p-4">
               <Button variant="outline" onClick={onAddRoom} className="w-full h-12 text-base">
                 <PlusCircle className="w-5 h-5 mr-2" />
-                Ajouter un autre espace
+                {t.devis.summary.addAnother}
               </Button>
             </Card.Content>
           </Card>
@@ -136,13 +136,13 @@ export default function OrderSummary({
             <Card.Header className="pb-3">
               <Card.Title className="text-xl flex items-center gap-2">
                 <Package className="w-5 h-5 text-red-600" />
-                Récapitulatif
+                {t.devis.summary.recap}
               </Card.Title>
             </Card.Header>
             <Card.Content className="space-y-4">
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-primary">Lettre de la commune (optionnel)</label>
-                <p className="text-xs text-green-700">En ajoutant la lettre de la commune, vous bénéficiez de 10% de remise.</p>
+                <label className="text-sm font-semibold text-primary">{t.devis.summary.comuneLabel}</label>
+                <p className="text-xs text-green-700">{t.devis.summary.comuneBenefit}</p>
                 <div className="border-2 border-dashed rounded-lg p-4 bg-gray-50 hover:bg-gray-100 transition-colors">
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
@@ -153,22 +153,22 @@ export default function OrderSummary({
                       )}
                       <div>
                         <p className="text-sm text-primary font-medium">
-                          {preview ? 'Fichier ajouté' : 'Glissez-déposez ou choisissez une image'}
+                          {preview ? t.devis.summary.fileAdded : t.devis.summary.chooseOrDrop}
                         </p>
-                        <p className="text-xs text-secondary">PNG, JPG, até 5MB</p>
+                        <p className="text-xs text-secondary">{t.devis.summary.formats}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       <label className="inline-flex items-center px-3 py-2 text-sm bg-white border rounded cursor-pointer hover:bg-gray-50">
-                        Choisir
+                        {t.devis.summary.choose}
                         <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
                       </label>
                       {preview && (
-                        <button type="button" className="text-xs text-red-600 hover:underline" onClick={() => { setPreview(undefined); setComuneLetterPath(undefined); onComuneLetterFlagChange?.(false) }}>Retirer</button>
+                        <button type="button" className="text-xs text-red-600 hover:underline" onClick={() => { setPreview(undefined); setComuneLetterPath(undefined); onComuneLetterFlagChange?.(false) }}>{t.devis.summary.remove}</button>
                       )}
                     </div>
                   </div>
-                  {uploading && <p className="text-xs text-secondary mt-2">Téléversement...</p>}
+                  {uploading && <p className="text-xs text-secondary mt-2">{t.devis.summary.uploading}</p>}
                   {uploadError && <p className="text-xs text-red-600 mt-2">{uploadError}</p>}
                 </div>
               </div>
@@ -176,7 +176,7 @@ export default function OrderSummary({
                 <div className="grid grid-cols-2 items-center p-3 bg-gray-50 rounded-lg gap-4">
                   <div className="flex items-center gap-3">
                     <MapPin className="w-4 h-4 text-gray-600 flex-shrink-0" />
-                    <span className="font-semibold text-primary text-sm">Canton</span>
+                    <span className="font-semibold text-primary text-sm">{t.devis.summary.canton}</span>
                   </div>
                   <div className="flex items-center gap-3 justify-end">
                     <div className="w-6 h-6 flex-shrink-0">
@@ -195,7 +195,7 @@ export default function OrderSummary({
                   <div className="grid grid-cols-2 items-center p-3 bg-gray-50 rounded-lg gap-4">
                     <div className="flex items-center gap-3">
                       <Calendar className="w-4 h-4 text-gray-600 flex-shrink-0" />
-                      <span className="font-semibold text-primary text-sm">Date</span>
+                      <span className="font-semibold text-primary text-sm">{t.devis.summary.date}</span>
                     </div>
                     <div className="flex items-center gap-3 justify-end">
                       <span className="font-bold text-primary text-sm">{format(selectedDate, 'd MMM yyyy', { locale: fr })}</span>
@@ -207,16 +207,16 @@ export default function OrderSummary({
               
               <div className="border-t-2 border-gray-200 pt-4">
                 <div className="flex justify-between items-baseline">
-                  <span className="text-base font-semibold text-primary">Total estimé</span>
+                  <span className="text-base font-semibold text-primary">{t.devis.summary.total}</span>
                   <div className="text-right">
                     <div className="text-2xl font-bold text-red-600">
                       {isCalculating ? '...' : `CHF ${calculatedPrice}`}
                     </div>
                     <div className="text-xs text-secondary mt-1">
-                      Prix final garanti
+                      {t.devis.summary.guaranteed}
                     </div>
                     {comuneLetterPath && (
-                      <div className="text-xs text-green-700 mt-1">Remise -10% (Lettre de la commune)</div>
+                      <div className="text-xs text-green-700 mt-1">{t.devis.summary.discount}</div>
                     )}
                   </div>
                 </div>
@@ -229,20 +229,20 @@ export default function OrderSummary({
             <Card.Content className="p-4">
               <h4 className="text-sm font-semibold text-blue-800 mb-3 flex items-center gap-2">
                 <Shield className="w-4 h-4" />
-                Ce qui est inclus
+                {t.devis.summary.includedTitle}
               </h4>
               <div className="space-y-2 text-xs text-blue-700">
                 <div className="flex items-center gap-2">
                   <Truck className="w-3 h-3" />
-                  <span>Transport et évacuation</span>
+                  <span>{t.devis.summary.included[0]}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <ClockIcon className="w-3 h-3" />
-                  <span>Intervention programmée</span>
+                  <span>{t.devis.summary.included[1]}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Shield className="w-3 h-3" />
-                  <span>Équipe professionnelle</span>
+                  <span>{t.devis.summary.included[2]}</span>
                 </div>
               </div>
             </Card.Content>
@@ -254,16 +254,16 @@ export default function OrderSummary({
               disabled={isProcessingCheckout || isCalculating || selections.length === 0}
               className="w-full h-12 text-base font-bold shadow-lg hover:shadow-xl transition-all duration-300"
             >
-              {isProcessingCheckout ? 'Traitement...' : 'Réserver maintenant'}
+              {isProcessingCheckout ? t.devis.summary.processing : t.devis.summary.reserveNow}
             </Button>
             
             <div className="space-y-3">
               <Button variant="outline" onClick={onChangeDate} className="w-full h-10 text-sm">
                 <Edit className="w-4 h-4 mr-2" />
-                Modifier la date ou le canton
+                {t.devis.summary.editDateCanton}
               </Button>
               <Button variant="secondary" onClick={onChangeCanton} className="w-full h-10 text-sm">
-                Recommencer
+                {t.devis.summary.restart}
               </Button>
             </div>
           </div>

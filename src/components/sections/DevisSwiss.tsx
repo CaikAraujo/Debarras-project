@@ -15,9 +15,11 @@ import CustomerInfoForm from '@/components/devis/CustomerInfoForm'
 import { getBookedDates } from '@/app/_actions/getBookedDates'
 import type { VALID_CANTONS } from '@/lib/schemas'
 import { SecurityValidators } from '@/lib/security'
+import useI18n from '@/components/i18n/useI18n'
 
 export default function DevisSwiss() {
   const searchParams = useSearchParams();
+  const { t } = useI18n()
   const [customerInfo, setCustomerInfo] = useState<{ name: string; email: string; phone?: string; address?: string; notes?: string } | null>(null)
   const {
     currentStep,
@@ -173,9 +175,9 @@ export default function DevisSwiss() {
       <div className="container-swiss">
         <div className="max-w-6xl">
           <div className="text-center mb-12">
-            <h1 className="text-primary mb-4">Calculateur de Devis Personnalisé</h1>
+            <h1 className="text-primary mb-4">{t.devis.landing.title}</h1>
             <p className="text-secondary text-lg">
-              Sélectionnez les objets de votre logement et le nombre d&apos;objets à débarrasser pour obtenir votre devis instantané.
+              {t.devis.landing.subtitle}
             </p>
           </div>
 
@@ -190,7 +192,7 @@ export default function DevisSwiss() {
               <>
                 <div className="mb-6 text-center">
                   <p className="text-secondary text-sm md:text-base">
-                    💡 Cliquez sur un objet pour sélectionner la quantité, puis ajoutez d'autres objets si nécessaire.
+                    {t.devis.hints.selectObjects}
                   </p>
                 </div>
                 <RoomSelector 

@@ -1,19 +1,19 @@
 import Image from 'next/image'
 import Card from '@/components/ui/Card'
 import { cantons } from '@/data/devisData'
+import useI18n from '@/components/i18n/useI18n'
 
 interface CantonSelectorProps {
   onSelectCanton: (cantonId: string) => void
 }
 
 export default function CantonSelector({ onSelectCanton }: CantonSelectorProps) {
+  const { t } = useI18n()
 
   return (
     <div className="max-w-4xl mx-auto px-4">
       <div className="text-center mb-6 md:mb-8">
-        <p className="text-secondary text-base md:text-lg">
-          Sélectionnez votre canton pour obtenir des prix adaptés à votre région.
-        </p>
+        <p className="text-secondary text-base md:text-lg">{t.devis.cantonSelector.prompt}</p>
       </div>
       
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-12 place-items-center">

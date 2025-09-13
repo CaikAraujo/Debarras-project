@@ -94,7 +94,7 @@ const HeroSwiss = () => {
                   Photo<br/>Chef Équipe
                 </div>
                 <div style={{ fontSize: '14px', fontWeight: 'bold' }}>Pierre Martinet</div>
-                <div style={{ fontSize: '12px', color: 'var(--text-medium)' }}>Chef d&apos;Équipe Valais</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-medium)' }}>Chef d'Equipe Valais</div>
               </div>
               
               <div style={{ textAlign: 'center' }}>
@@ -117,8 +117,8 @@ const HeroSwiss = () => {
             </div>
           </div>
           
-          {/* Article principal avec carrossel d'images */}
-          <div className="admin-section" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '20px' }}>
+          {/* Article principal com carrossel de imagens */}
+          <div className="admin-section" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
             <div style={{ 
               position: 'relative',
               height: '200px',
@@ -151,7 +151,7 @@ const HeroSwiss = () => {
               <p>
                 Débarras Pro investit dans des solutions durables pour le traitement 
                 des déchets en Suisse. Notre équipe certifiée garantit un service 
-                professionnel respectueux de l&apos;environnement.
+                professionnel respectueux de l'environnement.
               </p>
               <p>
                 Nos méthodes de tri sélectif et de recyclage dépassent les exigences 
@@ -172,7 +172,7 @@ const HeroSwiss = () => {
           <div className="admin-section">
             <div style={{ 
               display: 'grid', 
-              gridTemplateColumns: '200px 1fr', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
               gap: '20px',
               padding: '20px',
               background: 'var(--background-gray)',
@@ -191,9 +191,9 @@ const HeroSwiss = () => {
               </div>
               <div>
                 <h3 style={{ marginBottom: '15px' }}>Réseaux sociaux</h3>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
                   <span style={{ fontSize: '13px' }}>📄 tout</span>
-                  <div style={{ display: 'flex', gap: '15px' }}>
+                  <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{ 
                         background: 'var(--swiss-red)', 
@@ -240,7 +240,7 @@ const HeroSwiss = () => {
             <h4 style={{ color: 'var(--text-dark)', fontSize: '16px', marginBottom: '10px' }}>
               Engagement international
             </h4>
-            <p>Notre expertise s&apos;étend au-delà des frontières suisses.</p>
+            <p>Notre expertise s'étend au-delà des frontières suisses.</p>
           </div>
           
         </div>

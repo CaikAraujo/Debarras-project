@@ -1,5 +1,6 @@
 import { CheckCircle } from 'lucide-react'
 import { SecurityValidators } from '@/lib/security'
+import useI18n from '@/components/i18n/useI18n'
 
 interface ProgressStepperProps {
   currentStep: number
@@ -7,13 +8,8 @@ interface ProgressStepperProps {
 }
 
 export default function ProgressStepper({ currentStep, onStepClick }: ProgressStepperProps) {
-  const steps = [
-    { id: 0, title: 'Sélection du canton', description: 'Choisissez votre canton' },
-    { id: 1, title: 'Sélection des objets', description: 'Sélectionnez les objets à débarrasser' },
-    { id: 2, title: 'Infos du client', description: 'Nom, e-mail, téléphone' },
-    { id: 3, title: 'Date de réservation', description: 'Choisissez la date' },
-    { id: 4, title: 'Confirmation', description: 'Confirmez votre commande' }
-  ]
+  const { t } = useI18n()
+  const steps = t.devis.stepper.map((s, idx) => ({ id: idx, title: s.title, description: s.description }))
 
   const handleStepClick = (stepId: number) => {
     // Validar se o stepId é válido usando o validador de segurança
@@ -55,7 +51,7 @@ export default function ProgressStepper({ currentStep, onStepClick }: ProgressSt
                     position: 'relative'
                   }}
                   onClick={() => handleStepClick(step.id)}
-                  title={isClickable ? `Cliquez pour revenir à l'étape: ${step.title}` : 'Étape non encore accessible'}
+                  title={isClickable ? `${t.devis.tooltips.goToStep} ${step.title}` : t.devis.tooltips.locked}
                 >
                   {index + 1}
                 </div>

@@ -4,6 +4,7 @@ import type { Selection } from '@/lib/schemas'
 import { Plus, Check, Edit } from 'lucide-react'
 import { useState } from 'react'
 import { SecurityValidators } from '@/lib/security'
+import useI18n from '@/components/i18n/useI18n'
 
 interface RoomSelectorProps {
   onSelectRoom: (roomId: Selection['roomId'], quantity: number) => void
@@ -15,6 +16,7 @@ interface RoomSelectorProps {
 
 export default function RoomSelector({ onSelectRoom, onEditRoom, selections, isRoomSelected, getBedroomCount }: RoomSelectorProps) {
   const [expandedRoom, setExpandedRoom] = useState<Selection['roomId'] | null>(null)
+  const { t } = useI18n()
 
   const handleRoomClick = (roomId: Selection['roomId']) => {
     // Validar se o roomId é válido usando o validador de segurança
@@ -63,6 +65,10 @@ export default function RoomSelector({ onSelectRoom, onEditRoom, selections, isR
         const isBedroom = room.id === 'bedroom'
         const bedroomCount = getBedroomCount()
         const isExpanded = expandedRoom === room.id
+
+        const label = (t.devis.roomsLabels as any)[room.id]
+        const roomName = label?.name ?? room.name
+        const roomDesc = label?.desc ?? room.description
         
         return (
           <Card 
@@ -105,10 +111,10 @@ export default function RoomSelector({ onSelectRoom, onEditRoom, selections, isR
             <h3 className={`text-base md:text-lg font-semibold mb-2 ${
               isSelected && !isBedroom ? 'text-gray-500' : 'text-primary'
             }`}>
-              {room.name}
+              {roomName}
               {isBedroom && bedroomCount > 0 && (
                 <span className="text-xs md:text-sm font-normal text-green-600 block">
-                  {bedroomCount} sélectionné{bedroomCount > 1 ? 's' : ''}
+                  {bedroomCount} {t.devis.rooms.selectedCount}{bedroomCount > 1 ? 's' : ''}
                 </span>
               )}
             </h3>
@@ -116,10 +122,10 @@ export default function RoomSelector({ onSelectRoom, onEditRoom, selections, isR
             <p className={`text-xs md:text-sm ${
               isSelected && !isBedroom ? 'text-gray-400' : 'text-secondary'
             }`}>
-              {room.description}
+              {roomDesc}
               {isBedroom && (
                 <span className="block mt-1 text-xs text-red-600 font-medium">
-                  Cliquez pour ajouter un autre quarto
+                  {t.devis.rooms.addAnotherBedroom}
                 </span>
               )}
             </p>
@@ -128,10 +134,10 @@ export default function RoomSelector({ onSelectRoom, onEditRoom, selections, isR
             {isExpanded && (
               <div className="mt-4 p-3 bg-gray-50 rounded-lg">
                 <p className="text-xs text-gray-600 mb-3">
-                  {isSelected ? 'Modifiez la quantité :' : 'Choisissez la quantité :'}
+                  {isSelected ? t.devis.rooms.qtySelect.edit : t.devis.rooms.qtySelect.choose}
                 </p>
                 <div className="grid grid-cols-3 gap-2">
-                  {quantities.map(q => (
+                  {quantities.map((q, idx) => (
                     <button
                       key={q.value}
                       onClick={(e) => {
@@ -140,7 +146,7 @@ export default function RoomSelector({ onSelectRoom, onEditRoom, selections, isR
                       }}
                       className="px-2 py-1 text-xs bg-white border border-gray-300 rounded hover:bg-red-50 hover:border-red-300 transition-colors"
                     >
-                      {q.label}
+                      {(t.devis.quantityLabels as any)[idx] ?? q.label}
                     </button>
                   ))}
                 </div>
@@ -155,17 +161,17 @@ export default function RoomSelector({ onSelectRoom, onEditRoom, selections, isR
               >
                 <span className="text-green-600 font-semibold text-sm md:text-base flex items-center gap-1 mb-3">
                   <Check className="w-4 h-4" />
-                  Sélectionné
+                  {t.devis.rooms.selected}
                 </span>
                 <button
                   type="button"
                   onClick={(e) => handleEditClick(e, room.id)}
                   className="flex items-center gap-2 text-blue-600 hover:text-blue-800 px-3 py-2 rounded-md hover:bg-blue-50 transition-colors text-sm font-medium border border-blue-200 hover:border-blue-300 bg-white"
-                  title={`Éditer ${room.name}`}
+                  title={`${t.devis.rooms.editTitle} ${roomName}`}
                   style={{ pointerEvents: 'auto' }}
                 >
                   <Edit className="w-4 h-4" />
-                  Éditer
+                  {t.devis.rooms.edit}
                 </button>
               </div>
             )}

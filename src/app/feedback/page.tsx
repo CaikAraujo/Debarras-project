@@ -4,8 +4,10 @@ import Image from 'next/image'
 import NavSwiss from '@/components/sections/NavSwiss'
 import FeedbackSwiss from '@/components/sections/FeedbackSwiss'
 import FooterSwiss from '@/components/sections/FooterSwiss'
+import useI18n from '@/components/i18n/useI18n'
 
 export default function FeedbackPage() {
+  const { t } = useI18n()
   return (
     <div style={{ background: 'var(--background)', minHeight: '100vh' }}>
       <NavSwiss />
@@ -15,7 +17,7 @@ export default function FeedbackPage() {
       <section className="section-swiss bg-white border-b border-gray-200">
         <div className="container-swiss">
           <div className="max-w-[1600px] mx-auto">
-            <h2 className="text-primary text-center mb-12">Notre Localisation</h2>
+            <h2 className="text-primary text-center mb-12">{t.feedbackPage.locationTitle}</h2>
             
             <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
               {/* Linha Vermelha Superior */}
@@ -58,23 +60,17 @@ export default function FeedbackPage() {
                     
                     {/* Informations */}
                     <div className="py-4 border-t border-gray-200">
-                      <div className="text-gray-900 font-semibold mb-3">BUREAU PRINCIPAL:</div>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        Siège social de Suisse Débarras. Accueil sur rendez-vous uniquement. Contactez-nous pour planifier votre visite.
-                      </p>
+                      <div className="text-gray-900 font-semibold mb-3">{t.feedbackPage.hqTitle}</div>
+                      <p className="text-gray-600 text-sm leading-relaxed">{t.feedbackPage.hqDesc}</p>
                     </div>
                     
                     {/* Horários */}
                     <div className="py-4 border-t border-gray-200">
-                      <div className="text-gray-900 font-medium mb-2">
-                        Lundi au vendredi
-                      </div>
+                      <div className="text-gray-900 font-medium mb-2">{t.feedbackPage.weekday}</div>
                       <div className="text-gray-700">
                         08h00 - 18h00
                       </div>
-                      <div className="text-xs text-gray-500 mt-2">
-                        * Sur rendez-vous uniquement
-                      </div>
+                      <div className="text-xs text-gray-500 mt-2">{t.feedbackPage.apptOnly}</div>
                     </div>
                   </div>
                 </div>

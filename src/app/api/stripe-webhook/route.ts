@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import { saveReservation } from '@/app/_actions/saveReservation'
 import { sendOrderConfirmationEmail } from '@/app/_actions/sendOrderConfirmationEmail'
 import type { VALID_CANTONS } from '@/lib/schemas'
+import { calculateSecurePrice } from '@/app/_actions/calculatePrice'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
@@ -36,6 +37,28 @@ export async function POST(req: Request) {
     if (!metadata || !customer_details) {
       console.error('[Webhook] Error: Metadados ou detalhes do cliente ausentes na sessão.')
       return new Response('Webhook Error: Missing metadata or customer details.', { status: 400 })
+    }
+
+    // Recomputar preço e validar montante cobrado
+    try {
+      const recomputed = await calculateSecurePrice({
+        selections: JSON.parse(metadata.selections || '[]'),
+        cantonId: metadata.canton as typeof VALID_CANTONS[number],
+        selectedDate: metadata.selectedDate ? new Date(metadata.selectedDate) : undefined,
+        hasComuneLetter: Boolean(metadata.comuneLetterUrl)
+      })
+
+      const charged = amount_total ? amount_total / 100 : 0
+      if (!recomputed.success || typeof recomputed.totalPrice !== 'number' || recomputed.totalPrice !== charged) {
+        console.error('[Webhook] Divergência de preço', {
+          recomputed: recomputed.totalPrice,
+          charged
+        })
+        return new Response('Webhook Error: Price validation failed', { status: 400 })
+      }
+    } catch (err) {
+      console.error('[Webhook] Erro ao recomputar preço:', err)
+      return new Response('Webhook Error: Recompute failed', { status: 400 })
     }
 
     try {

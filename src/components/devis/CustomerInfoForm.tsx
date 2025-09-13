@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import useI18n from '@/components/i18n/useI18n'
 
 type CustomerInfo = {
   name: string
@@ -23,6 +24,7 @@ export default function CustomerInfoForm({ initial, onSubmit, onBack }: Props) {
   const [address, setAddress] = useState(initial?.address || '')
   const [notes, setNotes] = useState(initial?.notes || '')
   const [isValid, setIsValid] = useState(false)
+  const { t } = useI18n()
 
   useEffect(() => {
     const ok = name.trim().length >= 2 && /.+@.+\..+/.test(email)
@@ -38,29 +40,29 @@ export default function CustomerInfoForm({ initial, onSubmit, onBack }: Props) {
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-4 px-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Nom</label>
-        <input value={name} onChange={(e) => setName(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Votre nom" required />
+        <label className="block text-sm font-medium text-gray-700 mb-1">{t.devis.customer.name}</label>
+        <input value={name} onChange={(e) => setName(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder={t.devis.customer.namePh} required />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="vous@email.com" required />
+        <label className="block text-sm font-medium text-gray-700 mb-1">{t.devis.customer.email}</label>
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder={t.devis.customer.emailPh} required />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
-        <input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="+41 79 000 00 00" />
+        <label className="block text-sm font-medium text-gray-700 mb-1">{t.devis.customer.phone}</label>
+        <input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder={t.devis.customer.phonePh} />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
-        <input value={address} onChange={(e) => setAddress(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Rue, numéro, ville" />
+        <label className="block text-sm font-medium text-gray-700 mb-1">{t.devis.customer.address}</label>
+        <input value={address} onChange={(e) => setAddress(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder={t.devis.customer.addressPh} />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-        <textarea value={notes} onChange={(e) => setNotes(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" rows={4} placeholder="Informations supplémentaires" />
+        <label className="block text-sm font-medium text-gray-700 mb-1">{t.devis.customer.notes}</label>
+        <textarea value={notes} onChange={(e) => setNotes(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" rows={4} placeholder={t.devis.customer.notesPh} />
       </div>
 
       <div className="flex items-center justify-between pt-2">
-        <button type="button" onClick={onBack} className="px-4 py-2 rounded-md border hover:bg-gray-50">Retour</button>
-        <button type="submit" disabled={!isValid} className="px-4 py-2 rounded-md bg-red-600 text-white disabled:opacity-50">Continuer</button>
+        <button type="button" onClick={onBack} className="px-4 py-2 rounded-md border hover:bg-gray-50">{t.devis.customer.back}</button>
+        <button type="submit" disabled={!isValid} className="px-4 py-2 rounded-md bg-red-600 text-white disabled:opacity-50">{t.devis.customer.continue}</button>
       </div>
     </form>
   )

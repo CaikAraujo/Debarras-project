@@ -1,5 +1,6 @@
 import Card from '../ui/Card'
 import Form from '../ui/Form'
+import useI18n from '@/components/i18n/useI18n'
 
 const testimonials = [
   {
@@ -61,44 +62,40 @@ const renderStars = (rating: number) => {
 }
 
 const FeedbackSwiss = () => {
+  const { t } = useI18n()
   return (
     <section className="section-swiss bg-gray-50 border-b border-gray-200" id="feedback">
       <div className="container-swiss">
         {/* En-tête de section */}
         <div className="text-center mb-16">
-          <h2 className="text-primary mb-6">Témoignages Clients</h2>
-          <p className="text-lg text-secondary max-w-3xl mx-auto">
-            Découvrez pourquoi plus de 500 clients nous font confiance 
-            pour leurs projets de débarras à travers la Suisse.
-          </p>
+          <h2 className="text-primary mb-6">{t.feedback.title}</h2>
+          <p className="text-lg text-secondary max-w-3xl mx-auto">{t.feedback.desc}</p>
         </div>
 
         {/* Statistiques */}
         <div className="grid-swiss-3 mb-16">
           <div className="metric-card">
             <div className="metric-number">4.9/5</div>
-            <div className="metric-label">Note moyenne</div>
+            <div className="metric-label">{t.feedback.stats.avg}</div>
             <div className="flex justify-center mt-2">
               {renderStars(5)}
             </div>
           </div>
           <div className="metric-card">
             <div className="metric-number">98%</div>
-            <div className="metric-label">Clients satisfaits</div>
-            <div className="text-sm text-light mt-2">Sur 500+ projets</div>
+            <div className="metric-label">{t.feedback.stats.satisfied}</div>
+            <div className="text-sm text-light mt-2">{t.feedback.stats.overProjects}</div>
           </div>
           <div className="metric-card">
             <div className="metric-number">48h</div>
-            <div className="metric-label">Délai maximum</div>
-            <div className="text-sm text-light mt-2">Intervention garantie</div>
+            <div className="metric-label">{t.feedback.stats.maxDelay}</div>
+            <div className="text-sm text-light mt-2">{t.feedback.stats.guaranteed}</div>
           </div>
         </div>
 
         {/* Témoignages récents */}
         <div className="mb-16">
-          <h3 className="text-xl font-semibold text-primary text-center mb-12">
-            Avis Récents de nos Clients
-          </h3>
+          <h3 className="text-xl font-semibold text-primary text-center mb-12">{t.feedback.recent}</h3>
           <div className="grid-swiss-2">
             {testimonials.map((testimonial, index) => (
               <Card key={index} hover>
@@ -128,13 +125,8 @@ const FeedbackSwiss = () => {
             
             {/* En-tête élégant */}
             <div className="text-center mb-16">
-              <h3 className="text-3xl font-bold text-primary mb-6">
-                Partagez votre Expérience
-              </h3>
-              <p className="text-lg text-secondary max-w-3xl mx-auto leading-relaxed">
-                Votre avis nous aide à améliorer nos services et guide d&apos;autres clients 
-                dans le choix de leurs prestations de débarras.
-              </p>
+              <h3 className="text-3xl font-bold text-primary mb-6">{t.feedback.shareTitle}</h3>
+              <p className="text-lg text-secondary max-w-3xl mx-auto leading-relaxed">{t.feedback.shareDesc}</p>
             </div>
 
                          {/* Cards d'avantages */}
@@ -143,43 +135,41 @@ const FeedbackSwiss = () => {
                  <div className="mb-4 flex justify-center">
                    <span className="text-swiss-red text-5xl font-bold">+</span>
                  </div>
-                 <h4 className="text-lg font-semibold text-primary mb-3">Simple et Rapide</h4>
-                 <p className="text-secondary">Formulaire en moins de 3 minutes</p>
+                 <h4 className="text-lg font-semibold text-primary mb-3">{t.feedback.perks[0].title}</h4>
+                 <p className="text-secondary">{t.feedback.perks[0].desc}</p>
                </div>
                
                <div className="card-swiss card-swiss-hover text-center">
                  <div className="mb-4 flex justify-center">
                    <span className="text-swiss-red text-5xl font-bold">+</span>
                  </div>
-                 <h4 className="text-lg font-semibold text-primary mb-3">Vérification Qualité</h4>
-                 <p className="text-secondary">Avis validé avant publication</p>
+                 <h4 className="text-lg font-semibold text-primary mb-3">{t.feedback.perks[1].title}</h4>
+                 <p className="text-secondary">{t.feedback.perks[1].desc}</p>
                </div>
                
                <div className="card-swiss card-swiss-hover text-center">
                  <div className="mb-4 flex justify-center">
                    <span className="text-swiss-red text-5xl font-bold">+</span>
                  </div>
-                 <h4 className="text-lg font-semibold text-primary mb-3">Données Sécurisées</h4>
-                 <p className="text-secondary">Protection selon la LPD suisse</p>
+                 <h4 className="text-lg font-semibold text-primary mb-3">{t.feedback.perks[2].title}</h4>
+                 <p className="text-secondary">{t.feedback.perks[2].desc}</p>
                </div>
              </div>
 
             {/* Formulaire moderne */}
             <div className="card-swiss">
               <div className="border-b border-gray-200 pb-6 mb-8">
-                <h4 className="text-2xl font-semibold text-primary text-center">
-                  Évaluer nos Services
-                </h4>
+                <h4 className="text-2xl font-semibold text-primary text-center">{t.feedback.rateTitle}</h4>
               </div>
               
               <Form>
                 <div className="space-y-8">
                   {/* Informations personnelles */}
                   <div>
-                    <h5 className="text-lg font-medium text-primary mb-6">Vos Informations</h5>
+                    <h5 className="text-lg font-medium text-primary mb-6">{t.feedback.yourInfo}</h5>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <Form.Field>
-                        <Form.Label htmlFor="feedback-nom" required>Nom complet</Form.Label>
+                        <Form.Label htmlFor="feedback-nom" required>{t.feedback.fullName}</Form.Label>
                         <Form.Input 
                           id="feedback-nom"
                           name="nom"
@@ -190,7 +180,7 @@ const FeedbackSwiss = () => {
                       </Form.Field>
                       
                       <Form.Field>
-                        <Form.Label htmlFor="feedback-location">Localisation</Form.Label>
+                        <Form.Label htmlFor="feedback-location">{t.feedback.location}</Form.Label>
                         <Form.Input 
                           id="feedback-location"
                           name="location"
@@ -203,16 +193,16 @@ const FeedbackSwiss = () => {
                   
                   {/* Service et évaluation */}
                   <div>
-                    <h5 className="text-lg font-medium text-primary mb-6">Votre Expérience</h5>
+                    <h5 className="text-lg font-medium text-primary mb-6">{t.feedback.yourExp}</h5>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <Form.Field>
-                        <Form.Label htmlFor="feedback-service">Service utilisé</Form.Label>
+                        <Form.Label htmlFor="feedback-service">{t.feedback.usedService}</Form.Label>
                         <select 
                           id="feedback-service"
                           name="service"
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 transition-all duration-200 focus:outline-none focus:border-swiss-red focus:ring-2 focus:ring-red-100"
                         >
-                          <option value="">Choisir un service</option>
+                          <option value="">{t.feedback.chooseService}</option>
                           <option value="debarras-residentiel">Débarras résidentiel</option>
                           <option value="debarras-commercial">Débarras commercial</option>
                           <option value="nettoyage-desinfection">Nettoyage et désinfection</option>
@@ -223,19 +213,19 @@ const FeedbackSwiss = () => {
                       </Form.Field>
                       
                       <Form.Field>
-                        <Form.Label htmlFor="feedback-rating" required>Note globale</Form.Label>
+                        <Form.Label htmlFor="feedback-rating" required>{t.feedback.rating}</Form.Label>
                         <select 
                           id="feedback-rating"
                           name="rating"
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 transition-all duration-200 focus:outline-none focus:border-swiss-red focus:ring-2 focus:ring-red-100"
                           required
                         >
-                          <option value="">Choisir une note</option>
-                          <option value="5">★★★★★ Excellent</option>
-                          <option value="4">★★★★☆ Très bien</option>
-                          <option value="3">★★★☆☆ Bien</option>
-                          <option value="2">★★☆☆☆ Moyen</option>
-                          <option value="1">★☆☆☆☆ Insatisfaisant</option>
+                          <option value="">{t.feedback.chooseRating}</option>
+                          <option value="5">{t.feedback.ratingOptions[0]}</option>
+                          <option value="4">{t.feedback.ratingOptions[1]}</option>
+                          <option value="3">{t.feedback.ratingOptions[2]}</option>
+                          <option value="2">{t.feedback.ratingOptions[3]}</option>
+                          <option value="1">{t.feedback.ratingOptions[4]}</option>
                         </select>
                       </Form.Field>
                     </div>
@@ -243,9 +233,9 @@ const FeedbackSwiss = () => {
                   
                   {/* Témoignage */}
                   <div>
-                    <h5 className="text-lg font-medium text-primary mb-6">Votre Témoignage</h5>
+                    <h5 className="text-lg font-medium text-primary mb-6">{t.feedback.testimonial}</h5>
                     <Form.Field>
-                      <Form.Label htmlFor="feedback-comment" required>Décrivez votre expérience</Form.Label>
+                      <Form.Label htmlFor="feedback-comment" required>{t.feedback.describe}</Form.Label>
                       <Form.Textarea 
                         id="feedback-comment"
                         name="comment"
@@ -253,9 +243,7 @@ const FeedbackSwiss = () => {
                         className="min-h-[140px] focus:ring-2 focus:ring-red-100"
                         required
                       />
-                       <p className="text-sm text-gray-500 mt-2">
-                         Minimum 50 caractères pour un témoignage de qualité
-                       </p>
+                       <p className="text-sm text-gray-500 mt-2">{t.feedback.minChars}</p>
                     </Form.Field>
                   </div>
                 </div>
@@ -271,22 +259,14 @@ const FeedbackSwiss = () => {
                         className="h-5 w-5 text-swiss-red rounded border-gray-300 focus:ring-red-500"
                         required
                       />
-                      <Form.Label htmlFor="feedback-consent" className="ml-3 text-sm mb-0">
-                        J&apos;accepte que mon témoignage soit utilisé à des fins marketing 
-                        et publié sur le site de Suisse Débarras.
-                      </Form.Label>
+                      <Form.Label htmlFor="feedback-consent" className="ml-3 text-sm mb-0">{t.feedback.consent}</Form.Label>
                     </div>
                   </Form.Field>
                 </div>
                 
                 <div className="text-center pt-6 border-t border-gray-200 mt-8">
-                   <button type="submit" className="admin-btn">
-                     Publier mon Avis
-                   </button>
-                   <p className="text-sm text-gray-500 mt-4 max-w-lg mx-auto">
-                     En publiant cet avis, vous acceptez nos conditions d&apos;utilisation 
-                     et confirmez l&apos;authenticité de votre témoignage.
-                   </p>
+                   <button type="submit" className="admin-btn">{t.feedback.publish}</button>
+                   <p className="text-sm text-gray-500 mt-4 max-w-lg mx-auto">{t.feedback.publishNote}</p>
                  </div>
               </Form>
             </div>

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import LocaleRoot from '@/components/i18n/localeRoot'
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,9 +25,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
     languages: {
-      'fr-CH': '/',
-      'de-CH': '/de',
-      'it-CH': '/it',
+      'fr': '/',
+      'en': '/en',
+      'it': '/it',
     },
   },
   openGraph: {
@@ -180,7 +181,9 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//maps.googleapis.com" />
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
-        {children}
+        <LocaleRoot>
+          {children}
+        </LocaleRoot>
       </body>
     </html>
   );

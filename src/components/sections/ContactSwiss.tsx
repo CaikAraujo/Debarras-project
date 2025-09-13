@@ -1,30 +1,29 @@
 'use client'
 
 import { sendEmail } from '@/app/_actions/sendEmail'
+import useI18n from '@/components/i18n/useI18n'
 
 const ContactSwiss = () => {
+  const { t } = useI18n()
   return (
     <div className="admin-container" id="contact">
       <div className="admin-main-layout">
         <div className="admin-content">
           
           <div className="admin-section">
-            <h2>Contact</h2>
-            <p style={{ marginBottom: '30px' }}>
-              Contactez-nous pour obtenir un devis gratuit ou pour toute question 
-              concernant nos services de débarras.
-            </p>
+            <h2>{t.contact.title}</h2>
+            <p style={{ marginBottom: '30px' }}>{t.contact.desc}</p>
             
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
               
               {/* Formulaire */}
               <div>
-                <h3 style={{ marginBottom: '20px' }}>Demande de devis</h3>
+                <h3 style={{ marginBottom: '20px' }}>{t.contact.formTitle}</h3>
                 <form action={async (formData) => {
                   await sendEmail(formData)
                 }}>
                   <div className="admin-form-group">
-                    <label className="admin-form-label">Nom *</label>
+                    <label className="admin-form-label">{t.contact.name}</label>
                     <input 
                       type="text"
                       name="name"
@@ -34,7 +33,7 @@ const ContactSwiss = () => {
                   </div>
                   
                   <div className="admin-form-group">
-                    <label className="admin-form-label">Email *</label>
+                    <label className="admin-form-label">{t.contact.email}</label>
                     <input 
                       type="email"
                       name="senderEmail"
@@ -44,7 +43,7 @@ const ContactSwiss = () => {
                   </div>
                   
                   <div className="admin-form-group">
-                    <label className="admin-form-label">Téléphone</label>
+                    <label className="admin-form-label">{t.contact.phone}</label>
                     <input 
                       type="tel"
                       name="phone"
@@ -53,74 +52,73 @@ const ContactSwiss = () => {
                   </div>
                   
                   <div className="admin-form-group">
-                    <label className="admin-form-label">Service souhaité</label>
+                    <label className="admin-form-label">{t.contact.service}</label>
                     <input 
                       type="text"
                       name="service"
                       className="admin-form-input"
-                      placeholder="Ex: Débarras de maison, nettoyage..."
+                      placeholder={t.contact.servicePlaceholder}
                     />
                   </div>
 
                   <div className="admin-form-group">
-                    <label className="admin-form-label">Description du projet *</label>
+                    <label className="admin-form-label">{t.contact.description}</label>
                     <textarea 
                       name="message"
                       className="admin-form-input"
                       rows={5}
-                      placeholder="Décrivez votre projet de débarras..."
+                      placeholder={t.contact.descriptionPlaceholder}
                       required
                     />
                   </div>
                   
                   <button type="submit" className="admin-btn">
-                    Envoyer la demande
+                    {t.contact.submit}
                   </button>
                 </form>
               </div>
               
               {/* Informations de contact */}
               <div>
-                <h3 style={{ marginBottom: '20px' }}>Informations</h3>
+                <h3 style={{ marginBottom: '20px' }}>{t.contact.infoTitle}</h3>
                 
                 <div className="admin-card">
-                  <h4 style={{ color: 'var(--text-dark)', marginBottom: '15px' }}>Suisse Débarras</h4>
+                  <h4 style={{ color: 'var(--text-dark)', marginBottom: '15px' }}>{t.contact.company}</h4>
                   <div style={{ fontSize: '14px', lineHeight: '1.6' }}>
                     <div style={{ marginBottom: '10px' }}>
-                      <strong>Adresse:</strong><br/>
+                      <strong>{t.contact.addressLabel}</strong><br/>
                       Avenue des Communes-Réunies 43<br/>
                       1212 Grand-Lancy<br/>
-                      Genève, Suisse
+                      {t.contact.city}
                     </div>
                     
                     <div style={{ marginBottom: '10px' }}>
-                      <strong>Téléphone:</strong><br/>
+                      <strong>{t.contact.phoneLabel}</strong><br/>
                       <a href="tel:+41229391549" style={{ color: 'var(--link-blue)' }}>
                         +41 22 939 15 49
                       </a>
                     </div>
                     
                     <div style={{ marginBottom: '10px' }}>
-                      <strong>Email:</strong><br/>
+                      <strong>{t.contact.emailLabel}</strong><br/>
                       <a href="mailto:info@suisse-debarras.ch" style={{ color: 'var(--link-blue)' }}>
                         info@suisse-debarras.ch
                       </a>
                     </div>
                     
                     <div>
-                      <strong>Horaires:</strong><br/>
-                      Lundi - Vendredi: 8h00 - 18h00<br/>
-                      Samedi: Sur rendez-vous<br/>
-                      Dimanche: Fermé
+                      <strong>{t.contact.hoursLabel}</strong><br/>
+                      {t.contact.hours[0]}<br/>
+                      {t.contact.hours[1]}<br/>
+                      {t.contact.hours[2]}
                     </div>
                   </div>
                 </div>
                 
                 <div className="admin-card">
-                  <h4 style={{ color: 'var(--text-dark)', marginBottom: '15px' }}>Urgences</h4>
+                  <h4 style={{ color: 'var(--text-dark)', marginBottom: '15px' }}>{t.contact.urgentTitle}</h4>
                   <p style={{ fontSize: '14px' }}>
-                    Pour les interventions urgentes (inondations, sinistres), 
-                    contactez-nous 24h/7j au:
+                    {t.contact.urgentDesc}
                   </p>
                   <p style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--swiss-red)' }}>
                     +41 22 939 15 49
@@ -133,18 +131,18 @@ const ContactSwiss = () => {
         
         <div className="admin-sidebar">
           <div className="admin-sidebar-item">
-            <h4>Devis gratuit</h4>
-            <p>Réponse garantie sous 24 heures. Déplacement gratuit dans toute la Suisse romande.</p>
+            <h4>{t.contact.sidebar.freeQuote}</h4>
+            <p>{t.contact.sidebar.freeQuoteDesc}</p>
           </div>
           
           <div className="admin-sidebar-item">
-            <h4>Paiement</h4>
-            <p>Facture après service. Paiement possible par virement bancaire ou en espèces.</p>
+            <h4>{t.contact.sidebar.payment}</h4>
+            <p>{t.contact.sidebar.paymentDesc}</p>
           </div>
           
           <div className="admin-sidebar-item">
-            <h4>Assurance</h4>
-            <p>Tous nos services sont couverts par une assurance responsabilité civile de 5 millions CHF.</p>
+            <h4>{t.contact.sidebar.insurance}</h4>
+            <p>{t.contact.sidebar.insuranceDesc}</p>
           </div>
         </div>
       </div>
