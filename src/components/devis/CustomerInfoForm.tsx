@@ -6,8 +6,8 @@ import useI18n from '@/components/i18n/useI18n'
 type CustomerInfo = {
   name: string
   email: string
-  phone?: string
-  address?: string
+  phone: string
+  address: string
   notes?: string
 }
 
@@ -27,14 +27,23 @@ export default function CustomerInfoForm({ initial, onSubmit, onBack }: Props) {
   const { t } = useI18n()
 
   useEffect(() => {
-    const ok = name.trim().length >= 2 && /.+@.+\..+/.test(email)
-    setIsValid(ok)
-  }, [name, email])
+    const emailOk = /.+@.+\..+/.test(email)
+    const nameOk = name.trim().length >= 2
+    const phoneOk = phone.trim().length >= 6
+    const addressOk = address.trim().length >= 5
+    setIsValid(nameOk && emailOk && phoneOk && addressOk)
+  }, [name, email, phone, address])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!isValid) return
-    onSubmit({ name: name.trim(), email: email.trim(), phone: phone?.trim() || undefined, address: address?.trim() || undefined, notes: notes?.trim() || undefined })
+    onSubmit({ 
+      name: name.trim(), 
+      email: email.trim(), 
+      phone: phone.trim(), 
+      address: address.trim(), 
+      notes: notes?.trim() || undefined 
+    })
   }
 
   return (
@@ -49,11 +58,11 @@ export default function CustomerInfoForm({ initial, onSubmit, onBack }: Props) {
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">{t.devis.customer.phone}</label>
-        <input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder={t.devis.customer.phonePh} />
+        <input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder={t.devis.customer.phonePh} required />
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">{t.devis.customer.address}</label>
-        <input value={address} onChange={(e) => setAddress(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder={t.devis.customer.addressPh} />
+        <input value={address} onChange={(e) => setAddress(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder={t.devis.customer.addressPh} required />
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">{t.devis.customer.notes}</label>

@@ -141,9 +141,9 @@ export async function createStripeCheckout(data: CheckoutData) {
         serverPrice: priceResult.totalPrice.toString(),
         timestamp: Date.now().toString(),
         comuneLetterUrl: validated.comuneLetterUrl || '',
-        customerName: validated.customerName || '',
-        customerPhone: validated.customerPhone || '',
-        customerAddress: validated.customerAddress || '',
+        customerName: validated.customerName,
+        customerPhone: validated.customerPhone,
+        customerAddress: validated.customerAddress,
         customerNotes: validated.customerNotes || ''
       }
     })

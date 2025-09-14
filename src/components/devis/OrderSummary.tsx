@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import uploadComuneLetter from '@/data/uploadComuneLetter'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
@@ -44,6 +44,7 @@ export default function OrderSummary({
   const [comuneLetterPath, setComuneLetterPath] = useState<string | undefined>(undefined)
   const [preview, setPreview] = useState<string | undefined>(undefined)
   const [uploadError, setUploadError] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
   const { t } = useI18n()
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,6 +61,8 @@ export default function OrderSummary({
     }
     else setUploadError(t.devis.summary.uploadFail)
     setUploading(false)
+    // Permitir re-selecionar o mesmo arquivo depois
+    if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
   return (
@@ -161,10 +164,21 @@ export default function OrderSummary({
                     <div className="flex items-center gap-2">
                       <label className="inline-flex items-center px-3 py-2 text-sm bg-white border rounded cursor-pointer hover:bg-gray-50">
                         {t.devis.summary.choose}
-                        <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+                        <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
                       </label>
                       {preview && (
-                        <button type="button" className="text-xs text-red-600 hover:underline" onClick={() => { setPreview(undefined); setComuneLetterPath(undefined); onComuneLetterFlagChange?.(false) }}>{t.devis.summary.remove}</button>
+                        <button 
+                          type="button" 
+                          className="text-xs text-red-600 hover:underline" 
+                          onClick={() => { 
+                            setPreview(undefined); 
+                            setComuneLetterPath(undefined); 
+                            onComuneLetterFlagChange?.(false);
+                            if (fileInputRef.current) fileInputRef.current.value = ''
+                          }}
+                        >
+                          {t.devis.summary.remove}
+                        </button>
                       )}
                     </div>
                   </div>

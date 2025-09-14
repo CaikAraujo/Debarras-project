@@ -92,7 +92,7 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate, 
     } finally {
       setIsCalculating(false)
     }
-  }, [selectedCanton, selections, selectedDate])
+  }, [selectedCanton, selections, selectedDate, hasComuneLetter])
 
   // Debounced effect para evitar múltiplas chamadas
   useEffect(() => {
@@ -143,7 +143,7 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate, 
     } finally {
       setIsProcessingCheckout(false)
     }
-  }, [selectedCanton, selections, selectedDate])
+  }, [selectedCanton, selections, selectedDate, hasComuneLetter, customerInfo])
 
   return {
     calculatedPrice,

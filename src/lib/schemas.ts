@@ -19,13 +19,13 @@ export const PriceCalculationSchema = z.object({
 })
 
 export const CheckoutSchema = PriceCalculationSchema.extend({
-  customerEmail: z.string().email().optional(),
+  customerEmail: z.string().email(),
   // Aceita URL pública ou caminho no storage
   comuneLetterUrl: z.string().min(1).optional(),
   // Informações básicas do cliente para e-mail/webhook
-  customerName: z.string().min(2).optional(),
-  customerPhone: z.string().min(3).optional(),
-  customerAddress: z.string().min(3).optional(),
+  customerName: z.string().min(2),
+  customerPhone: z.string().min(6),
+  customerAddress: z.string().min(5),
   customerNotes: z.string().min(3).optional()
 })
 
