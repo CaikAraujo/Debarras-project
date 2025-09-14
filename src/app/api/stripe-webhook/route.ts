@@ -64,13 +64,23 @@ export async function POST(req: Request) {
     try {
       // Usar o e-mail de customer_details como fonte principal
       const finalCustomerEmail = customer_details.email ?? customer_email ?? ''
-      
+
+      // Formatar endereço vindo do Stripe se necessário
+      const formatStripeAddress = (addr: Stripe.Address | null | undefined) => {
+        if (!addr) return ''
+        const parts = [addr.line1, addr.line2, addr.postal_code, addr.city, addr.country].filter(Boolean)
+        return parts.join(', ')
+      }
+
       const reservationData = {
         sessionId: session.id,
         cantonId: metadata.canton as typeof VALID_CANTONS[number],
         selections: JSON.parse(metadata.selections),
         selectedDate: new Date(metadata.selectedDate),
-        customerEmail: finalCustomerEmail, // Usar o email corrigido
+        customerEmail: finalCustomerEmail,
+        customerName: (metadata.customerName && metadata.customerName.length > 1) ? metadata.customerName : (customer_details.name ?? 'Client'),
+        customerPhone: metadata.customerPhone || customer_details.phone || '000000',
+        customerAddress: metadata.customerAddress || formatStripeAddress(customer_details.address) || 'Adresse',
       }
 
       // 1. Salvar a reserva

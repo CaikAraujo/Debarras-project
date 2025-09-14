@@ -9,7 +9,7 @@ interface UsePriceCalculationProps {
   selectedCanton: string | null
   selectedDate: Date | undefined
   hasComuneLetter?: boolean
-  customerInfo?: { name: string; email: string; phone?: string; address?: string; notes?: string } | null
+  customerInfo?: { name: string; email: string; phone: string; address: string; notes?: string } | null
 }
 
 export function usePriceCalculation({ selections, selectedCanton, selectedDate, hasComuneLetter, customerInfo }: UsePriceCalculationProps) {
@@ -120,6 +120,12 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate, 
       return
     }
 
+    // Garantir dados obrigatórios do cliente antes de prosseguir
+    if (!customerInfo || !customerInfo.email || !customerInfo.name || !customerInfo.phone || !customerInfo.address) {
+      alert('Veuillez renseigner nom, e-mail, téléphone et adresse avant de continuer.')
+      return
+    }
+
     setIsProcessingCheckout(true)
     try {
       const result = await createStripeCheckout({ 
@@ -127,11 +133,11 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate, 
         cantonId: selectedCanton as typeof VALID_CANTONS[number],
         selectedDate: selectedDate as Date,
         hasComuneLetter,
-        customerEmail: customerInfo?.email,
-        customerName: customerInfo?.name,
-        customerPhone: customerInfo?.phone,
-        customerAddress: customerInfo?.address,
-        customerNotes: customerInfo?.notes,
+        customerEmail: customerInfo.email,
+        customerName: customerInfo.name,
+        customerPhone: customerInfo.phone,
+        customerAddress: customerInfo.address,
+        customerNotes: customerInfo.notes ?? '',
       })
       if (result.success && result.checkoutUrl) {
         window.location.href = result.checkoutUrl
