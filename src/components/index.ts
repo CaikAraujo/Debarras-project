@@ -3,6 +3,7 @@ export { default as Button } from './ui/Button'
 export { default as Card } from './ui/Card'
 export { default as Form } from './ui/Form'
 export { default as SectionDivider } from './ui/SectionDivider'
+export { default as WhatsAppFloat } from './ui/WhatsAppFloat'
 
 // Swiss Sections
 export { default as NavSwiss } from './sections/NavSwiss'

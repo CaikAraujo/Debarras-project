@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import LocaleRoot from '@/components/i18n/localeRoot'
+import WhatsAppFloat from '@/components/ui/WhatsAppFloat'
 
 const inter = Inter({
   subsets: ["latin"],
@@ -183,6 +184,7 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans antialiased`}>
         <LocaleRoot>
           {children}
+          <WhatsAppFloat />
         </LocaleRoot>
       </body>
     </html>

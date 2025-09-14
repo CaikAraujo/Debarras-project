@@ -46,26 +46,8 @@ const NavSwiss = () => {
               </div>
             </div>
             
-            {/* Busca + Language */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: '1 1 260px', justifyContent: 'flex-end' }}>
-              <div style={{ position: 'relative', flex: '1 1 160px', maxWidth: 280 }}>
-                <input 
-                  type="text" 
-                  placeholder={t.search} 
-                  style={{
-                    padding: '6px 28px 6px 10px',
-                    border: '1px solid var(--border-gray)',
-                    fontSize: '13px',
-                    width: '100%'
-                  }}
-                />
-                <span style={{ 
-                  position: 'absolute', 
-                  right: '8px', 
-                  top: '6px', 
-                  color: 'var(--text-medium)'
-                }}>🔍</span>
-              </div>
+            {/* Language */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'flex-end' }}>
               <LanguagePicker />
             </div>
           </div>

@@ -205,13 +205,7 @@ export default function DevisSwiss() {
                 {selections.length > 0 && (
                   <div ref={summaryRef}>
                     <SelectionsSummary
-                      selectedCanton={selectedCanton}
-                      selections={selections}
-                      calculatedPrice={calculatedPrice}
-                      isCalculating={isCalculating}
-                      onRemoveSelection={removeSelection}
                       onContinue={() => goToStep(2)}
-                      onChangeCanton={resetAll}
                     />
                   </div>
                 )}
