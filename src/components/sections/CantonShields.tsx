@@ -51,6 +51,7 @@ const CantonShields = () => {
           <p className="text-secondary mb-6">{t.cantons.teamLocal}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/devis" className="admin-btn">{t.common.requestQuote}</a>
+            <a href="tel:+41223367128" className="admin-btn">{t.common.callNow}</a>
           </div>
         </div>
 

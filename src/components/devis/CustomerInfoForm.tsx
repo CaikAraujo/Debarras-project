@@ -7,6 +7,8 @@ type CustomerInfo = {
   name: string
   email: string
   phone: string
+  floor?: string
+  doorCode?: string
   address: string
   notes?: string
 }
@@ -21,6 +23,8 @@ export default function CustomerInfoForm({ initial, onSubmit, onBack }: Props) {
   const [name, setName] = useState(initial?.name || '')
   const [email, setEmail] = useState(initial?.email || '')
   const [phone, setPhone] = useState(initial?.phone || '')
+  const [floor, setFloor] = useState(initial?.floor || '')
+  const [doorCode, setDoorCode] = useState(initial?.doorCode || '')
   const [address, setAddress] = useState(initial?.address || '')
   const [notes, setNotes] = useState(initial?.notes || '')
   const [isValid, setIsValid] = useState(false)
@@ -41,6 +45,8 @@ export default function CustomerInfoForm({ initial, onSubmit, onBack }: Props) {
       name: name.trim(), 
       email: email.trim(), 
       phone: phone.trim(), 
+      floor: floor.trim() || undefined,
+      doorCode: doorCode.trim() || undefined,
       address: address.trim(), 
       notes: notes?.trim() || undefined 
     })
@@ -59,6 +65,14 @@ export default function CustomerInfoForm({ initial, onSubmit, onBack }: Props) {
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">{t.devis.customer.phone}</label>
         <input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder={t.devis.customer.phonePh} required />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">{t.devis.customer.floor}</label>
+        <input value={floor} onChange={(e) => setFloor(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder={t.devis.customer.floorPh} />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">{t.devis.customer.doorCode}</label>
+        <input value={doorCode} onChange={(e) => setDoorCode(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder={t.devis.customer.doorCodePh} />
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">{t.devis.customer.address}</label>

@@ -15,7 +15,9 @@ export const PriceCalculationSchema = z.object({
   selections: z.array(SelectionSchema).min(1).max(10),
   cantonId: z.enum(VALID_CANTONS),
   selectedDate: z.date().optional(),  // Tornando a data opcional
-  hasComuneLetter: z.boolean().optional()
+  hasComuneLetter: z.boolean().optional(),
+  // Offset de timezone do cliente em minutos (getTimezoneOffset)
+  clientTzOffsetMin: z.number().optional()
 })
 
 export const CheckoutSchema = PriceCalculationSchema.extend({
@@ -26,7 +28,10 @@ export const CheckoutSchema = PriceCalculationSchema.extend({
   customerName: z.string().min(2),
   customerPhone: z.string().min(6),
   customerAddress: z.string().min(5),
-  customerNotes: z.string().min(3).optional()
+  customerNotes: z.string().optional(),
+  // Campos adicionais separados
+  customerFloor: z.string().min(1).optional(),
+  customerDoorCode: z.string().min(1).optional()
 })
 
 export type Selection = z.infer<typeof SelectionSchema>

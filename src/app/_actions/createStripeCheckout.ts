@@ -144,7 +144,9 @@ export async function createStripeCheckout(data: CheckoutData) {
         customerName: validated.customerName,
         customerPhone: validated.customerPhone,
         customerAddress: validated.customerAddress,
-        customerNotes: validated.customerNotes || ''
+        customerNotes: validated.customerNotes || '',
+        customerFloor: validated.customerFloor || '',
+        customerDoorCode: validated.customerDoorCode || ''
       }
     })
 

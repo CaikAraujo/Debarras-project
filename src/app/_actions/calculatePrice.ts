@@ -79,7 +79,7 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
       return { success: false, error: 'Muitas tentativas. Aguarde 1 minuto.' }
     }
 
-    const { selections, cantonId, selectedDate, hasComuneLetter } = PriceCalculationSchema.parse(data)
+    const { selections, cantonId, selectedDate, hasComuneLetter, clientTzOffsetMin } = PriceCalculationSchema.parse(data)
     const cantonBasePrice = PRICING.cantonBasePrices[cantonId]
     const seenNonBedroomRooms = new Set<string>()
 
@@ -114,19 +114,55 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
       return { success: false, error: 'Total inválido' }
     }
 
-    // Aplicar sobretaxa de 10% para amanhã ou fim de semana
+    // Aplicar sobretaxa de 10% para amanhã (D+1) ou fim de semana
     if (selectedDate) {
       const date = new Date(selectedDate)
-      date.setHours(0, 0, 0, 0)
-      const today = new Date()
-      today.setHours(0, 0, 0, 0)
-      const tomorrow = new Date(today)
-      tomorrow.setDate(today.getDate() + 1)
-      const isTomorrow = date.getTime() === tomorrow.getTime()
-      const isWeekend = date.getDay() === 0 || date.getDay() === 6
-      if (isTomorrow || isWeekend) {
+
+      // Offsets
+      const clientOffset = typeof clientTzOffsetMin === 'number' ? clientTzOffsetMin : new Date().getTimezoneOffset()
+      const zurichOffsetGuess = isDst(date) ? -120 : -60 // minutos
+
+      // Helpers
+      const now = new Date()
+
+      // Função de índice de dia para um dado offset de timezone (minutos como getTimezoneOffset)
+      const dayIndex = (d: Date, offsetMin: number) => Math.floor((d.getTime() - offsetMin * 60 * 1000) / 86400000)
+
+      // Dia civil no fuso do cliente
+      const dayDiffClient = dayIndex(date, clientOffset) - dayIndex(now, clientOffset)
+      const isTomorrowClient = dayDiffClient === 1
+
+      // Dia civil no fuso de Zurich (para fins de fim de semana operacional)
+      const dayDiffZurich = dayIndex(date, zurichOffsetGuess) - dayIndex(now, zurichOffsetGuess)
+      const weekdayZurich = weekdayInOffset(date, zurichOffsetGuess)
+      const isWeekendZurich = weekdayZurich === 0 || weekdayZurich === 6
+
+      const applySurcharge = isTomorrowClient || isWeekendZurich
+
+      if (applySurcharge) {
         total = Math.round(total * 1.1)
+      } else {
+        // noop
       }
+    }
+
+    function isDst(d: Date): boolean {
+      // Heurística simples para Europa/Zurich: DST entre último domingo de março e último domingo de outubro
+      const year = d.getUTCFullYear()
+      const lastSunday = (month: number) => {
+        const end = new Date(Date.UTC(year, month + 1, 0))
+        const day = end.getUTCDay()
+        return new Date(Date.UTC(year, month, 31 - day))
+      }
+      const dstStart = lastSunday(2) // Março (2)
+      const dstEnd = lastSunday(9) // Outubro (9)
+      return d >= dstStart && d < dstEnd
+    }
+
+    function weekdayInOffset(d: Date, offsetMin: number): number {
+      // Converte para hora local do offset e usa getUTCDay para obter o dia da semana nesse fuso
+      const shifted = new Date(d.getTime() - offsetMin * 60 * 1000)
+      return shifted.getUTCDay()
     }
 
     // Desconto de 10% se houver carta de commune

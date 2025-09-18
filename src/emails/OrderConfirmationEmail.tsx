@@ -23,6 +23,8 @@ interface OrderConfirmationEmailProps {
   customerPhone?: string
   customerAddress?: string
   customerNotes?: string
+  customerFloor?: string
+  customerDoorCode?: string
 }
 
 const formatAddress = (address: Stripe.Address | null) => {
@@ -43,6 +45,8 @@ export default function OrderConfirmationEmail({
   customerPhone,
   customerAddress,
   customerNotes,
+  customerFloor,
+  customerDoorCode,
 }: OrderConfirmationEmailProps) {
   const preview = `Nouvelle commande de ${customerName} confirmée`
   const shippingText = formatAddress(shippingAddress)
@@ -104,6 +108,16 @@ export default function OrderConfirmationEmail({
               {customerNotes && (
                 <Text className="text-base text-gray-600 my-1">
                   <strong>Notes :</strong> {customerNotes}
+                </Text>
+              )}
+              {customerFloor && (
+                <Text className="text-base text-gray-600 my-1">
+                  <strong>Étage :</strong> {customerFloor}
+                </Text>
+              )}
+              {customerDoorCode && (
+                <Text className="text-base text-gray-600 my-1">
+                  <strong>Code d'entrée :</strong> {customerDoorCode}
                 </Text>
               )}
             </Section>

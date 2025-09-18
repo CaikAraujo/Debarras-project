@@ -81,6 +81,8 @@ export async function POST(req: Request) {
         customerName: (metadata.customerName && metadata.customerName.length > 1) ? metadata.customerName : (customer_details.name ?? 'Client'),
         customerPhone: metadata.customerPhone || customer_details.phone || '000000',
         customerAddress: metadata.customerAddress || formatStripeAddress(customer_details.address) || 'Adresse',
+        customerFloor: metadata.customerFloor || undefined,
+        customerDoorCode: metadata.customerDoorCode || undefined,
       }
 
       // 1. Salvar a reserva
@@ -102,9 +104,11 @@ export async function POST(req: Request) {
         customerPhone: metadata.customerPhone || undefined,
         customerAddress: metadata.customerAddress || undefined,
         customerNotes: metadata.customerNotes || undefined,
+        customerFloor: metadata.customerFloor || undefined,
+        customerDoorCode: metadata.customerDoorCode || undefined,
       })
       
-      console.log(`✅ Reserva salva e e-mail enviado para a sessão: ${session.id}`)
+      // Sucesso silencioso
 
     } catch (error: any) {
       console.error(`Webhook Error ao processar a sessão ${session.id}:`, error)

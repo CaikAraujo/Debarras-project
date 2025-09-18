@@ -9,7 +9,7 @@ interface UsePriceCalculationProps {
   selectedCanton: string | null
   selectedDate: Date | undefined
   hasComuneLetter?: boolean
-  customerInfo?: { name: string; email: string; phone: string; address: string; notes?: string } | null
+  customerInfo?: { name: string; email: string; phone: string; address: string; floor?: string; doorCode?: string; notes?: string } | null
 }
 
 export function usePriceCalculation({ selections, selectedCanton, selectedDate, hasComuneLetter, customerInfo }: UsePriceCalculationProps) {
@@ -72,7 +72,8 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate, 
         selections, 
         cantonId: selectedCanton as typeof VALID_CANTONS[number],
         selectedDate,
-        hasComuneLetter
+        hasComuneLetter,
+        clientTzOffsetMin: new Date().getTimezoneOffset()
       })
       
       if (result.success && typeof result.totalPrice === 'number' && result.totalPrice > 0) {
@@ -128,6 +129,13 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate, 
 
     setIsProcessingCheckout(true)
     try {
+      // Concatenar informações adicionais nas notas para o backend atual
+      const extraNotes = [
+        customerInfo?.notes?.trim() || '',
+        customerInfo?.floor ? `Floor: ${customerInfo.floor}` : '',
+        customerInfo?.doorCode ? `Door code: ${customerInfo.doorCode}` : '',
+      ].filter(Boolean).join(' | ')
+
       const result = await createStripeCheckout({ 
         selections, 
         cantonId: selectedCanton as typeof VALID_CANTONS[number],
@@ -137,7 +145,9 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate, 
         customerName: customerInfo.name,
         customerPhone: customerInfo.phone,
         customerAddress: customerInfo.address,
-        customerNotes: customerInfo.notes ?? '',
+        customerNotes: customerInfo.notes?.trim() || '',
+        customerFloor: customerInfo.floor || undefined,
+        customerDoorCode: customerInfo.doorCode || undefined,
       })
       if (result.success && result.checkoutUrl) {
         window.location.href = result.checkoutUrl

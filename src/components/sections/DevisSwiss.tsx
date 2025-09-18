@@ -20,7 +20,7 @@ import useI18n from '@/components/i18n/useI18n'
 export default function DevisSwiss() {
   const searchParams = useSearchParams();
   const { t } = useI18n()
-  const [customerInfo, setCustomerInfo] = useState<{ name: string; email: string; phone: string; address: string; notes?: string } | null>(null)
+  const [customerInfo, setCustomerInfo] = useState<{ name: string; email: string; phone: string; address: string; floor?: string; doorCode?: string; notes?: string } | null>(null)
   const {
     currentStep,
     selectedCanton,

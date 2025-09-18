@@ -50,6 +50,7 @@ export default function DateSelector({ selectedDate, bookedDates, isLoading, onS
       const isCurrentDay = isToday(day)
       const isWeekend = day.getDay() === 0 || day.getDay() === 6
       const isPast = day < new Date(new Date().setHours(0, 0, 0, 0))
+      // Destacar "amanhã" em laranja com base no fuso local do usuário
       const tomorrow = new Date()
       tomorrow.setDate(tomorrow.getDate() + 1)
       tomorrow.setHours(0, 0, 0, 0)

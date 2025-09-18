@@ -17,12 +17,14 @@ interface EmailPayload {
   customerPhone?: string
   customerAddress?: string
   customerNotes?: string
+  customerFloor?: string
+  customerDoorCode?: string
 }
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function sendOrderConfirmationEmail(payload: EmailPayload) {
-  const { customerName, customerEmail, orderId, amountTotal, shippingAddress, comuneLetterUrl, customerPhone, customerAddress, customerNotes } = payload
+  const { customerName, customerEmail, orderId, amountTotal, shippingAddress, comuneLetterUrl, customerPhone, customerAddress, customerNotes, customerFloor, customerDoorCode } = payload
 
 
   try {
@@ -63,6 +65,8 @@ export async function sendOrderConfirmationEmail(payload: EmailPayload) {
         customerPhone,
         customerAddress,
         customerNotes,
+        customerFloor,
+        customerDoorCode,
       }),
       attachments,
     })
