@@ -79,7 +79,7 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
       return { success: false, error: 'Muitas tentativas. Aguarde 1 minuto.' }
     }
 
-    const { selections, cantonId, selectedDate, hasComuneLetter, clientTzOffsetMin } = PriceCalculationSchema.parse(data)
+    const { selections, cantonId, selectedDate, hasComuneLetter, clientTzOffsetMin, extraCartons } = PriceCalculationSchema.parse(data)
     const cantonBasePrice = PRICING.cantonBasePrices[cantonId]
     const seenNonBedroomRooms = new Set<string>()
 
@@ -168,6 +168,12 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
     // Desconto de 10% se houver carta de commune
     if (hasComuneLetter) {
       total = Math.max(0, Math.round(total * 0.9))
+    }
+
+    // Cartons adicionais pagos: preço unitário (ex.: 3 CHF por carton)
+    const EXTRA_CARTON_UNIT_PRICE = 3
+    if (typeof extraCartons === 'number' && extraCartons > 0) {
+      total += EXTRA_CARTON_UNIT_PRICE * extraCartons
     }
 
     return { success: true, totalPrice: total, breakdown, cantonBasePrice }

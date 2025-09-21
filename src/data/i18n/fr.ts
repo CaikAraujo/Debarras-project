@@ -376,6 +376,12 @@ const fr = {
       editDateCanton: 'Modifier la date ou le canton',
       restart: 'Recommencer',
       baseValue: 'Valeur de base',
+      cartons: {
+        included: 'Cartons inclus',
+        extra: 'Cartons supplémentaires',
+        unit: '+3 CHF / carton',
+        badge: (count: number) => `+${count} cartons`,
+      },
     },
     landing: {
       title: 'Calculateur de Devis Personnalisé',

@@ -326,6 +326,12 @@ const it = {
       editDateCanton: 'Modifica data o cantone',
       restart: 'Ricomincia',
       baseValue: 'Valore base',
+      cartons: {
+        included: 'Cartoni inclusi',
+        extra: 'Cartoni aggiuntivi',
+        unit: '+3 CHF / cartone',
+        badge: (count: number) => `+${count} cartoni`,
+      },
     },
     landing: {
       title: 'Calcolatore di Preventivo Personalizzato',

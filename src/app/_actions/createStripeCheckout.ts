@@ -146,7 +146,8 @@ export async function createStripeCheckout(data: CheckoutData) {
         customerAddress: validated.customerAddress,
         customerNotes: validated.customerNotes || '',
         customerFloor: validated.customerFloor || '',
-        customerDoorCode: validated.customerDoorCode || ''
+        customerDoorCode: validated.customerDoorCode || '',
+        extraCartons: (validated.extraCartons ?? 0).toString()
       }
     })
 

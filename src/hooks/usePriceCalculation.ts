@@ -9,10 +9,11 @@ interface UsePriceCalculationProps {
   selectedCanton: string | null
   selectedDate: Date | undefined
   hasComuneLetter?: boolean
+  extraCartons?: number
   customerInfo?: { name: string; email: string; phone: string; address: string; floor?: string; doorCode?: string; notes?: string } | null
 }
 
-export function usePriceCalculation({ selections, selectedCanton, selectedDate, hasComuneLetter, customerInfo }: UsePriceCalculationProps) {
+export function usePriceCalculation({ selections, selectedCanton, selectedDate, hasComuneLetter, extraCartons, customerInfo }: UsePriceCalculationProps) {
   
   const [calculatedPrice, setCalculatedPrice] = useState(0)
   const [isCalculating, setIsCalculating] = useState(false)
@@ -73,6 +74,7 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate, 
         cantonId: selectedCanton as typeof VALID_CANTONS[number],
         selectedDate,
         hasComuneLetter,
+        extraCartons,
         clientTzOffsetMin: new Date().getTimezoneOffset()
       })
       
@@ -93,7 +95,7 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate, 
     } finally {
       setIsCalculating(false)
     }
-  }, [selectedCanton, selections, selectedDate, hasComuneLetter])
+  }, [selectedCanton, selections, selectedDate, hasComuneLetter, extraCartons])
 
   // Debounced effect para evitar múltiplas chamadas
   useEffect(() => {
@@ -141,6 +143,7 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate, 
         cantonId: selectedCanton as typeof VALID_CANTONS[number],
         selectedDate: selectedDate as Date,
         hasComuneLetter,
+        extraCartons,
         customerEmail: customerInfo.email,
         customerName: customerInfo.name,
         customerPhone: customerInfo.phone,
@@ -159,7 +162,7 @@ export function usePriceCalculation({ selections, selectedCanton, selectedDate, 
     } finally {
       setIsProcessingCheckout(false)
     }
-  }, [selectedCanton, selections, selectedDate, hasComuneLetter, customerInfo])
+  }, [selectedCanton, selections, selectedDate, hasComuneLetter, extraCartons, customerInfo])
 
   return {
     calculatedPrice,

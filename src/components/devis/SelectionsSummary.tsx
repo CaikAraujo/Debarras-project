@@ -13,6 +13,8 @@ interface SelectionsSummaryProps {
   onRemoveSelection: (selectionId: string) => void
   onContinue: () => void
   onChangeCanton: () => void
+  extraCartons?: number
+  onChangeExtraCartons?: (n: number) => void
 }
 
 export default function SelectionsSummary({
@@ -22,7 +24,9 @@ export default function SelectionsSummary({
   isCalculating,
   onRemoveSelection,
   onContinue,
-  onChangeCanton
+  onChangeCanton,
+  extraCartons = 0,
+  onChangeExtraCartons
 }: SelectionsSummaryProps) {
   const currentCanton = cantons.find(c => c.id === selectedCanton)
   const { t } = useI18n()
@@ -51,6 +55,14 @@ export default function SelectionsSummary({
     }
     return 0
   }
+
+  const cartonsIncludedForQuantity = (q: number) => {
+    if (q <= 5) return 5
+    if (q <= 10) return 10
+    return 15
+  }
+
+  const totalIncludedCartons = selections.reduce((acc, s) => acc + cartonsIncludedForQuantity(s.quantity), 0)
 
   return (
     <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gray-200 px-4">
@@ -115,6 +127,9 @@ export default function SelectionsSummary({
                 </div>
               </div>
               <div className="flex items-center space-x-2 md:space-x-3 flex-shrink-0">
+                <div className="text-xs md:text-sm text-green-700 bg-green-50 border border-green-200 px-2 py-1 rounded-md">
+                  {t.devis.summary.cartons.badge(cartonsIncludedForQuantity(selection.quantity))}
+                </div>
                 <button 
                   onClick={() => onRemoveSelection(selection.selectionId)}
                   className="text-red-500 hover:text-red-700 w-5 h-5 md:w-6 md:h-6 flex items-center justify-center rounded-full hover:bg-red-100 transition-colors"
@@ -129,6 +144,28 @@ export default function SelectionsSummary({
       </div>
       
       <div className="flex flex-col space-y-3 md:space-y-4">
+        {/* Cartons info e extras */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+            <div className="text-center">
+              <p className="text-sm text-green-700 mb-1">{t.devis.summary.cartons.included}</p>
+              <div className="text-xl font-bold text-green-800">{totalIncludedCartons}</div>
+            </div>
+          </div>
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+            <div className="flex items-center justify-between gap-2">
+              <div>
+                <p className="text-sm text-yellow-700">{t.devis.summary.cartons.extra}</p>
+                <p className="text-xs text-yellow-700">{t.devis.summary.cartons.unit}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <button aria-label="decrease" className="px-2 py-1 border rounded" onClick={() => onChangeExtraCartons && onChangeExtraCartons(Math.max(0, extraCartons - 1))}>-</button>
+                <div className="w-10 text-center font-semibold">{extraCartons}</div>
+                <button aria-label="increase" className="px-2 py-1 border rounded" onClick={() => onChangeExtraCartons && onChangeExtraCartons(extraCartons + 1)}>+</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="text-lg md:text-xl font-bold text-primary text-center sm:text-left">
             {isCalculating ? t.devis.summary.processing : `Total: CHF ${calculatedPrice}.-`}

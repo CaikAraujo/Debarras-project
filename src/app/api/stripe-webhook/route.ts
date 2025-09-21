@@ -83,6 +83,7 @@ export async function POST(req: Request) {
         customerAddress: metadata.customerAddress || formatStripeAddress(customer_details.address) || 'Adresse',
         customerFloor: metadata.customerFloor || undefined,
         customerDoorCode: metadata.customerDoorCode || undefined,
+        extraCartons: metadata.extraCartons ? parseInt(metadata.extraCartons as string, 10) : 0,
       }
 
       // 1. Salvar a reserva

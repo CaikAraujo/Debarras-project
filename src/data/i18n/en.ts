@@ -326,6 +326,12 @@ const en = {
       editDateCanton: 'Edit date or canton',
       restart: 'Restart',
       baseValue: 'Base value',
+      cartons: {
+        included: 'Included cartons',
+        extra: 'Additional cartons',
+        unit: '+3 CHF / carton',
+        badge: (count: number) => `+${count} cartons`,
+      },
     },
     landing: {
       title: 'Personalized Quote Calculator',
