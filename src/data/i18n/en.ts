@@ -329,7 +329,7 @@ const en = {
       cartons: {
         included: 'Included cartons',
         extra: 'Additional cartons',
-        unit: '+3 CHF / carton',
+        unit: '+7 CHF / carton',
         badge: (count: number) => `+${count} cartons`,
       },
     },

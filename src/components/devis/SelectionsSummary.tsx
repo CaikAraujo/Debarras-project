@@ -82,13 +82,13 @@ export default function SelectionsSummary({
 
       {/* HUD de valores: base do cantão + total estimé */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
           <div className="text-center">
-            <p className="text-sm text-blue-700 mb-1">{t.devis.summary.baseValue}</p>
-            <div className="text-2xl font-bold text-blue-800">
+            <p className="text-sm text-gray-700 mb-1">{t.devis.summary.baseValue}</p>
+            <div className="text-2xl font-bold text-gray-800">
               {currentCanton?.basePrice} CHF
             </div>
-            <p className="text-xs text-blue-600 mt-1">
+            <p className="text-xs text-gray-600 mt-1">
               {t.devis.summary.guaranteed}
             </p>
           </div>
@@ -122,12 +122,12 @@ export default function SelectionsSummary({
                   {IconComponent && <IconComponent size={20} className="text-red-600 md:w-6 md:h-6" />}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="font-semibold text-primary text-sm md:text-base truncate">{roomTitle}</div>
-                  <div className="text-sm font-bold text-blue-600">{itemPrice} CHF</div>
+                  <div className="font-semibold text-gray-800 text-sm md:text-base truncate">{roomTitle}</div>
+                  <div className="text-sm font-bold text-gray-700">{itemPrice} CHF</div>
                 </div>
               </div>
               <div className="flex items-center space-x-2 md:space-x-3 flex-shrink-0">
-                <div className="text-xs md:text-sm text-green-700 bg-green-50 border border-green-200 px-2 py-1 rounded-md">
+                <div className="text-xs md:text-sm text-gray-700 bg-gray-50 border border-gray-200 px-2 py-1 rounded-md">
                   {t.devis.summary.cartons.badge(cartonsIncludedForQuantity(selection.quantity))}
                 </div>
                 <button 
@@ -146,28 +146,28 @@ export default function SelectionsSummary({
       <div className="flex flex-col space-y-3 md:space-y-4">
         {/* Cartons info e extras */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
             <div className="text-center">
-              <p className="text-sm text-green-700 mb-1">{t.devis.summary.cartons.included}</p>
-              <div className="text-xl font-bold text-green-800">{totalIncludedCartons}</div>
+              <p className="text-sm text-gray-700 mb-1">{t.devis.summary.cartons.included}</p>
+              <div className="text-xl font-bold text-gray-800">{totalIncludedCartons}</div>
             </div>
           </div>
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
             <div className="flex items-center justify-between gap-2">
               <div>
-                <p className="text-sm text-yellow-700">{t.devis.summary.cartons.extra}</p>
-                <p className="text-xs text-yellow-700">{t.devis.summary.cartons.unit}</p>
+                <p className="text-sm text-gray-700">{t.devis.summary.cartons.extra}</p>
+                <p className="text-xs text-gray-700">{t.devis.summary.cartons.unit}</p>
               </div>
               <div className="flex items-center gap-2">
-                <button aria-label="decrease" className="px-2 py-1 border rounded" onClick={() => onChangeExtraCartons && onChangeExtraCartons(Math.max(0, extraCartons - 1))}>-</button>
-                <div className="w-10 text-center font-semibold">{extraCartons}</div>
-                <button aria-label="increase" className="px-2 py-1 border rounded" onClick={() => onChangeExtraCartons && onChangeExtraCartons(extraCartons + 1)}>+</button>
+                <button aria-label="decrease" className="px-2 py-1 border border-gray-300 rounded text-gray-700" onClick={() => onChangeExtraCartons && onChangeExtraCartons(Math.max(0, extraCartons - 1))}>-</button>
+                <div className="w-10 text-center font-semibold text-gray-800">{extraCartons}</div>
+                <button aria-label="increase" className="px-2 py-1 border border-gray-300 rounded text-gray-700" onClick={() => onChangeExtraCartons && onChangeExtraCartons(extraCartons + 1)}>+</button>
               </div>
             </div>
           </div>
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div className="text-lg md:text-xl font-bold text-primary text-center sm:text-left">
+          <div className="text-lg md:text-xl font-bold text-gray-800 text-center sm:text-left">
             {isCalculating ? t.devis.summary.processing : `Total: CHF ${calculatedPrice}.-`}
           </div>
           <div className="w-full sm:w-auto flex flex-col items-stretch gap-2">

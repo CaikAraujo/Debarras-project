@@ -159,14 +159,14 @@ export default function RoomSelector({ onSelectRoom, onEditRoom, selections, isR
                 className="absolute inset-0 flex flex-col items-center justify-center bg-white rounded-lg"
                 style={{ zIndex: 50 }}
               >
-                <span className="text-green-600 font-semibold text-sm md:text-base flex items-center gap-1 mb-3">
+                <span className="text-gray-600 font-semibold text-sm md:text-base flex items-center gap-1 mb-3">
                   <Check className="w-4 h-4" />
                   {t.devis.rooms.selected}
                 </span>
                 <button
                   type="button"
                   onClick={(e) => handleEditClick(e, room.id)}
-                  className="flex items-center gap-2 text-blue-600 hover:text-blue-800 px-3 py-2 rounded-md hover:bg-blue-50 transition-colors text-sm font-medium border border-blue-200 hover:border-blue-300 bg-white"
+                  className="flex items-center gap-2 text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-50 transition-colors text-sm font-medium border border-gray-200 hover:border-gray-300 bg-white"
                   title={`${t.devis.rooms.editTitle} ${roomName}`}
                   style={{ pointerEvents: 'auto' }}
                 >

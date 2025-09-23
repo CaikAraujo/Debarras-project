@@ -170,8 +170,8 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
       total = Math.max(0, Math.round(total * 0.9))
     }
 
-    // Cartons adicionais pagos: preço unitário (ex.: 3 CHF por carton)
-    const EXTRA_CARTON_UNIT_PRICE = 3
+    // Cartons adicionais pagos: preço unitário (7 CHF por carton)
+    const EXTRA_CARTON_UNIT_PRICE = 7
     if (typeof extraCartons === 'number' && extraCartons > 0) {
       total += EXTRA_CARTON_UNIT_PRICE * extraCartons
     }
