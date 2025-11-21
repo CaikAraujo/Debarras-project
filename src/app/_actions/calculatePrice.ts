@@ -141,8 +141,6 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
 
       if (applySurcharge) {
         total = Math.round(total * 1.1)
-      } else {
-        // noop
       }
     }
 
@@ -165,15 +163,15 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
       return shifted.getUTCDay()
     }
 
-    // Desconto de 10% se houver carta de commune
-    if (hasComuneLetter) {
-      total = Math.max(0, Math.round(total * 0.9))
-    }
-
     // Cartons adicionais pagos: preço unitário (7 CHF por carton)
     const EXTRA_CARTON_UNIT_PRICE = 7
     if (typeof extraCartons === 'number' && extraCartons > 0) {
       total += EXTRA_CARTON_UNIT_PRICE * extraCartons
+    }
+
+    // Desconto de 10% se houver carta de commune (aplicado por último para garantir o desconto sobre o total)
+    if (hasComuneLetter) {
+      total = Math.max(0, Math.round(total * 0.9))
     }
 
     return { success: true, totalPrice: total, breakdown, cantonBasePrice }

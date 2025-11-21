@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Button from '@/components/ui/Button'
 import { rooms, quantities, cantons } from '@/data/devisData'
 import type { Selection } from '@/lib/schemas'
-import { ArrowRight, CheckCircle } from 'lucide-react'
+import { ArrowRight, CheckCircle, Truck, Users, MapPin, FileText } from 'lucide-react'
 import useI18n from '@/components/i18n/useI18n'
 
 interface SelectionsSummaryProps {
@@ -82,18 +82,46 @@ export default function SelectionsSummary({
 
       {/* HUD de valores: base do cantão + total estimé */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-          <div className="text-center">
-            <p className="text-sm text-gray-700 mb-1">{t.devis.summary.baseValue}</p>
-            <div className="text-2xl font-bold text-gray-800">
-              {currentCanton?.basePrice} CHF
+        <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+          <div className="p-4 bg-gray-50 border-b border-gray-100 text-center">
+            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">{t.devis.summary.baseValue}</p>
+            <div className="text-3xl font-bold text-gray-900">
+              {currentCanton?.basePrice} <span className="text-lg font-medium text-gray-500">CHF</span>
             </div>
-            <p className="text-xs text-gray-600 mt-1">
-              {t.devis.summary.guaranteed}
-            </p>
+          </div>
+          
+          <div className="p-4 space-y-3">
+            <div className="flex items-center gap-3 text-sm text-gray-700 group hover:bg-gray-50 p-2 rounded-lg transition-colors">
+              <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0 group-hover:bg-red-100 transition-colors">
+                <Truck size={16} className="text-swiss-red" />
+              </div>
+              <span className="font-medium">{t.devis.summary.includes.truck}</span>
+            </div>
+            
+            <div className="flex items-center gap-3 text-sm text-gray-700 group hover:bg-gray-50 p-2 rounded-lg transition-colors">
+              <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0 group-hover:bg-red-100 transition-colors">
+                <Users size={16} className="text-swiss-red" />
+              </div>
+              <span className="font-medium">{t.devis.summary.includes.movers(selections.length <= 3 ? 2 : selections.length === 4 ? 3 : 4)}</span>
+            </div>
+            
+            <div className="flex items-center gap-3 text-sm text-gray-700 group hover:bg-gray-50 p-2 rounded-lg transition-colors">
+              <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0 group-hover:bg-red-100 transition-colors">
+                <MapPin size={16} className="text-swiss-red" />
+              </div>
+              <span className="font-medium">{t.devis.summary.includes.travel}</span>
+            </div>
+            
+            <div className="flex items-center gap-3 text-sm text-gray-700 group hover:bg-gray-50 p-2 rounded-lg transition-colors">
+              <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0 group-hover:bg-red-100 transition-colors">
+                <FileText size={16} className="text-swiss-red" />
+              </div>
+              <span className="font-medium">{t.devis.summary.includes.fees}</span>
+            </div>
           </div>
         </div>
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4" aria-live="polite">
+        
+        <div className="bg-gradient-to-br from-red-50 to-white border border-red-100 rounded-xl p-4 flex flex-col justify-center items-center shadow-sm" aria-live="polite">
           <div className="text-center">
             <p className="text-sm text-red-700 mb-1">{t.devis.summary.total}</p>
             <div className="text-2xl font-bold text-red-700">

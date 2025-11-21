@@ -326,6 +326,12 @@ const en = {
       editDateCanton: 'Edit date or canton',
       restart: 'Restart',
       baseValue: 'Base value',
+      includes: {
+        truck: '1 truck',
+        movers: (count: number) => `${count} movers`,
+        travel: 'Travel',
+        fees: 'Various fees',
+      },
       cartons: {
         included: 'Included cartons',
         extra: 'Additional cartons',

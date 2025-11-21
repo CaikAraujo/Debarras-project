@@ -376,6 +376,12 @@ const fr = {
       editDateCanton: 'Modifier la date ou le canton',
       restart: 'Recommencer',
       baseValue: 'Valeur de base',
+      includes: {
+        truck: '1 camion',
+        movers: (count: number) => `${count} déménageurs`,
+        travel: 'Déplacement',
+        fees: 'Frais divers',
+      },
       cartons: {
         included: 'Cartons inclus',
         extra: 'Cartons supplémentaires',

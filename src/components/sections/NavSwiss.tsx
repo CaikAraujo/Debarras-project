@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { Phone } from 'lucide-react'
 import useI18n from '@/components/i18n/useI18n'
 import LanguagePicker from '@/components/i18n/languagePicker'
 
@@ -47,7 +48,48 @@ const NavSwiss = () => {
             </div>
             
             {/* Language */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'flex-end' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', justifyContent: 'flex-end' }}>
+              <a 
+                href="tel:+41229391549" 
+                className="phone-button"
+                style={{ 
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '8px 16px',
+                  backgroundColor: 'rgba(220, 0, 24, 0.04)',
+                  border: '1px solid rgba(220, 0, 24, 0.1)',
+                  borderRadius: '24px',
+                  color: 'var(--text-dark)', 
+                  textDecoration: 'none',
+                  transition: 'all 0.2s ease',
+                  whiteSpace: 'nowrap'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(220, 0, 24, 0.08)'
+                  e.currentTarget.style.transform = 'translateY(-1px)'
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(220, 0, 24, 0.15)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(220, 0, 24, 0.04)'
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = 'none'
+                }}
+              >
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  width: '24px',
+                  height: '24px',
+                  backgroundColor: 'var(--swiss-red)',
+                  borderRadius: '50%',
+                  color: 'white'
+                }}>
+                  <Phone size={14} fill="white" />
+                </div>
+                <span style={{ fontSize: '15px', fontWeight: 600 }}>+41 22 939 15 49</span>
+              </a>
               <LanguagePicker />
             </div>
           </div>
