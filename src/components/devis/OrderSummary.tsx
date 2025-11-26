@@ -226,9 +226,6 @@ export default function OrderSummary({
                     <div className="text-2xl font-bold text-red-600">
                       {isCalculating ? '...' : `CHF ${calculatedPrice}`}
                     </div>
-                    <div className="text-xs text-secondary mt-1">
-                      {t.devis.summary.guaranteed}
-                    </div>
                     {comuneLetterPath && (
                       <div className="text-xs text-green-700 mt-1">{t.devis.summary.discount}</div>
                     )}

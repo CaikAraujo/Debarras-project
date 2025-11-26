@@ -24,22 +24,30 @@ const CantonShields = () => {
               <Link
                 key={canton.id}
                 href={`/devis?canton=${canton.id}`}
-                className={classes}
-                style={{ height: '150px', textDecoration: 'none' }}
+                className={`${classes} group relative flex flex-col items-center justify-between`}
+                style={{ minHeight: '220px', textDecoration: 'none' }}
               >
-                <div className="mb-4">
-                  <div className="canton-shield-container">
-                    <Image
-                      src={canton.image}
-                      alt={`Escudo de ${canton.name}`}
-                      width={80}
-                      height={80}
-                      className="object-contain"
-                    />
+                <div className="flex-1 flex flex-col items-center justify-center w-full">
+                  <div className="mb-4 transition-transform duration-300 group-hover:-translate-y-1">
+                    <div className="canton-shield-container">
+                      <Image
+                        src={canton.image}
+                        alt={`Escudo de ${canton.name}`}
+                        width={80}
+                        height={80}
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                  <div className="text-sm font-medium text-primary group-hover:text-accent transition-colors mb-3">
+                    {canton.name}
                   </div>
                 </div>
-                <div className="text-sm font-medium text-primary">
-                  {canton.name}
+                
+                <div className="w-full text-center">
+                  <span className="inline-block text-xs font-bold text-swiss-red bg-red-50 border border-red-100 px-3 py-1.5 rounded transition-colors duration-300 group-hover:bg-swiss-red group-hover:text-white">
+                    {t.common.requestQuote}
+                  </span>
                 </div>
               </Link>
             )

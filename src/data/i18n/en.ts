@@ -17,7 +17,7 @@ const en = {
   },
   about: {
     title: 'Suisse Débarras – Your trusted partner in Romandy',
-    p1a: 'With nearly 10 years of experience and branches in every Romandy canton',
+    p1a: '10 years of experience',
     p1b: '(Geneva, Vaud, Valais, Fribourg, Neuchâtel, Jura, Bern),',
     p1c: 'Suisse Débarras is your fast, efficient and discreet solution for all clearance needs.',
     p2: 'Each year, we handle over 500 sites: apartments, houses, chalets, farms, businesses, barns, garages, and public buildings.',
@@ -112,8 +112,6 @@ const en = {
     sidebar: {
       freeQuote: 'Free quote',
       freeQuoteDesc: 'Response guaranteed within 24 hours. Free travel across Swiss Romandy.',
-      payment: 'Payment',
-      paymentDesc: 'Invoice after service. Payment by bank transfer or cash.',
       insurance: 'Insurance',
       insuranceDesc: 'All our services are covered by 5 million CHF liability insurance.',
     },
@@ -122,9 +120,7 @@ const en = {
       mentionsTitle: 'Legal Mentions',
       labels: {
         company: 'Company name:',
-        ide: 'IDE number:',
         hq: 'Head office:',
-        capital: 'Share capital:',
       },
       privacyTitle: 'Data Protection',
       lpd: 'In accordance with the Swiss Federal Data Protection Act (FADP), we are committed to protecting your personal data.',
@@ -149,15 +145,12 @@ const en = {
       invoiceBullets: [
         '• Free quote without obligation',
         '• Fixed price communicated before intervention',
-        '• Invoicing after client approval',
-        '• Payment within 30 days net',
       ],
       assuranceTitle: 'Insurance and Guarantees',
       assuranceBullets: [
         '• Liability insurance 5 million CHF',
         '• Trained and certified staff',
         '• 100% satisfaction guarantee',
-        '• After-sales service included',
       ],
     },
   },
@@ -373,8 +366,6 @@ const en = {
   },
   feedbackPage: {
     locationTitle: 'Our Location',
-    hqTitle: 'HEAD OFFICE:',
-    hqDesc: 'Head office of Suisse Débarras. By appointment only. Contact us to schedule your visit.',
     weekday: 'Monday to Friday',
     apptOnly: '* By appointment only',
   },

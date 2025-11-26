@@ -136,11 +136,6 @@ const ContactSwiss = () => {
           </div>
           
           <div className="admin-sidebar-item">
-            <h4>{t.contact.sidebar.payment}</h4>
-            <p>{t.contact.sidebar.paymentDesc}</p>
-          </div>
-          
-          <div className="admin-sidebar-item">
             <h4>{t.contact.sidebar.insurance}</h4>
             <p>{t.contact.sidebar.insuranceDesc}</p>
           </div>

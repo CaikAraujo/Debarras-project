@@ -17,7 +17,7 @@ const it = {
   },
   about: {
     title: 'Suisse Débarras – Il tuo partner di fiducia in Romandia',
-    p1a: 'Con quasi 10 anni di esperienza e sedi in ogni cantone romando',
+    p1a: '10 anni di esperienza',
     p1b: '(Ginevra, Vaud, Vallese, Friburgo, Neuchâtel, Giura, Berna),',
     p1c: 'Suisse Débarras è la soluzione rapida, efficiente e discreta per ogni tipo di sgombero.',
     p2: 'Ogni anno interveniamo su oltre 500 immobili: appartamenti, case, chalet, aziende, fienili, garage e edifici pubblici.',
@@ -112,8 +112,6 @@ const it = {
     sidebar: {
       freeQuote: 'Preventivo gratuito',
       freeQuoteDesc: 'Risposta garantita entro 24 ore. Spostamenti gratuiti in tutta la Svizzera romanda.',
-      payment: 'Pagamento',
-      paymentDesc: 'Fattura dopo il servizio. Pagamento tramite bonifico o contanti.',
       insurance: 'Assicurazione',
       insuranceDesc: 'Tutti i nostri servizi sono coperti da assicurazione RC da 5 milioni CHF.',
     },
@@ -122,9 +120,7 @@ const it = {
       mentionsTitle: 'Note Legali',
       labels: {
         company: 'Ragione sociale:',
-        ide: 'Numero IDE:',
         hq: 'Sede legale:',
-        capital: 'Capitale sociale:',
       },
       privacyTitle: 'Protezione dei Dati',
       lpd: 'In conformità con la Legge federale sulla protezione dei dati (LPD), ci impegniamo a proteggere i tuoi dati personali.',
@@ -149,15 +145,12 @@ const it = {
       invoiceBullets: [
         '• Preventivo gratuito e senza impegno',
         '• Prezzo fisso comunicato prima dell’intervento',
-        '• Fatturazione dopo approvazione del cliente',
-        '• Pagamento a 30 giorni netti',
       ],
       assuranceTitle: 'Assicurazioni e Garanzie',
       assuranceBullets: [
         '• Assicurazione RC 5 milioni CHF',
         '• Personale formato e certificato',
         '• Garanzia di soddisfazione 100%',
-        '• Servizio post-vendita incluso',
       ],
     },
   },
@@ -373,8 +366,6 @@ const it = {
   },
   feedbackPage: {
     locationTitle: 'La Nostra Posizione',
-    hqTitle: 'SEDE PRINCIPALE:',
-    hqDesc: 'Sede di Suisse Débarras. Ricevimento solo su appuntamento. Contattaci per pianificare la visita.',
     weekday: 'Lunedì - Venerdì',
     apptOnly: '* Solo su appuntamento',
   },

@@ -17,7 +17,7 @@ const fr = {
   },
   about: {
     title: 'Suisse Débarras – Votre partenaire de confiance en Suisse romande',
-    p1a: "Avec près de 10 ans d'expérience et des succursales dans chaque canton romand",
+    p1a: "10 ans d'expérience",
     p1b: '(Genève, Vaud, Valais, Fribourg, Neuchâtel, Jura, Berne),',
     p1c: 'Suisse Débarras est votre solution rapide, efficace et discrète pour tout type de débarras.',
     p2: 'Chaque année, nous intervenons sur plus de 500 biens : appartements, maisons, chalets, fermes, entreprises, granges, garages, et bâtiments publics.',
@@ -112,8 +112,6 @@ const fr = {
     sidebar: {
       freeQuote: 'Devis gratuit',
       freeQuoteDesc: 'Réponse garantie sous 24 heures. Déplacement gratuit dans toute la Suisse romande.',
-      payment: 'Paiement',
-      paymentDesc: 'Facture après service. Paiement possible par virement bancaire ou en espèces.',
       insurance: 'Assurance',
       insuranceDesc: 'Tous nos services sont couverts par une assurance responsabilité civile de 5 millions CHF.',
     },
@@ -122,9 +120,7 @@ const fr = {
       mentionsTitle: 'Mentions Légales',
       labels: {
         company: 'Raison sociale :',
-        ide: 'Numéro IDE :',
         hq: 'Siège social :',
-        capital: 'Capital social :',
       },
       privacyTitle: 'Protection des Données',
       lpd: 'Conformément à la Loi fédérale sur la protection des données (LPD), nous nous engageons à protéger vos données personnelles.',
@@ -149,15 +145,12 @@ const fr = {
       invoiceBullets: [
         '• Devis gratuit et sans engagement',
         '• Prix fixe communiqué avant intervention',
-        '• Facturation après validation du client',
-        '• Paiement 30 jours net',
       ],
       assuranceTitle: 'Assurances et Garanties',
       assuranceBullets: [
         '• Assurance RC 5 millions CHF',
         '• Personnel formé et certifié',
         '• Garantie satisfaction 100%',
-        '• Service après-vente inclus',
       ],
     },
   },
@@ -216,7 +209,7 @@ const fr = {
   },
   cantons: {
     title: "Nos Cantons d'Intervention",
-    desc: 'Nous intervenons dans tous les cantons de la Suisse romande avec la même qualité de service et le respect des réglementations locales.',
+    desc: 'Nous intervenons dans tous les cantons de la Suisse romande avec la même qualité de service et le respect des réglementations locales. Cliquez sur votre canton pour demander un devis.',
     teamLocal: 'Une équipe locale dans chaque canton pour mieux vous servir',
   },
   services: {
@@ -423,8 +416,6 @@ const fr = {
   },
   feedbackPage: {
     locationTitle: 'Notre Localisation',
-    hqTitle: 'BUREAU PRINCIPAL:',
-    hqDesc: "Siège social de Suisse Débarras. Accueil sur rendez-vous uniquement. Contactez-nous pour planifier votre visite.",
     weekday: 'Lundi au vendredi',
     apptOnly: '* Sur rendez-vous uniquement',
   }

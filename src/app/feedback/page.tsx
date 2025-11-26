@@ -58,12 +58,6 @@ export default function FeedbackPage() {
                       </div>
                     </div>
                     
-                    {/* Informations */}
-                    <div className="py-4 border-t border-gray-200">
-                      <div className="text-gray-900 font-semibold mb-3">{t.feedbackPage.hqTitle}</div>
-                      <p className="text-gray-600 text-sm leading-relaxed">{t.feedbackPage.hqDesc}</p>
-                    </div>
-                    
                     {/* Horários */}
                     <div className="py-4 border-t border-gray-200">
                       <div className="text-gray-900 font-medium mb-2">{t.feedbackPage.weekday}</div>

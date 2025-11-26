@@ -27,18 +27,10 @@ export default function ContactPage() {
                     Suisse Débarras
                   </div>
                   <div>
-                    <strong>{t.contact.legal.labels.ide}</strong><br />
-                    CHE-123.456.789
-                  </div>
-                  <div>
                     <strong>{t.contact.legal.labels.hq}</strong><br />
                     Avenue des Communes-Réunies 43<br />
                     1212 Grand-Lancy<br />
                     Genève, Suisse
-                  </div>
-                  <div>
-                    <strong>{t.contact.legal.labels.capital}</strong><br />
-                    CHF 20'000.-
                   </div>
                 </div>
               </div>
@@ -76,8 +68,6 @@ export default function ContactPage() {
                   <ul className="space-y-2">
                     <li>{t.contact.legal.invoiceBullets[0]}</li>
                     <li>{t.contact.legal.invoiceBullets[1]}</li>
-                    <li>{t.contact.legal.invoiceBullets[2]}</li>
-                    <li>{t.contact.legal.invoiceBullets[3]}</li>
                   </ul>
                 </div>
                 <div>
@@ -86,7 +76,6 @@ export default function ContactPage() {
                     <li>{t.contact.legal.assuranceBullets[0]}</li>
                     <li>{t.contact.legal.assuranceBullets[1]}</li>
                     <li>{t.contact.legal.assuranceBullets[2]}</li>
-                    <li>{t.contact.legal.assuranceBullets[3]}</li>
                   </ul>
                 </div>
               </div>
