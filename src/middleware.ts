@@ -97,22 +97,24 @@ export function middleware(request: NextRequest) {
   )
 
   // Content Security Policy
-  // Nota: Ajuste conforme os domínios que você utiliza
+  // Usando Report-Only primeiro para testar sem quebrar nada
+  // Depois de testar, mude para 'Content-Security-Policy' para bloquear de verdade
   const cspDirectives = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://www.googletagmanager.com",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://www.googletagmanager.com https://*.google-analytics.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "font-src 'self' https://fonts.gstatic.com",
+    "font-src 'self' https://fonts.gstatic.com data:",
     "img-src 'self' data: blob: https: http:",
-    "connect-src 'self' https://api.stripe.com https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com",
+    "connect-src 'self' https://api.stripe.com https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://*.analytics.google.com",
     "frame-src 'self' https://js.stripe.com https://hooks.stripe.com",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self' https://checkout.stripe.com",
-    "frame-ancestors 'self'",
-    "upgrade-insecure-requests"
+    "frame-ancestors 'self'"
   ]
-  response.headers.set('Content-Security-Policy', cspDirectives.join('; '))
+  // 🔒 MODO SEGURO: Report-Only não bloqueia, só avisa no console do navegador
+  // Após testar em produção por alguns dias sem erros, mude para 'Content-Security-Policy'
+  response.headers.set('Content-Security-Policy-Report-Only', cspDirectives.join('; '))
 
   // Strict Transport Security (força HTTPS)
   // Apenas em produção
