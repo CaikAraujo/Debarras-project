@@ -150,15 +150,32 @@ export const generateSecureId = (): string => {
   return `${timestamp}-${random}`
 }
 
+// 🔒 Detectar tentativas de command injection
+export const hasCommandInjection = (input: unknown): boolean => {
+  if (typeof input !== 'string') return false
+  const patterns = [
+    /\$\([^)]+\)/,           // $(command)
+    /`[^`]+`/,               // `command`
+    /;\s*(curl|wget|bash|sh|nc|netcat|python|perl|ruby|php)/i,
+    /\|\s*(curl|wget|bash|sh|nc|netcat)/i,
+    /&&\s*(curl|wget|bash|sh)/i,
+    />\s*\/etc\//,           // > /etc/...
+    /\/bin\/(bash|sh|zsh)/,
+    /\beval\s*\(/,
+    /\bexec\s*\(/,
+  ]
+  return patterns.some(p => p.test(input))
+}
+
 // 🔒 Log de tentativas suspeitas (para monitoramento)
 export const logSecurityEvent = (event: {
-  type: 'sql_injection' | 'xss_attempt' | 'path_traversal' | 'rate_limit' | 'invalid_input'
+  type: 'sql_injection' | 'xss_attempt' | 'path_traversal' | 'rate_limit' | 'invalid_input' | 'command_injection'
   input?: string
   ip?: string
   endpoint?: string
 }) => {
   // Em produção, envie para um serviço de logging/monitoramento
-  console.warn('[SECURITY EVENT]', {
+  console.warn('🚨 [SECURITY EVENT]', {
     ...event,
     timestamp: new Date().toISOString(),
     // Truncar input para não logar dados sensíveis extensos

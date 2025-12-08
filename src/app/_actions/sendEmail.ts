@@ -5,7 +5,7 @@ import { Resend } from 'resend'
 import React from 'react'
 
 import ContactFormEmail from '@/emails/ContactFormEmail'
-import { SecurityValidators, logSecurityEvent, SECURITY_CONSTANTS } from '@/lib/security'
+import { SecurityValidators, logSecurityEvent, SECURITY_CONSTANTS, hasCommandInjection } from '@/lib/security'
 
 // 🔒 Schema de validação com limites de tamanho
 const sendEmailSchema = z.object({
@@ -41,6 +41,20 @@ export async function sendEmail(formData: FormData) {
   // 🔒 Verificar tentativas de injeção antes do parse
   const allInputs = Object.values(rawData).filter(v => typeof v === 'string') as string[]
   for (const input of allInputs) {
+    // Detectar command injection (curl, bash, etc.)
+    if (hasCommandInjection(input)) {
+      logSecurityEvent({
+        type: 'command_injection',
+        input,
+        endpoint: '/contact'
+      })
+      return {
+        success: false,
+        error: 'Entrée invalide détectée.',
+      }
+    }
+    
+    // Detectar XSS e SQL injection
     if (!SecurityValidators.isSafeInput(input)) {
       logSecurityEvent({
         type: 'xss_attempt',

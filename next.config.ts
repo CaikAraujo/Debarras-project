@@ -28,9 +28,6 @@ const securityHeaders = [
 ]
 
 const nextConfig: NextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   // 🔒 Headers de segurança como backup (middleware tem precedência)
   async headers() {
     return [
