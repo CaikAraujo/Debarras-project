@@ -76,7 +76,7 @@ function checkRateLimit(ip: string = 'localhost'): boolean {
 export async function calculateSecurePrice(data: PriceCalculationData) {
   try {
     if (!checkRateLimit()) {
-      return { success: false, error: 'Muitas tentativas. Aguarde 1 minuto.' }
+      return { success: false, error: 'Trop de tentatives. Veuillez patienter 1 minute.' }
     }
 
     const { selections, cantonId, selectedDate, hasComuneLetter, clientTzOffsetMin, extraCartons } = PriceCalculationSchema.parse(data)
@@ -91,19 +91,19 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
       // Para outros cômodos, verificar duplicatas
       if (selection.roomId !== 'bedroom') {
         if (seenNonBedroomRooms.has(selection.roomId)) {
-          return { success: false, error: `Cômodo já selecionado: ${selection.roomId}` }
+          return { success: false, error: `Pièce déjà sélectionnée : ${selection.roomId}` }
         }
         seenNonBedroomRooms.add(selection.roomId)
       }
 
       const roomPricing = PRICING.rooms[selection.roomId]
       if (!roomPricing) {
-        return { success: false, error: `Quarto inválido: ${selection.roomId}` }
+        return { success: false, error: `Pièce invalide : ${selection.roomId}` }
       }
 
       const itemPrice = roomPricing[selection.quantity as keyof typeof roomPricing]
       if (!itemPrice) {
-        return { success: false, error: `Quantidade inválida: ${selection.quantity}` }
+        return { success: false, error: `Quantité invalide : ${selection.quantity}` }
       }
 
       breakdown.push({ ...selection, basePrice: itemPrice, finalPrice: itemPrice })
@@ -111,7 +111,7 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
     }
 
     if (total <= 0 || total > 50000) {
-      return { success: false, error: 'Total inválido' }
+      return { success: false, error: 'Total invalide' }
     }
 
     // Aplicar sobretaxa de 10% para amanhã (D+1) ou fim de semana
@@ -178,6 +178,6 @@ export async function calculateSecurePrice(data: PriceCalculationData) {
 
   } catch (error) {
     console.error('Erro ao calcular o preço:', error)
-    return { success: false, error: 'Ocorreu um erro ao calcular o preço. Tente novamente.' }
+    return { success: false, error: 'Une erreur est survenue lors du calcul du prix. Veuillez réessayer.' }
   }
 } 

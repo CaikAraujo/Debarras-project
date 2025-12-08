@@ -74,7 +74,7 @@ export async function sendEmail(formData: FormData) {
   if (!SecurityValidators.isValidEmail(senderEmail)) {
     return {
       success: false,
-      error: { senderEmail: ['Email inválido'] },
+      error: { senderEmail: ['Adresse e-mail invalide'] },
     }
   }
 
@@ -98,6 +98,6 @@ export async function sendEmail(formData: FormData) {
     return { success: true, data }
   } catch (error) {
     console.error('Erro ao enviar e-mail:', error)
-    return { success: false, error: 'Falha ao enviar o e-mail.' }
+    return { success: false, error: 'Échec de l\'envoi de l\'e-mail.' }
   }
 }

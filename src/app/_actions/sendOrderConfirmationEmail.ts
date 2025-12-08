@@ -156,6 +156,6 @@ export async function sendOrderConfirmationEmail(payload: EmailPayload) {
     return { success: true }
   } catch (error) {
     console.error('[Email] Erro ao enviar e-mail de confirmação de pedido:', error)
-    return { success: false, error: 'Falha ao enviar o e-mail.' }
+    return { success: false, error: 'Échec de l\'envoi de l\'e-mail.' }
   }
 } 

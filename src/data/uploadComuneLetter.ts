@@ -11,7 +11,7 @@ export default async function uploadComuneLetter(file: File) {
     return { success: true as const, path: json.path as string }
   } catch (error) {
     console.error('Erro ao fazer upload da carta de comune:', error)
-    return { success: false as const, error: 'Falha no upload' }
+    return { success: false as const, error: 'Échec du téléchargement' }
   }
 }
 

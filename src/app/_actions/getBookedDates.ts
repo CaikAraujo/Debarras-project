@@ -26,9 +26,9 @@ export async function getBookedDates(cantonId: string) {
 
   } catch (error: any) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: 'Cantão inválido', dates: [] };
+      return { success: false, error: 'Canton invalide', dates: [] };
     }
     console.error('Erro inesperado ao buscar datas:', error)
-    return { success: false, error: 'Erro inesperado no servidor', dates: [] }
+    return { success: false, error: 'Erreur inattendue du serveur', dates: [] }
   }
 } 

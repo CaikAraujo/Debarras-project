@@ -27,6 +27,6 @@ export async function saveReservation(data: CheckoutData & { sessionId: string }
     return { success: true, reservation }
   } catch (error) {
     console.error('Erro ao salvar reserva:', error)
-    return { success: false, error: 'Falha ao salvar reserva' }
+    return { success: false, error: 'Échec de l\'enregistrement de la réservation' }
   }
 } 

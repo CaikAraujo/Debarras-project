@@ -75,7 +75,7 @@ export async function POST(req: Request) {
     const file = form.get('file') as File | null
     
     if (!file) {
-      return NextResponse.json({ success: false, error: 'Arquivo ausente' }, { status: 400 })
+      return NextResponse.json({ success: false, error: 'Fichier manquant' }, { status: 400 })
     }
 
     // Validar extensão do nome original (primeira camada)
@@ -83,7 +83,7 @@ export async function POST(req: Request) {
     if (!ALLOWED_EXTENSIONS.has(originalExt)) {
       return NextResponse.json({ 
         success: false, 
-        error: 'Extensão de arquivo não permitida. Use: jpg, jpeg, png ou webp' 
+        error: 'Extension de fichier non autorisée. Utilisez : jpg, jpeg, png ou webp' 
       }, { status: 415 })
     }
 
@@ -93,11 +93,11 @@ export async function POST(req: Request) {
 
     // Validar tamanho
     if (bytes.byteLength > MAX_SIZE_BYTES) {
-      return NextResponse.json({ success: false, error: 'Arquivo muito grande (máx 5MB)' }, { status: 413 })
+      return NextResponse.json({ success: false, error: 'Fichier trop volumineux (max 5 Mo)' }, { status: 413 })
     }
 
     if (bytes.byteLength < 8) {
-      return NextResponse.json({ success: false, error: 'Arquivo inválido ou corrompido' }, { status: 400 })
+      return NextResponse.json({ success: false, error: 'Fichier invalide ou corrompu' }, { status: 400 })
     }
 
     // 🔒 SEGURANÇA: Validar magic bytes - verifica o conteúdo REAL do arquivo
@@ -110,7 +110,7 @@ export async function POST(req: Request) {
       })
       return NextResponse.json({ 
         success: false, 
-        error: 'Tipo de arquivo não reconhecido. Envie uma imagem válida (JPG, PNG ou WebP)' 
+        error: 'Type de fichier non reconnu. Envoyez une image valide (JPG, PNG ou WebP)' 
       }, { status: 415 })
     }
 
@@ -133,7 +133,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true, path })
   } catch (e) {
     console.error('Upload comune letter error:', e)
-    return NextResponse.json({ success: false, error: 'Falha no upload' }, { status: 500 })
+    return NextResponse.json({ success: false, error: 'Échec du téléchargement' }, { status: 500 })
   }
 }
 

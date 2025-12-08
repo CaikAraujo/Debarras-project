@@ -64,7 +64,7 @@ export function middleware(request: NextRequest) {
     
     if (!allowed) {
       return new NextResponse(
-        JSON.stringify({ error: 'Muitas requisições. Tente novamente em breve.' }),
+        JSON.stringify({ error: 'Trop de requêtes. Veuillez réessayer dans un instant.' }),
         { 
           status: 429, 
           headers: { 

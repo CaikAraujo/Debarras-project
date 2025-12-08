@@ -11,12 +11,12 @@ export async function createStripeCheckout(data: CheckoutData) {
     const validated = CheckoutSchema.parse(data)
 
     if (!validated.selectedDate) {
-      return { success: false, error: 'A data da reserva é obrigatória.' }
+      return { success: false, error: 'La date de réservation est obligatoire.' }
     }
     
     // Validação adicional de segurança
     if (!validated.selections || validated.selections.length === 0) {
-      return { success: false, error: 'Nenhuma seleção válida encontrada.' }
+      return { success: false, error: 'Aucune sélection valide trouvée.' }
     }
 
     // Verificar se todas as seleções têm dados válidos
@@ -27,22 +27,22 @@ export async function createStripeCheckout(data: CheckoutData) {
     )
 
     if (!hasValidSelections) {
-      return { success: false, error: 'Dados de seleção inválidos.' }
+      return { success: false, error: 'Données de sélection invalides.' }
     }
 
     // Verificar se não excede o limite máximo de seleções
     if (validated.selections.length > SECURITY_CONSTANTS.MAX_SELECTIONS) {
-      return { success: false, error: 'Número máximo de seleções excedido.' }
+      return { success: false, error: 'Nombre maximum de sélections dépassé.' }
     }
     
     const priceResult = await calculateSecurePrice(validated)
     if (!priceResult.success || !priceResult.totalPrice || !priceResult.breakdown) {
-      return { success: false, error: priceResult.error || 'Erro ao calcular o preço detalhado.' }
+      return { success: false, error: priceResult.error || 'Erreur lors du calcul du prix détaillé.' }
     }
 
     // Verificar se o preço não excede o limite máximo
     if (priceResult.totalPrice > SECURITY_CONSTANTS.MAX_TOTAL_PRICE) {
-      return { success: false, error: 'Preço total excede o limite máximo permitido.' }
+      return { success: false, error: 'Le prix total dépasse la limite maximale autorisée.' }
     }
     
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
@@ -114,7 +114,7 @@ export async function createStripeCheckout(data: CheckoutData) {
     // Segurança final
     if (totalFromLineItems !== targetTotal) {
       console.error('Divergência de preço entre o total e a soma dos itens após ajuste.')
-      return { success: false, error: 'Erro interno de cálculo de preço (ajuste).' }
+      return { success: false, error: 'Erreur interne de calcul de prix.' }
     }
 
     const hasComune = Boolean(validated.comuneLetterUrl || validated.hasComuneLetter)
@@ -155,7 +155,7 @@ export async function createStripeCheckout(data: CheckoutData) {
 
   } catch (error) {
     console.error('Erro ao criar checkout do Stripe:', error)
-    return { success: false, error: 'Não foi possível iniciar o checkout. Tente novamente.' }
+    return { success: false, error: 'Impossible de démarrer le paiement. Veuillez réessayer.' }
   }
 }
 
@@ -167,12 +167,12 @@ export async function validateStripePayment(sessionId: string) {
     })
     
     if (session.payment_status !== 'paid') {
-      return { success: false, error: 'Pagamento não confirmado' }
+      return { success: false, error: 'Paiement non confirmé' }
     }
 
     const { metadata } = session
     if (!metadata?.selections || !metadata?.canton || !metadata.selectedDate || !metadata.serverPrice) {
-      return { success: false, error: 'Dados de validação ausentes nos metadados' }
+      return { success: false, error: 'Données de validation manquantes' }
     }
 
     const priceResult = await calculateSecurePrice({
@@ -185,7 +185,7 @@ export async function validateStripePayment(sessionId: string) {
 
     if (!isValid) {
       console.error('FRAUDE DETECTADA:', { sessionId, metadata, calculated: priceResult.totalPrice })
-      return { success: false, error: 'Validação de preço falhou' }
+      return { success: false, error: 'Échec de la validation du prix' }
     }
 
     // Retorna todos os dados da sessão necessários para a página de sucesso
@@ -206,6 +206,6 @@ export async function validateStripePayment(sessionId: string) {
 
   } catch (error) {
     console.error('Erro na validação do Stripe:', error)
-    return { success: false, error: 'Erro de validação' }
+    return { success: false, error: 'Erreur de validation' }
   }
 } 
